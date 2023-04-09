@@ -1,0 +1,22 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
+    /* Completeness */
+    "target": "ES6",
+    "module": "CommonJS",
+    // "lib": [
+    //   "es6"
+    // ],
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "allowJs": true,
+    "jsx": "react-native",
+    "noEmit": false,
+    "incremental": false,
+    // "isolatedModules": true,
+    // "strict": true,
+    "moduleResolution": "node16"
+  },
+  "include": ["./app"]
+}
