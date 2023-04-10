@@ -8,7 +8,7 @@ import {
   NavigationContainer,
 } from '@react-navigation/native';
 import {enableScreens} from 'react-native-screens';
-import { ScreenNames } from '../shared/ScreenNames';
+import { ScreenNames } from 'app/shared/ScreenNames';
 import { HomeScreen } from './home/HomeScreen';
 
 enableScreens();
@@ -16,9 +16,10 @@ const Stack = createStackNavigator();
 export const rootNavigation = createNavigationContainerRef();
 
 export const AppNavigator = () => {
-    const routeNameRef = useRef();
     return(
-        <NavigationContainer>
+        <NavigationContainer
+            ref={rootNavigation}
+        >
             <Stack.Navigator
                 initialRouteName={ScreenNames.Home}
                 screenOptions={{
