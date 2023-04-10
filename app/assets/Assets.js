@@ -1,6 +1,6 @@
-import {AppIcons} from './AppIcon';
-import {AppColors} from './AppColors';
-import {AppImages} from './AppImages';
+import { AppIcons } from './AppIcon';
+import { AppColors } from './AppColors';
+import { AppImages } from './AppImages';
 
 export default {
   AppColors,
