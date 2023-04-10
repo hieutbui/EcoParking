@@ -8,7 +8,7 @@ import {
   NavigationContainer,
 } from '@react-navigation/native';
 import {enableScreens} from 'react-native-screens';
-import { ScreenNames } from 'app/shared/ScreenNames';
+import { ScreenNames } from 'app/constants/ScreenNames';
 import { HomeScreen } from './home/HomeScreen';
 
 enableScreens();
