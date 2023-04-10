@@ -20,5 +20,11 @@ module.exports = {
     'no-undef': 'off',
     'react-native/no-inline-styles': 'off',
     radix: 'off',
+    semi: [2, 'always'],
+    'prefer-const': [
+      'warn',
+      { ignoreReadBeforeAssign: false, destructuring: 'any' },
+    ],
+    'no-duplicate-imports': ['error', { includeExports: false }],
   },
 };
