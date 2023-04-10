@@ -27,5 +27,6 @@ module.exports = {
       { ignoreReadBeforeAssign: false, destructuring: 'any' },
     ],
     'no-duplicate-imports': ['error', { includeExports: false }],
+    '@typescript-eslint/consistent-type-imports': 'off',
   },
 };
