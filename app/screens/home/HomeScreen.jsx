@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 export const HomeScreen = () => {
-  useEffect(() => {}, []);
+  let test;
+  test = test1.data;
   return (
     <View>
       <Text>Home</Text>
