@@ -1,1 +1,3 @@
-export interface AppState {}
+export interface AppState {
+  language: 'vi' | 'en';
+}

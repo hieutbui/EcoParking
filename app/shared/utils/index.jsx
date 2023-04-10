@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { StoreState } from 'app/types';
 
 /**
  * @description hook to app's reducers state. convenient for typescripts
@@ -8,5 +9,7 @@ import { useSelector } from 'react-redux';
  * @returns {T}
  */
 export function useAppSelector(selector) {
-  return useSelector(selector);
+  const state = useAppSelector(selector);
+
+  return state;
 }
