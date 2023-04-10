@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 export const HomeScreen = () => {
-  useEffect(() => {});
+  const ref = useRef();
   return (
     <View>
       <Text>Home</Text>
