@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 export const HomeScreen = () => {
-  asdhfjksjbgjksdbg;
+          sgh
   return (
     <View>
       <Text>Home</Text>
