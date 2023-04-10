@@ -21,8 +21,8 @@
 
 - Các component dùng chung phải có comment giải thích đầu vào cụ thể ( ví dụ: Divider.js)
 - Khi viết code vào các file dùng chung ( ví dụ: Const.js, Styles.js, Assets.js ..) thì nên có comment để giải thích việc thêm code đó để làm gì
-  và nên viết tên của mình vào comment để biết được ai thêm. Ví dụ:
-  // hieubt: add padding in home screen
+  và nên viết tên của mình vào comment để biết được ai thêm. Ví dụ: <br/>
+  // hieubt: add padding in home screen <br/>
   const paddingHome = 100
 
 ## 4. Về việc chuyển trang
