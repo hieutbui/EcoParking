@@ -10,7 +10,7 @@
     "test": "jest",
     "pod_install": "cd ios && pod install && cd ..",
     "postinstall": "patch-package",
-    "prepare": "patch-package"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@os-team/i18next-react-native-language-detector": "^1.0.23",
