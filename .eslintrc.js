@@ -28,13 +28,7 @@ module.exports = {
     ],
     'no-duplicate-imports': ['error', { includeExports: false }],
     '@typescript-eslint/consistent-type-imports': 'off',
-    'spaced-comment': ['warn', 'never'],
-    'prettier/prettier': [
-      'warn',
-      {
-        jsxSingleQuote: false,
-        parser: 'flow',
-      },
-    ],
+    'spaced-comment': 'off',
+    'prettier/prettier': 'off',
   },
 };
