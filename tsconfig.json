@@ -18,5 +18,7 @@
     // "strict": true,
     "moduleResolution": "node16"
   },
-  "include": ["./app"]
+  "include": [
+    "./app"
+  ]
 }

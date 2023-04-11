@@ -10,7 +10,7 @@ export const Const = {
   apiBaseUrl: '',
   baseUrl: '',
 
-  // SCREENS
+  //SCREENS
   deviceHeight: Dimensions.get('screen').height,
   deviceWidth: Dimensions.get('screen').width,
   windowHeight: Dimensions.get('window').height,

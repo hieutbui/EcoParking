@@ -28,5 +28,6 @@ module.exports = {
     ],
     'no-duplicate-imports': ['error', { includeExports: false }],
     '@typescript-eslint/consistent-type-imports': 'off',
+    'spaced-comment': ['warn', 'never'],
   },
 };
