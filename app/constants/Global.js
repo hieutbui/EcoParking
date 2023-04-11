@@ -1,5 +1,5 @@
 import Styles, { Font, FontSize } from './Styles';
-import { Const } from './constants';
+import { Const } from './Constants';
 
 export default {
   UserId: null,

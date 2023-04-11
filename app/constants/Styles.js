@@ -1,5 +1,5 @@
 import Assets from 'app/assets/Assets';
-import { Const } from './constants';
+import { Const } from './Constants';
 
 export const FontSize = {
   s_5: 5,

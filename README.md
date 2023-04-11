@@ -13,7 +13,7 @@
 - Các component định nghĩa trong shared/components
 - Các hàm tiện ích
 - Về việc lưu và sử dụng config
-- Các hằng số định nghĩa trong shared/Const.js
+- Các hằng số định nghĩa trong app/constants/Constants.js
 - Style, Font, FontSize định nghĩa trong Styles.js
 - Icon, Image, Color định nghĩa trong AppColors.js, AppIcons.js, AppImages.js
 
@@ -43,6 +43,7 @@
 4.  app/controllers/listener: chứa các component có nhiệm vụ lắng nghe hoặc xử lý sự kiện (ko có giao diện)
 5.  app/controllers/socket: quản lý socket
 6.  app/controllers/slice: chứa các slice chính của ứng dụng: AppSlice, AccountSlice, AppSlice, PackageSlice, ServiceSlice,
+7.  app/screens: chứa các màn hình ứng dụng
 
 ## 9. Về việc cài thêm cái package
 
