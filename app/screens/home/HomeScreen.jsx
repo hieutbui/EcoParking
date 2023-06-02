@@ -6,7 +6,7 @@ import { NearbyScreen } from '../nearby/NearbyScreen';
 import { HistoryScreen } from '../history/HistoryScreen';
 import { ProfileScreen } from '../profile/ProfileScreen';
 import { AppIcons } from 'app/assets/AppIcon';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { Const } from 'app/constants/Constants';
 
 const Tab = createBottomTabNavigator();
