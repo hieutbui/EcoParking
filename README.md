@@ -32,10 +32,10 @@
 
 ## 5. Về các màn hình Test
 
-## 7. Side effect
+## 6. Side effect
 Ứng dụng sẽ dùng redux để lưu các trạng thái và redux-thunk để thực hiện các side effect (công việc liên quan đến kết nối mạng hoặc công việc cần thời gian xử lý). Sau đó sẽ lưu vào redux. redux + redux-thunk => slice toolkit. Tất cả sẽ được viết trong slice.
 
-## 8. Cấu trúc của project
+## 7. Cấu trúc của project
 
 1.  app/assets: chứa tất cả files, icons, images, locales, colors
 2.  app/controllers/api: gọi api
@@ -45,7 +45,7 @@
 6.  app/controllers/slice: chứa các slice chính của ứng dụng: AppSlice, AccountSlice, AppSlice, PackageSlice, ServiceSlice,
 7.  app/screens: chứa các màn hình ứng dụng
 
-## 9. Về việc cài thêm cái package
+## 8. Về việc cài thêm cái package
 
 Dùng "yarn add" thay cho "npm install"
 
