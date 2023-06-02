@@ -72,3 +72,28 @@ hoặc
 npx patch-package <package_name>
 ```
 ***
+
+#Docker
+- Tạo 1 file Dockerfile
+```bash
+vi Dockerfile
+```
+- Sau đó thêm nội dung vào file:
+	FROM node:16
+	WORKDIR .
+	COPY . .
+	RUN yarn install --production
+	CMD ["node", "./index.js"]
+	EXPOSE 3000
+- Build docker image
+```bash
+docker build -t <name>
+```bash
+- Kiểm tra image
+```bash
+docker images
+```
+- Running
+```bash
+Run docker -dp <localport>:<image port> <name>
+```bash
