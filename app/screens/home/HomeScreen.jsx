@@ -7,7 +7,7 @@ import { HistoryScreen } from '../history/HistoryScreen';
 import { ProfileScreen } from '../profile/ProfileScreen';
 import { AppIcons } from 'app/assets/AppIcon';
 import { Image, View } from 'react-native';
-import { Const } from 'app/constants/Constants';
+import { Const } from 'app/constants/Const';
 
 const Tab = createBottomTabNavigator();
 
