@@ -152,5 +152,8 @@ export const AppColors = {
   fireEngineRed: '#d6232b',
   fulvous: '#e18000',
   /* App colors */
-  feature: '#ff6345',
+  feature: '#BC0063',
+  textRegular: 'rgba(53, 53, 53, 0.5)',
+  textBlack: '#353535',
+  inactiveColor: '#CACACA',
 };
