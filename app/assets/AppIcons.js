@@ -7,4 +7,5 @@ export const AppIcons = {
   icBookingActive: require('../assets/icons/ic_booking_active/ic_booking_active.png'),
   icProfileInactive: require('../assets/icons/ic_profile_inactive/ic_profile_inactive.png'),
   icProfileActive: require('../assets/icons/ic_profile_active/ic_profile_active.png'),
+  icBack: require('../assets/icons/ic_back/ic_back.png'),
 };

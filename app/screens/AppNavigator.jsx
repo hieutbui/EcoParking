@@ -8,13 +8,15 @@ import { enableScreens } from 'react-native-screens';
 import { ScreenNames } from 'app/constants/ScreenNames';
 import { HomeScreen } from './home/HomeScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { AppIcons } from 'app/assets/AppIcon';
+import { AppIcons } from 'app/assets/AppIcons';
 import { SavedScreen } from './saved/SavedScreen';
 import { BookingScreen } from './booking/BookingScreen';
 import { ProfileScreen } from './profile/ProfileScreen';
 import { Image } from 'react-native';
 import { Const } from 'app/constants/Const';
 import { AppColors } from 'app/assets/AppColors';
+import { Font, FontSize, TextStyles } from 'app/constants/Styles';
+import { useTranslation } from 'react-i18next';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -37,15 +39,16 @@ export const AppNavigator = () => {
 };
 
 function MainTabBar() {
+  const { t } = useTranslation();
   const tabBarIcons = {
-    HOMENormal: AppIcons.icHomeInactive,
-    HOMEFocused: AppIcons.icHomeActive,
-    SAVEDNormal: AppIcons.icBookmarkInactive,
-    SAVEDFocused: AppIcons.icBookmarkActive,
-    BOOKINGNormal: AppIcons.icBookingInactive,
-    BOOKINGFocused: AppIcons.icBookingActive,
-    PROFILENormal: AppIcons.icProfileInactive,
-    PROFILEFocused: AppIcons.icProfileActive,
+    HomeNormal: AppIcons.icHomeInactive,
+    HomeFocused: AppIcons.icHomeActive,
+    SavedNormal: AppIcons.icBookmarkInactive,
+    SavedFocused: AppIcons.icBookmarkActive,
+    BookingNormal: AppIcons.icBookingInactive,
+    BookingFocused: AppIcons.icBookingActive,
+    ProfileNormal: AppIcons.icProfileInactive,
+    ProfileFocused: AppIcons.icProfileActive,
   };
 
   return (
@@ -60,12 +63,42 @@ function MainTabBar() {
         },
         tabBarActiveTintColor: AppColors.feature,
         tabBarInactiveTintColor: AppColors.inactiveColor,
+        tabBarStyle: {
+          backgroundColor: AppColors.white,
+          elevation: 0,
+          borderTopColor: AppColors.white,
+          zIndex: 1,
+        },
+        headerShown: false,
+        tabBarLabelStyle: {
+          fontFamily: Font.medium,
+          fontStyle: 'normal',
+          fontSize: FontSize.s_10,
+          lineHeight: Const.space_14,
+          fontWeight: '600',
+        },
       })}
     >
-      <Tab.Screen name={ScreenNames.Home} component={HomeScreen} />
-      <Tab.Screen name={ScreenNames.Saved} component={SavedScreen} />
-      <Tab.Screen name={ScreenNames.Booking} component={BookingScreen} />
-      <Tab.Screen name={ScreenNames.Profile} component={ProfileScreen} />
+      <Tab.Screen
+        name={ScreenNames.Home}
+        component={HomeScreen}
+        options={{ tabBarLabel: t(ScreenNames.Home) }}
+      />
+      <Tab.Screen
+        name={ScreenNames.Saved}
+        component={SavedScreen}
+        options={{ tabBarLabel: t(ScreenNames.Saved) }}
+      />
+      <Tab.Screen
+        name={ScreenNames.Booking}
+        component={BookingScreen}
+        options={{ tabBarLabel: t(ScreenNames.Booking) }}
+      />
+      <Tab.Screen
+        name={ScreenNames.Profile}
+        component={ProfileScreen}
+        options={{ tabBarLabel: t(ScreenNames.Profile) }}
+      />
     </Tab.Navigator>
   );
 }

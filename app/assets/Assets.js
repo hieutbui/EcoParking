@@ -1,4 +1,4 @@
-import { AppIcons } from './AppIcon';
+import { AppIcons } from './AppIcons';
 import { AppColors } from './AppColors';
 import { AppImages } from './AppImages';
 

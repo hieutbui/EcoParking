@@ -16,7 +16,7 @@ i18n
     interpolation: {
       escapeValue: false,
     },
-    lng: 'vi',
+    lng: 'en',
     resources: {
       en: { translation: en },
       vi: { translation: vi },

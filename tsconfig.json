@@ -16,9 +16,10 @@
     "incremental": false,
     // "isolatedModules": true,
     // "strict": true,
-    "moduleResolution": "node16"
+    "moduleResolution": "node16",
+    "rootDir": "app",
+    "types": [
+      "node"
+    ]
   },
-  "include": [
-    "./app"
-  ]
 }

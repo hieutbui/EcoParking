@@ -1,7 +1,7 @@
 export const ScreenNames = {
-  Home: 'HOME',
-  Saved: 'SAVED',
-  Profile: 'PROFILE',
-  Booking: 'BOOKING',
+  Home: 'Home',
+  Saved: 'Saved',
+  Profile: 'Profile',
+  Booking: 'Booking',
   MainTabBar: 'MainTabBar',
 };
