@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const initialState = {};
+export const initialState = {
+  language: 'en',
+};
 
 const actions = {};
 

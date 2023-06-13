@@ -17,6 +17,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import _ from 'lodash';
 
 /**
+ * @author hieubt
  * @typedef Param
  * @property {ImageSourcePropType} rightIcon
  * @property {ImageSourcePropType} leftIcon

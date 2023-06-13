@@ -72,7 +72,7 @@ export const AppColors = {
   lightgoldenrodyellow: '#fafad2',
   lightgray: '#8A8CB3',
   lightgreen: '#90ee90',
-  lightgrey: '#d3d3d3',
+  lightgrey: '#D9D9D9',
   lightpink: '#ffb6c1',
   lightsalmon: '#ffa07a',
   lightseagreen: '#20b2aa',

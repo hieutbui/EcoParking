@@ -42,6 +42,14 @@ export const Font = {
   bold: 'Jost-Bold',
 };
 
+export const SeconFont = {
+  light: 'Montserrat-Light',
+  regular: 'Montserrat-Regular',
+  medium: 'Montserrat-Medium',
+  semiBold: 'Montserrat-SemiBild',
+  bold: 'Montserrat-Bold',
+};
+
 export const TextStyles = {
   /**
    * @type {StyleProp<TextStyle>}

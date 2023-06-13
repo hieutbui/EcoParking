@@ -17,21 +17,31 @@ import { Const } from 'app/constants/Const';
 import { AppColors } from 'app/assets/AppColors';
 import { Font, FontSize, TextStyles } from 'app/constants/Styles';
 import { useTranslation } from 'react-i18next';
+import { LoginScreen } from './auth/LoginScreen';
 
 enableScreens();
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 export const rootNavigation = createNavigationContainerRef();
 
+/**
+ * @author hieubt
+ * @returns {JSX.Element}
+ */
 export const AppNavigator = () => {
   return (
     <NavigationContainer ref={rootNavigation}>
       <Stack.Navigator
-        initialRouteName={ScreenNames.MainTabBar}
+        initialRouteName={ScreenNames.Login}
         screenOptions={{
           headerShown: false,
         }}
       >
+        {/* AUTH */}
+        <Stack.Group>
+          <Stack.Screen name={ScreenNames.Login} component={LoginScreen} />
+        </Stack.Group>
+        {/* TAB BAR */}
         <Stack.Screen name={ScreenNames.MainTabBar} component={MainTabBar} />
       </Stack.Navigator>
     </NavigationContainer>

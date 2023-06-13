@@ -4,4 +4,5 @@ export const ScreenNames = {
   Profile: 'Profile',
   Booking: 'Booking',
   MainTabBar: 'MainTabBar',
+  Login: 'Login',
 };
