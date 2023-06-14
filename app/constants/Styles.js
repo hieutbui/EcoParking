@@ -42,7 +42,7 @@ export const Font = {
   bold: 'Jost-Bold',
 };
 
-export const SeconFont = {
+export const SecondFont = {
   light: 'Montserrat-Light',
   regular: 'Montserrat-Regular',
   medium: 'Montserrat-Medium',

@@ -11,7 +11,7 @@ import {
 import React from 'react';
 import Assets from 'app/assets/Assets';
 import { Const } from 'app/constants/Const';
-import { FontSize, SeconFont } from 'app/constants/Styles';
+import { FontSize, SecondFont } from 'app/constants/Styles';
 import _ from 'lodash';
 
 /**
@@ -51,7 +51,7 @@ export const RadiusButton = ({
    * @type {StyleProp<TextStyle>}
    */
   let defaultTitleStyle = {
-    fontFamily: SeconFont.bold,
+    fontFamily: SecondFont.bold,
     fontStyle: 'normal',
     fontSize: FontSize.s_16,
     lineHeight: Const.space_20,

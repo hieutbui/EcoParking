@@ -5,5 +5,11 @@
   "Profile": "Profile",
   "MyParking": "My Parking",
   "LoginTitle": "Login to your Account",
-  "SignIn": "Sign in"
+  "SignIn": "Sign in",
+  "RememberMe": "Remember me",
+  "InvalidEmail": "Invalid email",
+  "EmailRequired": "Email is required",
+  "PasswordRequired": "Password is required",
+  "PasswordLengthError": "Password must be more than 8 characters and less than 50 characters",
+  "Password": "Password"
 }

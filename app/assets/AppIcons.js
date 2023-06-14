@@ -8,4 +8,12 @@ export const AppIcons = {
   icProfileInactive: require('../assets/icons/ic_profile_inactive/ic_profile_inactive.png'),
   icProfileActive: require('../assets/icons/ic_profile_active/ic_profile_active.png'),
   icBack: require('../assets/icons/ic_back/ic_back.png'),
+  icUncheck: require('../assets/icons/ic_checkbox_uncheck/ic_check_uncheck.png'),
+  icChecked: require('../assets/icons/ic_checkbox_checked/ic_checkbox_checked.png'),
+  icEyeSlashBlack: require('../assets/icons/ic_eye_slash_black/ic_eye_slash_black.png'),
+  icEyeSlashFeature: require('../assets/icons/ic_eye_slash_feature/ic_eye_slash_feature.png'),
+  icEyeBlack: require('../assets/icons/ic_eye_black/ic_eye_black.png'),
+  icEyeFeature: require('../assets/icons/ic_eye_feature/ic_eye_feature.png'),
+  icEyeSlashGrey: require('../assets/icons/ic_eye_slash_grey/ic_eye_slash_grey.png'),
+  icEyeGrey: require('../assets/icons/ic_eye_grey/ic_eye_grey.png'),
 };

@@ -5,5 +5,11 @@
   "Profile": "Tôi",
   "MyParking": "Đặt trước",
   "LoginTitle": "Đăng nhập vào Tài khoản của bạn",
-  "SignIn": "Đăng nhập"
+  "SignIn": "Đăng nhập",
+  "RememberMe": "Ghi nhớ tài khoản",
+  "InvalidEmail": "Email không hợp lệ",
+  "EmailRequired": "Vui lòng điền email",
+  "PasswordRequired": "Vui long điền mật khẩu",
+  "PasswordLengthError": "Mật khẩu phải nhiều hơn 8 ký tự và ngắn hơn 50 ký tự",
+  "Password": "Mật khẩu"
 }

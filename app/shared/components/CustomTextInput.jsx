@@ -1,6 +1,6 @@
 import Assets from 'app/assets/Assets';
 import { Const } from 'app/constants/Const';
-import { FontSize, SeconFont } from 'app/constants/Styles';
+import { FontSize, SecondFont } from 'app/constants/Styles';
 import React, { useState } from 'react';
 import {
   TextInput,
@@ -16,6 +16,7 @@ import {
   TextInputFocusEventData,
 } from 'react-native';
 import _ from 'lodash';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 /**
  * @author hieubt
@@ -31,7 +32,7 @@ import _ from 'lodash';
  * @property {(e: NativeSyntheticEvent<TextInputFocusEventData>) => void=} onBlur
  * @property {(e: NativeSyntheticEvent<TextInputFocusEventData>) => void=} onFocus
  * @property {Boolean} isFocus
- * @property {Boolean} secureTextEntry
+ * @property {Boolean} isPassword
  * @param {Param} param
  * @returns {JSX.Element}
  */
@@ -47,9 +48,12 @@ export const CustomTextInput = ({
   onBlur,
   onFocus,
   isFocus,
-  secureTextEntry,
+  isPassword,
 }) => {
   const [text, setText] = useState('');
+  const [isTouch, setTouch] = useState(false);
+  const [isSecure, setSecure] = useState(isPassword ?? false);
+  const [isEmpty, setEmpty] = useState(true);
   /**
    * @type {StyleProp<ViewStyle>}
    */
@@ -62,6 +66,8 @@ export const CustomTextInput = ({
     alignItems: 'center',
     paddingLeft: Const.space_27,
     paddingRight: Const.space_24,
+    borderWidth: isTouch ? Const.space_1 : Const.space_0,
+    borderColor: Assets.AppColors.feature,
   };
   /**
    * @type {StyleProp<ImageStyle>}
@@ -70,6 +76,33 @@ export const CustomTextInput = ({
     resizeMode: 'contain',
     marginRight: Const.space_24,
   };
+  /**
+   *
+   * @returns {ImageSourcePropType}
+   */
+  function eyeIcon() {
+    if (isTouch) {
+      if (!isSecure) {
+        return Assets.AppIcons.icEyeFeature;
+      } else {
+        return Assets.AppIcons.icEyeSlashFeature;
+      }
+    } else {
+      if (isEmpty) {
+        if (!isSecure) {
+          return Assets.AppIcons.icEyeGrey;
+        } else {
+          return Assets.AppIcons.icEyeSlashGrey;
+        }
+      } else {
+        if (!isSecure) {
+          return Assets.AppIcons.icEyeBlack;
+        } else {
+          return Assets.AppIcons.icEyeSlashBlack;
+        }
+      }
+    }
+  }
   return (
     <View style={[defaultStyle, style]}>
       {leftIcon ? (
@@ -81,27 +114,57 @@ export const CustomTextInput = ({
       <TextInput
         placeholder={placeholder}
         style={{
-          fontFamily: SeconFont.regular,
+          fontFamily: SecondFont.regular,
           flex: 1,
           fontStyle: 'normal',
           fontSize: FontSize.s_15,
           lineHeight: Const.space_18,
           fontWeight: '500',
         }}
+        placeholderTextColor={Assets.AppColors.darkgray}
         value={text}
         onChangeText={value => {
           setText(value);
           if (_.isFunction(onChangeText)) {
             onChangeText(text);
           }
+          if (_.isEmpty(value)) {
+            setEmpty(true);
+          } else {
+            setEmpty(false);
+          }
         }}
-        onBlur={onBlur}
+        onBlur={() => {
+          setTouch(false);
+          _.isFunction(onBlur) && onBlur();
+        }}
         keyboardType={keyboardType}
-        onFocus={onFocus}
+        onFocus={() => {
+          setTouch(true);
+          _.isFunction(onFocus) && onFocus();
+        }}
         focusable={isFocus}
-        secureTextEntry={secureTextEntry}
+        secureTextEntry={isSecure}
       />
-      {rightIcon ? (
+      {isPassword ? (
+        <TouchableOpacity
+          onPress={() => {
+            setSecure(!isSecure);
+          }}
+          style={{
+            width: Const.space_20,
+            height: Const.space_20,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Image
+            source={eyeIcon()}
+            style={{ ...rightIconStyle, resizeMode: 'contain' }}
+          />
+        </TouchableOpacity>
+      ) : null}
+      {rightIcon && !isPassword ? (
         <Image
           source={rightIcon}
           style={{ ...rightIconStyle, resizeMode: 'contain' }}
