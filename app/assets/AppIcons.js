@@ -16,4 +16,10 @@ export const AppIcons = {
   icEyeFeature: require('../assets/icons/ic_eye_feature/ic_eye_feature.png'),
   icEyeSlashGrey: require('../assets/icons/ic_eye_slash_grey/ic_eye_slash_grey.png'),
   icEyeGrey: require('../assets/icons/ic_eye_grey/ic_eye_grey.png'),
+  icLockBlack: require('../assets/icons/ic_lock_black/ic_lock_black.png'),
+  icLockFeature: require('../assets/icons/ic_lock_feature/ic_lock_feature.png'),
+  icLockGrey: require('../assets/icons/ic_lock_grey/ic_lock_grey.png'),
+  icEmailBlack: require('../assets/icons/ic_email_black/ic_email_black.png'),
+  icEmailFeature: require('../assets/icons/ic_email_feature/ic_email_feature.png'),
+  icEmailGrey: require('../assets/icons/ic_email_grey/ic_email_grey.png'),
 };

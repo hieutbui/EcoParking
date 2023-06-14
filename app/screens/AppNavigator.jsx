@@ -18,6 +18,7 @@ import { AppColors } from 'app/assets/AppColors';
 import { Font, FontSize, TextStyles } from 'app/constants/Styles';
 import { useTranslation } from 'react-i18next';
 import { LoginScreen } from './auth/LoginScreen';
+import { RegisterScreen } from './auth/RegisterScreen';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -40,6 +41,10 @@ export const AppNavigator = () => {
         {/* AUTH */}
         <Stack.Group>
           <Stack.Screen name={ScreenNames.Login} component={LoginScreen} />
+          <Stack.Screen
+            name={ScreenNames.Register}
+            component={RegisterScreen}
+          />
         </Stack.Group>
         {/* TAB BAR */}
         <Stack.Screen name={ScreenNames.MainTabBar} component={MainTabBar} />

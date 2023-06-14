@@ -14,7 +14,7 @@ import * as Yup from 'yup';
 import _ from 'lodash';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-export const LoginScreen = () => {
+export const RegisterScreen = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const [isRemember, setRemember] = useState(false);
@@ -58,9 +58,12 @@ export const LoginScreen = () => {
       behavior={Const.os === 'ios' ? 'padding' : 'height'}
       showsVerticalScrollIndicator={false}
     >
-      <Header />
+      <Header
+        leftIcon={Assets.AppIcons.icBack}
+        onPressLeft={() => NavigatorUtils.goBack()}
+      />
       <View style={{ marginHorizontal: Const.space_31 }}>
-        <Text style={TextStyles.LargeTitle}>{t('LoginTitle')}</Text>
+        <Text style={TextStyles.LargeTitle}>{t('RegisterTitle')}</Text>
         <Formik
           initialValues={formik.initialValues}
           validationSchema={LoginSchema}
@@ -181,7 +184,7 @@ export const LoginScreen = () => {
                 <RadiusButton
                   type="positive"
                   onPress={() => handleSubmit()}
-                  title={t('SignIn')}
+                  title={t('SignUp')}
                   style={{
                     marginTop: Const.space_40 + Const.space_2,
                   }}
@@ -195,41 +198,24 @@ export const LoginScreen = () => {
         style={{
           marginHorizontal: Const.space_31,
           flexDirection: 'row',
-          marginBottom: Const.space_16,
+          marginBottom: Const.space_26,
           justifyContent: 'center',
           flex: 1,
           alignItems: 'flex-end',
         }}
       >
-        <Text
-          style={{
-            ...style.signUp,
-            color: Assets.AppColors.mountainMist,
-            paddingTop: Const.space_10,
-            paddingBottom: Const.space_10,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {t("Don't have an account?")}
+        <Text style={{ ...style.signUp, color: Assets.AppColors.mountainMist }}>
+          {t('Already have an account?')}
         </Text>
-        <TouchableOpacity
-          onPress={() => NavigatorUtils.gotoRegister({}, navigation)}
-          style={{
-            paddingTop: Const.space_10,
-            paddingBottom: Const.space_10,
-            paddingLeft: Const.space_8,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <TouchableOpacity onPress={() => NavigatorUtils.goBack()}>
           <Text
             style={{
               ...style.signUp,
               color: Assets.AppColors.feature,
+              marginLeft: Const.space_8,
             }}
           >
-            {t('SignUp')}
+            {t('SignIn')}
           </Text>
         </TouchableOpacity>
       </View>

@@ -9,7 +9,9 @@ import {
 
 const tag = '[NavigatorUtil]';
 
-const navigate = (screenm, params, navigation = rootNavigation) => {};
+const navigate = (screen, params, navigation = rootNavigation) => {
+  navigation.navigate(screen, params);
+};
 
 /**
  * @author hieubt
@@ -52,7 +54,7 @@ const replace = (screen, params, navigation) => {
  * @param {NavigationAction<ParamListBase>} navigation
  */
 const gotoHome = (params = null, navigation = rootNavigation) => {
-  gotoMainTabBar(params, {}, navigation);
+  gotoMainTabBar(params, true, navigation);
 };
 
 /**
@@ -73,9 +75,19 @@ const gotoMainTabBar = (
     navigate(ScreenNames.MainTabBar, params, navigation);
   }
 };
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoRegister = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoRegister');
+  navigate(ScreenNames.Register, params, navigation);
+};
 
 export default {
   goBack,
   gotoHome,
   gotoMainTabBar,
+  gotoRegister,
 };

@@ -33,6 +33,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
  * @property {(e: NativeSyntheticEvent<TextInputFocusEventData>) => void=} onFocus
  * @property {Boolean} isFocus
  * @property {Boolean} isPassword
+ * @property {String} value
+ * @property {'character' | 'none' | 'sentences' | 'words'} autoCapitalize
  * @param {Param} param
  * @returns {JSX.Element}
  */
@@ -49,10 +51,11 @@ export const CustomTextInput = ({
   onFocus,
   isFocus,
   isPassword,
+  value,
+  autoCapitalize,
 }) => {
-  const [text, setText] = useState('');
   const [isTouch, setTouch] = useState(false);
-  const [isSecure, setSecure] = useState(isPassword ?? false);
+  const [isSecure, setSecure] = useState(isPassword ?? true);
   const [isEmpty, setEmpty] = useState(true);
   /**
    * @type {StyleProp<ViewStyle>}
@@ -74,7 +77,7 @@ export const CustomTextInput = ({
    */
   const defaultLeftIconStyle = {
     resizeMode: 'contain',
-    marginRight: Const.space_24,
+    marginRight: Const.space_21,
   };
   /**
    *
@@ -120,15 +123,16 @@ export const CustomTextInput = ({
           fontSize: FontSize.s_15,
           lineHeight: Const.space_18,
           fontWeight: '500',
+          color: Assets.AppColors.black,
         }}
         placeholderTextColor={Assets.AppColors.darkgray}
-        value={text}
-        onChangeText={value => {
-          setText(value);
+        value={value}
+        onChangeText={t => {
+          // setText(value);
           if (_.isFunction(onChangeText)) {
-            onChangeText(text);
+            onChangeText(t);
           }
-          if (_.isEmpty(value)) {
+          if (_.isEmpty(t)) {
             setEmpty(true);
           } else {
             setEmpty(false);
@@ -145,6 +149,7 @@ export const CustomTextInput = ({
         }}
         focusable={isFocus}
         secureTextEntry={isSecure}
+        autoCapitalize={autoCapitalize}
       />
       {isPassword ? (
         <TouchableOpacity

@@ -11,5 +11,9 @@
   "EmailRequired": "Email is required",
   "PasswordRequired": "Password is required",
   "PasswordLengthError": "Password must be more than 8 characters and less than 50 characters",
-  "Password": "Password"
+  "Password": "Password",
+  "Don't have an account?": "Don't have an account?",
+  "SignUp": "Sign up",
+  "RegisterTitle": "Create Your Account",
+  "Already have an account?": "Already have an account?"
 }

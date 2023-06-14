@@ -151,6 +151,7 @@ export const AppColors = {
   trolleyGrey: 'rgba(127, 127, 127, 1)',
   fireEngineRed: '#d6232b',
   fulvous: '#e18000',
+  mountainMist: '#959396',
   /* App colors */
   feature: '#BC0063',
   textRegular: 'rgba(53, 53, 53, 0.5)',

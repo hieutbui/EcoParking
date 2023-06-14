@@ -11,5 +11,9 @@
   "EmailRequired": "Vui lòng điền email",
   "PasswordRequired": "Vui long điền mật khẩu",
   "PasswordLengthError": "Mật khẩu phải nhiều hơn 8 ký tự và ngắn hơn 50 ký tự",
-  "Password": "Mật khẩu"
+  "Password": "Mật khẩu",
+  "Don't have an account?": "Chưa có tài khoản?",
+  "SignUp": "Đăng ký",
+  "RegisterTitle": "Tạo tài khoản của bạn",
+  "Already have an account?": "Đã có tài khoản?"
 }

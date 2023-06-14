@@ -5,4 +5,5 @@ export const ScreenNames = {
   Booking: 'Booking',
   MainTabBar: 'MainTabBar',
   Login: 'Login',
+  Register: 'Register',
 };
