@@ -1,5 +1,5 @@
 import { Image, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Assets from 'app/assets/Assets';
 import { Header } from 'app/shared/components/Header';
 import { useTranslation } from 'react-i18next';
@@ -13,11 +13,27 @@ import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import * as Yup from 'yup';
 import _ from 'lodash';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useAppSelector } from 'app/shared/utils';
+import { useDispatch } from 'react-redux';
+import { thunkLogin } from 'app/controllers/slice/account.slice';
 
+/**
+ * @author hieubt
+ * @returns {JSX.Element}
+ */
 export const LoginScreen = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const [isRemember, setRemember] = useState(false);
+  const { status } = useAppSelector(state => state.account);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (status === 'loggedIn') {
+      NavigatorUtils.gotoHome({}, navigation);
+    }
+  }, [status, navigation]);
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -36,11 +52,6 @@ export const LoginScreen = () => {
       .max(50, t('PasswordLengthError'))
       .required(t('PasswordRequired')),
   });
-
-  const testAccount = {
-    email: 'abc@gmail.com',
-    password: '12345678',
-  };
 
   function handleRemember() {
     setRemember(!isRemember);
@@ -66,11 +77,13 @@ export const LoginScreen = () => {
           validationSchema={LoginSchema}
           onSubmit={values => {
             if (!_.isEmpty(values)) {
-              if (
-                values.email === testAccount.email &&
-                values.password === testAccount.password
-              ) {
-                NavigatorUtils.gotoHome({}, navigation);
+              if (values) {
+                dispatch(
+                  thunkLogin({
+                    email: values.email,
+                    password: values.password,
+                  }),
+                );
               } else {
                 console.log('No info');
               }

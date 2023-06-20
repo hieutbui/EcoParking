@@ -22,4 +22,7 @@ export const AppIcons = {
   icEmailBlack: require('../assets/icons/ic_email_black/ic_email_black.png'),
   icEmailFeature: require('../assets/icons/ic_email_feature/ic_email_feature.png'),
   icEmailGrey: require('../assets/icons/ic_email_grey/ic_email_grey.png'),
+  icChangeAvatar: require('../assets/icons/ic_change_avatar/ic_change_avatar.png'),
+  icTriangleDownBlack: require('../assets/icons/ic_triangle_down_black/ic_triangle_down_black.png'),
+  icTriangleDownGrey: require('../assets/icons/ic_triangle_down_grey/ic_triangle_grey.png'),
 };

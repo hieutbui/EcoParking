@@ -7,4 +7,5 @@ export default {
   Const,
   Font,
   FontSize,
+  RefreshToken: '',
 };

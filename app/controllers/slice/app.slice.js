@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { AppState } from 'app/types/app';
 
+/**
+ * @type {AppState}
+ */
 export const initialState = {
   language: 'en',
 };

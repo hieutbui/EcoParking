@@ -6,4 +6,5 @@ export const ScreenNames = {
   MainTabBar: 'MainTabBar',
   Login: 'Login',
   Register: 'Register',
+  UpdateProfile: 'UpdateProfile',
 };

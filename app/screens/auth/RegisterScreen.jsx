@@ -14,6 +14,10 @@ import * as Yup from 'yup';
 import _ from 'lodash';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+/**
+ * @author hieubt
+ * @returns {JSX.Element}
+ */
 export const RegisterScreen = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -25,7 +29,7 @@ export const RegisterScreen = () => {
     },
   });
 
-  const LoginSchema = Yup.object().shape({
+  const RegisterSchema = Yup.object().shape({
     email: Yup.string()
       .email(t('InvalidEmail'))
       .trim()
@@ -36,11 +40,6 @@ export const RegisterScreen = () => {
       .max(50, t('PasswordLengthError'))
       .required(t('PasswordRequired')),
   });
-
-  const testAccount = {
-    email: 'abc@gmail.com',
-    password: '12345678',
-  };
 
   function handleRemember() {
     setRemember(!isRemember);
@@ -66,18 +65,16 @@ export const RegisterScreen = () => {
         <Text style={TextStyles.LargeTitle}>{t('RegisterTitle')}</Text>
         <Formik
           initialValues={formik.initialValues}
-          validationSchema={LoginSchema}
+          validationSchema={RegisterSchema}
           onSubmit={values => {
-            if (!_.isEmpty(values)) {
-              if (
-                values.email === testAccount.email &&
-                values.password === testAccount.password
-              ) {
-                NavigatorUtils.gotoHome({}, navigation);
-              } else {
-                console.log('No info');
-              }
-            }
+            NavigatorUtils.gotoUpdateProfile(
+              {
+                type: 'Register',
+                email: values.email,
+                password: values.password,
+              },
+              navigation,
+            );
           }}
         >
           {({

@@ -15,5 +15,17 @@
   "Don't have an account?": "Don't have an account?",
   "SignUp": "Sign up",
   "RegisterTitle": "Create Your Account",
-  "Already have an account?": "Already have an account?"
+  "Already have an account?": "Already have an account?",
+  "Fill Your Profile": "Fill Your Profile",
+  "Edit Profile": "Edit Profile",
+  "FullName": "Fill Name",
+  "PhoneNumber": "Phone Number",
+  "Address": "Address",
+  "Gender": "Gender",
+  "Continue": "Continue",
+  "PhoneLength": "Phone length is invalid",
+  "NameLength": "Full name length is invalid",
+  "Male": "Male",
+  "Female": "Female",
+  "Other": "Other"
 }

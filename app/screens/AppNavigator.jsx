@@ -19,6 +19,7 @@ import { Font, FontSize, TextStyles } from 'app/constants/Styles';
 import { useTranslation } from 'react-i18next';
 import { LoginScreen } from './auth/LoginScreen';
 import { RegisterScreen } from './auth/RegisterScreen';
+import { UpdateProfileScreen } from './profile/UpdateProfileScreen';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -48,6 +49,17 @@ export const AppNavigator = () => {
         </Stack.Group>
         {/* TAB BAR */}
         <Stack.Screen name={ScreenNames.MainTabBar} component={MainTabBar} />
+        {/* MODALS */}
+        <Stack.Group
+          screenOptions={{
+            presentation: 'modal',
+          }}
+        >
+          <Stack.Screen
+            name={ScreenNames.UpdateProfile}
+            component={UpdateProfileScreen}
+          />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

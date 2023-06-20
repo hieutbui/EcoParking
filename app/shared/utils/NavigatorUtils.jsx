@@ -84,10 +84,24 @@ const gotoRegister = (params, navigation = rootNavigation) => {
   console.log(tag, 'gotoRegister');
   navigate(ScreenNames.Register, params, navigation);
 };
+/**
+ * @author hieubt
+ * @typedef UpdateProfileParams
+ * @property {'Register' | 'Update'} type
+ * @property {String} email
+ * @property {String} password
+ * @param {UpdateProfileParams} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoUpdateProfile = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoUpdateProfile');
+  navigate(ScreenNames.UpdateProfile, params, navigation);
+};
 
 export default {
   goBack,
   gotoHome,
   gotoMainTabBar,
   gotoRegister,
+  gotoUpdateProfile,
 };

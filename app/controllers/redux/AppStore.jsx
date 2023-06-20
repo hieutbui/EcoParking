@@ -22,9 +22,11 @@ import persistStore from 'redux-persist/es/persistStore';
 import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import { StoreState } from 'app/types';
 import appSlice from '../slice/app.slice';
+import accountSlice from '../slice/account.slice';
 
 const reducers = combineReducers({
   app: appSlice,
+  account: accountSlice,
 });
 
 /**
@@ -43,12 +45,12 @@ const persisConfig = {
   storage: AsyncStorage,
   stateReconciler: autoMergeLevel2,
   blacklist: [],
-  whitelist: ['app'],
+  whitelist: ['app', 'account'],
   transforms: [],
 };
 
 /**
- * @type {EnhancedStore<StoreState}
+ * @type {EnhancedStore<StoreState>}
  */
 export const store = configureStore({
   reducer: persistReducer(persisConfig, rootReducer),

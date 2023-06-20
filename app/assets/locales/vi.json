@@ -15,5 +15,17 @@
   "Don't have an account?": "Chưa có tài khoản?",
   "SignUp": "Đăng ký",
   "RegisterTitle": "Tạo tài khoản của bạn",
-  "Already have an account?": "Đã có tài khoản?"
+  "Already have an account?": "Đã có tài khoản?",
+  "Fill your profile": "Hoàn Thành Hồ Sơ",
+  "Edit Profile": "Cập Nhật Thông Tin",
+  "FullName": "Họ và tên",
+  "PhoneNumber": "Số điện thoại",
+  "Address": "Địa chỉ",
+  "Gender": "Giới tính",
+  "Continue": "Tiếp tục",
+  "PhoneLength": "Độ dài số điện thoại không hợp lệ",
+  "NameLength": "Độ dài họ tên không hợp lệ",
+  "Male": "Nam",
+  "Female": "Nữ",
+  "Other": "Khác"
 }
