@@ -1,26 +1,6 @@
-import Assets from 'app/assets/Assets';
-import { Const } from 'app/constants/Const';
-import { TextStyles } from 'app/constants/Styles';
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import _ from 'lodash';
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-/**
- * @author longvu
- * @typedef Param
- * @property {ImageSourcePropType} rightIcon
- * @property {ImageSourcePropType} leftIcon
- * @property {()=>void=} onPressRight
- * @property {()=>void=} onPressLeft
- * @property {String} title
- * @property {StyleProp<ViewStyle>} style
- * @property {StyleProp<TextStyle>} titleStyle
- * @property {StyleProp<ImageStyle>} rightIconStyle
- * @property {StyleProp<ImageStyle>} leftIconStyle
- * @param {Param} param
- * @returns {JSX.Element}
- */
 const RadioButton = ({ imageSource, text1, text2 }) => {
   const [isSelected, setIsSelected] = useState(false);
 
@@ -54,6 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+    backgroundColor: '#F2F2F2',
   },
   imageContainer: {
     marginRight: 10,
@@ -66,6 +47,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     justifyContent: 'center',
+    marginRight: 10, // Tùy chỉnh khoảng cách giữa hình ảnh + văn bản và radio button
   },
   text1: {
     fontSize: 16,
@@ -74,7 +56,7 @@ const styles = StyleSheet.create({
   },
   text2: {
     fontSize: 14,
-    color: '#808080',
+    color: '#666666',
   },
   radioButton: {
     width: 20,
@@ -82,6 +64,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     borderColor: '#FFFFFF',
+    marginLeft: 'auto',
   },
   radioButtonSelected: {
     backgroundColor: '#FF00FF',
