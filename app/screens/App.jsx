@@ -7,6 +7,10 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from 'app/controllers/language/i18n';
 import { AppNavigator } from './AppNavigator';
 import { StatusBar } from 'react-native';
+import { mapboxToken } from '../../env.json';
+import Mapbox from '@rnmapbox/maps';
+
+Mapbox.setAccessToken(mapboxToken);
 
 const App = () => {
   return (

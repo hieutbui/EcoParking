@@ -2,6 +2,7 @@ import Global from 'app/constants/Global';
 import axios from 'axios';
 import queryString from 'query-string';
 import { baseApiUrl } from '../../../../env.json';
+import Variable from 'app/constants/Variable';
 
 const qs = require('qs');
 const sTag = '[AxiosClient]';
@@ -10,13 +11,26 @@ const sTag = '[AxiosClient]';
  * @type {import('axios').AxiosInstance}
  */
 const axiosClient = axios.create({
+  baseURL: baseApiUrl,
   headers: {},
   paramsSerializer: params => queryString.stringify(params),
 });
 
-axiosClient.interceptors.request.use(async config => {
-  return config;
-});
+axiosClient.interceptors.request.use(
+  async config => {
+    if (Variable.accessToken) {
+      _.set(
+        config.headers.common,
+        'Authorization',
+        'Bearer' + Variable.accessToken,
+      );
+    }
+    return config;
+  },
+  error => {
+    console.warn(`${sTag} - ${error}`, 'error');
+  },
+);
 
 axiosClient.interceptors.request.use(
   async response => {

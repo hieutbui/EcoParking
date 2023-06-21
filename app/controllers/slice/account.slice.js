@@ -26,6 +26,22 @@ export const thunkLogin = createAsyncThunk(
   },
 );
 
+export const thunkRegister = createAsyncThunk(
+  '/register',
+  /**
+   *
+   * @param {{name: string, file: object, email: string, gender: 'Male' | 'Female' | 'Other', password: string, phoneNumber: string, address: string}} payload
+   */
+  async (payload, __thunkAPI) => {
+    try {
+      const result = await api.auth.register(payload);
+      return result.data;
+    } catch (error) {
+      return __thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 export const thunkLogout = createAsyncThunk(
   'logout',
   async (payload, __thunkAPI) => {
@@ -50,6 +66,7 @@ const AccountSlice = createSlice({
       })
       .addCase(thunkLogin.rejected, (state, { payload }) => {
         state.status = 'loggedOut';
+        console.log({ payload });
       })
       .addCase(thunkLogin.fulfilled, (state, { payload }) => {
         state.status = 'loggedIn';
@@ -64,6 +81,13 @@ const AccountSlice = createSlice({
       })
       .addCase(thunkLogout.fulfilled, state => {
         state.status = 'loggedOut';
+      })
+      .addCase(thunkRegister.pending, state => {})
+      .addCase(thunkRegister.rejected, (state, { payload }) => {
+        console.log({ payload });
+      })
+      .addCase(thunkRegister.fulfilled, (state, { payload }) => {
+        console.log({ payload });
       }),
 });
 
