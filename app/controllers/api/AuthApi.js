@@ -10,7 +10,7 @@ import { axiosSendRequest } from './axios/AxiosSendRequest';
 const login = async (email, password) => {
   return await axiosSendRequest(
     'post',
-    `${baseApiUrl}/users/login`,
+    `${baseApiUrl}users/login`,
     { email, password },
     null,
   );
@@ -43,7 +43,7 @@ const register = async params => {
   formData.append('role', 2);
   return await axiosSendRequest(
     'post',
-    `${baseApiUrl}/users/register`,
+    `${baseApiUrl}users/register`,
     formData,
     {
       'content-type': 'multipart/form-data',
