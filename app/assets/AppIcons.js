@@ -25,4 +25,6 @@ export const AppIcons = {
   icChangeAvatar: require('../assets/icons/ic_change_avatar/ic_change_avatar.png'),
   icTriangleDownBlack: require('../assets/icons/ic_triangle_down_black/ic_triangle_down_black.png'),
   icTriangleDownGrey: require('../assets/icons/ic_triangle_down_grey/ic_triangle_grey.png'),
+  icPenWWithBG: require('../assets/icons/ic_pen_with_bg/ic_pen_with_bg.png'),
+  icMapCar: require('../assets/icons/ic_map_car/ic_map_car.png'),
 };

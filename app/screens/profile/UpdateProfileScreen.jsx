@@ -1,4 +1,11 @@
-import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  ImageBackground,
+} from 'react-native';
 import React, { useRef, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -21,6 +28,8 @@ import Modal from 'react-native-modal';
 import { BottomSheet } from 'app/shared/components/BottomSheet';
 import { SelectionsOptionsView } from 'app/shared/components/SelectionOptionsView';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
+import { useDispatch } from 'react-redux';
+import { thunkRegister } from 'app/controllers/slice/account.slice';
 
 /**
  * @author hieubt
@@ -33,7 +42,7 @@ export const UpdateProfileScreen = () => {
   const phoneInputRef = useRef('phone');
   const defaultCountryCode = 'VN';
   const refBottomSheetChooseGender = useRef('gender');
-  // const [gender, setGender] = useState('Gender');
+  const dispatch = useDispatch();
   /**
    * @type {ImageLibraryOptions}
    */
@@ -54,6 +63,8 @@ export const UpdateProfileScreen = () => {
       phoneNumber: '',
       gender: 'Gender',
       address: '',
+      email: route.params?.email,
+      password: route.params?.password,
     },
   });
 
@@ -91,6 +102,19 @@ export const UpdateProfileScreen = () => {
         <Formik
           initialValues={formik.initialValues}
           validationSchema={ProfileSchema}
+          onSubmit={values => {
+            dispatch(
+              thunkRegister({
+                name: values.fullName,
+                file: values.avatar,
+                email: values.email,
+                gender: values.gender,
+                password: values.password,
+                phoneNumber: values.phoneNumber,
+                address: values.address,
+              }),
+            );
+          }}
         >
           {({
             handleChange,
@@ -106,20 +130,52 @@ export const UpdateProfileScreen = () => {
                 <TouchableOpacity
                   onPress={async () => {
                     const result = await launchImageLibrary(pickerOptions);
-                    setFieldValue('avatar', result.assets[0].uri);
+                    const image = result.assets[0].uri;
+                    setFieldValue('avatar', image);
                   }}
                   style={{ alignItems: 'center' }}
                 >
-                  <Image
-                    source={Assets.AppIcons.icChangeAvatar}
-                    style={{
-                      marginTop: Const.space_25,
-                      marginBottom: Const.space_29,
-                    }}
-                  />
+                  {_.isEmpty(values.avatar) ? (
+                    <Image source={Assets.AppIcons.icChangeAvatar} />
+                  ) : (
+                    <ImageBackground
+                      source={{
+                        uri: values.avatar,
+                      }}
+                      style={{
+                        marginTop: Const.space_25,
+                        marginBottom: Const.space_29,
+                        height: 132,
+                        width: 132,
+                        resizeMode: 'contain',
+                        borderRadius: 100,
+                        overflow: 'hidden',
+                      }}
+                    >
+                      <Image
+                        source={Assets.AppIcons.icPenWWithBG}
+                        style={{
+                          position: 'absolute',
+                          bottom: 0,
+                          alignSelf: 'center',
+                        }}
+                      />
+                    </ImageBackground>
+                  )}
                 </TouchableOpacity>
-                <CustomTextInput placeholder="Full Name" />
-                <View style={{ height: Const.space_26 }}>
+                <CustomTextInput
+                  placeholder="Full Name"
+                  onChangeText={handleChange('fullName')}
+                  isPassword={false}
+                  autoCapitalize="none"
+                  onFocus={() => {
+                    setFieldTouched('fullName', true);
+                  }}
+                  onBlur={() => {
+                    setFieldTouched('fullName', false);
+                  }}
+                />
+                <View style={{ height: Const.space_40 }}>
                   <Text>{errors.fullName}</Text>
                 </View>
                 <PhoneInput
@@ -140,10 +196,12 @@ export const UpdateProfileScreen = () => {
                       ? Const.space_1
                       : Const.space_0,
                     borderColor: Assets.AppColors.feature,
+                    padding: 0,
                   }}
                   textContainerStyle={{
                     backgroundColor: Assets.AppColors.lightgrey,
                     borderRadius: Const.space_15,
+                    paddingVertical: Const.space_0,
                   }}
                   textInputProps={{
                     onFocus: () => {
@@ -156,7 +214,7 @@ export const UpdateProfileScreen = () => {
                   textInputStyle={styles.phoneNumberText}
                   codeTextStyle={styles.phoneNumberText}
                 />
-                <View style={{ height: Const.space_26 }}>
+                <View style={{ height: Const.space_40 }}>
                   <Text>{errors.phoneNumber}</Text>
                 </View>
                 <TouchableOpacity
@@ -195,14 +253,26 @@ export const UpdateProfileScreen = () => {
                     style={{ resizeMode: 'contain' }}
                   />
                 </TouchableOpacity>
-                <View style={{ height: Const.space_26 }}>
+                <View style={{ height: Const.space_40 }}>
                   <Text>{errors.gender}</Text>
                 </View>
-                <CustomTextInput placeholder="Address" />
+                <CustomTextInput
+                  placeholder="Address"
+                  onChangeText={handleChange('address')}
+                  isPassword={false}
+                  autoCapitalize="none"
+                  onFocus={() => {
+                    setFieldTouched('address', true);
+                  }}
+                  onBlur={() => {
+                    setFieldTouched('address', false);
+                  }}
+                />
                 <RadiusButton
                   title={t('Continue')}
                   type="positive"
                   style={{ marginTop: Const.space_50 + Const.space_6 }}
+                  onPress={handleSubmit}
                 />
                 <BottomSheet
                   refBottomSheet={refBottomSheetChooseGender}
