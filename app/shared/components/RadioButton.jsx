@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
-const RadioButton = ({ imageSource, text1, text2 }) => {
+const RadioButton = ({ imageSource, title, description }) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePress = () => {
@@ -18,8 +18,8 @@ const RadioButton = ({ imageSource, text1, text2 }) => {
         <Image source={imageSource} style={styles.image} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.text1}>{text1}</Text>
-        <Text style={styles.text2}>{text2}</Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
       </View>
       <TouchableOpacity
         style={[styles.radioButton, isSelected && styles.radioButtonSelected]}
