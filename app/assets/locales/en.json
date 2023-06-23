@@ -27,5 +27,11 @@
   "NameLength": "Full name length is invalid",
   "Male": "Male",
   "Female": "Female",
-  "Other": "Other"
+  "Other": "Other",
+  "Loading": "Loading",
+  "Cannot register": "Cannot register",
+  "Login failed": "Login failed",
+  "Congratulations!": "Congratulations!",
+  "Your account is ready to use": "Your account is ready to use",
+  "Go to Login": "Go to Login"
 }

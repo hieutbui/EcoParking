@@ -27,5 +27,11 @@
   "NameLength": "Độ dài họ tên không hợp lệ",
   "Male": "Nam",
   "Female": "Nữ",
-  "Other": "Khác"
+  "Other": "Khác",
+  "Loading": "Chờ giây lát",
+  "Cannot register": "Không thể tạo tài khoản",
+  "Login failed": "Đăng nhập thất bại",
+  "Congratulations!": "Chúc mưng!",
+  "Your account is ready to use": "Tài khoản của bản đã được tạo thành công",
+  "Go to Login": "Đăng nhập"
 }

@@ -72,7 +72,7 @@ export const UpdateProfileScreen = () => {
     avatar: Yup.string(),
     fullName: Yup.string().min(2, t('NameLength')),
     phoneNumber: Yup.string().trim().min(5, t('PhoneLength')),
-    gender: Yup.string().trim().oneOf(['Male', 'Female', 'Other']),
+    gender: Yup.string().trim().oneOf(['Male', 'Female', 'Other']).nullable(),
     address: Yup.string(),
   });
 
@@ -227,6 +227,7 @@ export const UpdateProfileScreen = () => {
                     paddingLeft: Const.space_35,
                     paddingRight: Const.space_24,
                     justifyContent: 'space-between',
+                    marginBottom: Const.space_40,
                   }}
                   onPress={() => refBottomSheetChooseGender.current.show()}
                 >
@@ -253,9 +254,6 @@ export const UpdateProfileScreen = () => {
                     style={{ resizeMode: 'contain' }}
                   />
                 </TouchableOpacity>
-                <View style={{ height: Const.space_40 }}>
-                  <Text>{errors.gender}</Text>
-                </View>
                 <CustomTextInput
                   placeholder="Address"
                   onChangeText={handleChange('address')}

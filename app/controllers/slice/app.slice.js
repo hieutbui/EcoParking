@@ -6,9 +6,14 @@ import { AppState } from 'app/types/app';
  */
 export const initialState = {
   language: 'en',
+  flagAppLoadingHideDone: null,
 };
 
-const actions = {};
+const actions = {
+  setFlagAppLoadingHideDone: (state, action) => {
+    state.flagAppLoadingHideDone = action.payload;
+  },
+};
 
 const AppSlice = createSlice({
   name: 'app',
@@ -17,4 +22,5 @@ const AppSlice = createSlice({
   extraReducers: builder => {},
 });
 
+export const { setFlagAppLoadingHideDone } = AppSlice.actions;
 export default AppSlice.reducer;

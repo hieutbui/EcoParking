@@ -98,10 +98,22 @@ const gotoUpdateProfile = (params, navigation = rootNavigation) => {
   navigate(ScreenNames.UpdateProfile, params, navigation);
 };
 
+/**
+ * @author hieubt
+ * @param {object} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoLogin = (params = null, navigation = rootNavigation) => {
+  console.log(tag, 'gotoLogin');
+  replace(ScreenNames.Login, {});
+  navigate(ScreenNames.Login, params, navigation);
+};
+
 export default {
   goBack,
   gotoHome,
   gotoMainTabBar,
   gotoRegister,
   gotoUpdateProfile,
+  gotoLogin,
 };

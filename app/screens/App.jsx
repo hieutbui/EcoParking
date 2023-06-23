@@ -9,6 +9,9 @@ import { AppNavigator } from './AppNavigator';
 import { StatusBar } from 'react-native';
 import { mapboxToken } from '../../env.json';
 import Mapbox from '@rnmapbox/maps';
+import ScaleToast, { ScaleToastRef } from 'app/shared/components/ScaleToast';
+import AppLoading, { AppLoadingRef } from 'app/shared/components/AppLoading';
+import AlertDialog, { AlertDialogRef } from 'app/shared/components/AlertDialog';
 
 Mapbox.setAccessToken(mapboxToken);
 
@@ -26,11 +29,28 @@ const App = () => {
             />
             {/* navigator */}
             <AppNavigator />
+            {/* root component */}
+            <RootComponent />
           </I18nextProvider>
         </PersistGate>
       </Provider>
     </SafeAreaProvider>
   );
 };
+
+/**
+ * @author hieubt
+ * @description global app components
+ * @returns {JSX.Element}
+ */
+function RootComponent() {
+  return (
+    <>
+      <ScaleToast toastRef={ScaleToastRef} />
+      <AppLoading loadingRef={AppLoadingRef} />
+      <AlertDialog dialogRef={AlertDialogRef} />
+    </>
+  );
+}
 
 export default App;

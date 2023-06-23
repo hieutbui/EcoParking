@@ -45,6 +45,7 @@ export const RadiusButton = ({
     alignItems: 'center',
     height: Const.space_50 + Const.space_3,
     borderRadius: Const.space_50,
+    flexDirection: rightIcon ? 'row' : 'column',
   };
 
   /**
