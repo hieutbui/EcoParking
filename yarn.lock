@@ -7288,6 +7288,11 @@ react-native-country-picker-modal@^2.0.0:
     prop-types "15.7.2"
     react-async-hook "3.6.1"
 
+react-native-custom-switch@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-custom-switch/-/react-native-custom-switch-1.0.7.tgz#f41ec873b7c64983ba220b56c874a4b39a00a962"
+  integrity sha512-K4QDvh20F9KVQFmTr/PAta8JN2WofO7Ks4ZIq2U3EHKlRXMoMP0AplrV4oR5oRclaw9ltWecivrK/xWX85HC8A==
+
 react-native-gesture-handler@^2.9.0:
   version "2.9.0"
   resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.9.0.tgz"

@@ -136,7 +136,10 @@ export const UpdateProfileScreen = () => {
                   style={{ alignItems: 'center' }}
                 >
                   {_.isEmpty(values.avatar) ? (
-                    <Image source={Assets.AppIcons.icChangeAvatar} />
+                    <Image
+                      source={Assets.AppIcons.icChangeAvatar}
+                      style={{ marginBottom: Const.space_29 }}
+                    />
                   ) : (
                     <ImageBackground
                       source={{

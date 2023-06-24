@@ -31,6 +31,7 @@
     "react": "18.2.0",
     "react-i18next": "^12.2.0",
     "react-native": "0.71.6",
+    "react-native-custom-switch": "^1.0.7",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-image-picker": "^5.4.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",

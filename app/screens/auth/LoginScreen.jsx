@@ -100,31 +100,11 @@ export const LoginScreen = () => {
           }) => {
             return (
               <>
-                <View style={{ height: Const.space_50 + Const.space_9 }}>
-                  {errors ? (
-                    <>
-                      <Text
-                        style={{
-                          ...TextStyles.Regular,
-                          color: Assets.AppColors.red,
-                        }}
-                      >
-                        {errors.email}
-                      </Text>
-                      <Text
-                        style={{
-                          ...TextStyles.Regular,
-                          color: Assets.AppColors.red,
-                        }}
-                      >
-                        {errors.password}
-                      </Text>
-                    </>
-                  ) : null}
-                </View>
                 <CustomTextInput
                   placeholder="Email"
-                  style={{ marginBottom: Const.space_28 }}
+                  style={{
+                    marginTop: Const.space_50 + Const.space_9,
+                  }}
                   onChangeText={handleChange('email')}
                   isPassword={false}
                   autoCapitalize="none"
@@ -142,11 +122,26 @@ export const LoginScreen = () => {
                     setFieldTouched('email', false);
                   }}
                 />
+                <View
+                  style={{
+                    height: Const.space_30,
+                  }}
+                >
+                  {errors.email ? (
+                    <Text
+                      style={{
+                        ...TextStyles.Regular,
+                        color: Assets.AppColors.red,
+                      }}
+                    >
+                      {errors.email}
+                    </Text>
+                  ) : null}
+                </View>
                 <CustomTextInput
                   placeholder="Password"
                   autoCapitalize="none"
                   isPassword={true}
-                  style={{ marginBottom: Const.space_50 + Const.space_6 }}
                   onChangeText={handleChange('password')}
                   leftIcon={
                     touched.password
@@ -162,6 +157,23 @@ export const LoginScreen = () => {
                     setFieldTouched('password', false);
                   }}
                 />
+                <View
+                  style={{
+                    height: Const.space_35,
+                    marginBottom: Const.space_50 + Const.space_6,
+                  }}
+                >
+                  {errors.password ? (
+                    <Text
+                      style={{
+                        ...TextStyles.Regular,
+                        color: Assets.AppColors.red,
+                      }}
+                    >
+                      {errors.password}
+                    </Text>
+                  ) : null}
+                </View>
                 <TouchableOpacity
                   style={{
                     justifyContent: 'center',

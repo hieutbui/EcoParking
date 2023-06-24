@@ -153,6 +153,7 @@ export const AppColors = {
   fulvous: '#e18000',
   mountainMist: '#959396',
   starDust: '#A1A1A1',
+  davyGrey: '#565656',
   /* App colors */
   feature: '#BC0063',
   textRegular: 'rgba(53, 53, 53, 0.5)',

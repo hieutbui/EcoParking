@@ -28,4 +28,5 @@ export const AppIcons = {
   icPenWWithBG: require('../assets/icons/ic_pen_with_bg/ic_pen_with_bg.png'),
   icMapCar: require('../assets/icons/ic_map_car/ic_map_car.png'),
   icSuccessDialog: require('../assets/icons/ic_success_dialog/ic_success_dialog.png'),
+  icMore: require('../assets/icons/ic_more/ic_more.png'),
 };
