@@ -7,6 +7,7 @@ import i18n from '../language/i18n';
 import Assets from 'app/assets/Assets';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import { rootNavigation } from 'app/screens/AppNavigator';
+import Global from 'app/constants/Global';
 
 /**
  * @type {AccountState}
@@ -77,10 +78,11 @@ const AccountSlice = createSlice({
         utils.toast({ message: i18n.t('Login failed') });
       })
       .addCase(thunkLogin.fulfilled, (state, { payload }) => {
+        utils.hideLoading();
         if (!_.isEmpty(payload)) {
-          utils.hideLoading();
           state.status = 'loggedIn';
           state.userInfo = payload;
+          Global.AccessToken = payload.accessToken;
         }
       })
       .addCase(thunkLogout.pending, state => {

@@ -1,6 +1,7 @@
 import { Const } from 'app/constants/Const';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
+import { StyleProp, ViewStyle } from 'react-native';
 
 /**
  * @author hieubt
@@ -10,6 +11,8 @@ import Modal from 'react-native-modal';
  * @property {() => void =} onHideDone
  * @property {Boolean} hideOnBackdropPress
  * @property {Boolean} enableSwipeToDismiss
+ * @property {StyleProp<ViewStyle>} style
+ * @property {number} backgroundOpacity
  * @param {Param} param
  */
 export const BottomSheet = ({
@@ -18,6 +21,8 @@ export const BottomSheet = ({
   onHideDone,
   hideOnBackdropPress,
   enableSwipeToDismiss,
+  style,
+  backgroundOpacity,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -64,11 +69,16 @@ export const BottomSheet = ({
       }}
       hasBackdrop
       backdropTransitionOutTiming={0}
-      style={{
-        width: '100%',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      }}
+      backdropOpacity={backgroundOpacity}
+      style={[
+        {
+          width: '100%',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          marginBottom: 0,
+        },
+        style,
+      ]}
     >
       {content}
     </Modal>

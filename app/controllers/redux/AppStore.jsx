@@ -23,10 +23,12 @@ import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 import { StoreState } from 'app/types';
 import appSlice from '../slice/app.slice';
 import accountSlice from '../slice/account.slice';
+import parkingSlice from '../slice/parking.slice';
 
 const reducers = combineReducers({
   app: appSlice,
   account: accountSlice,
+  parking: parkingSlice,
 });
 
 /**
@@ -45,7 +47,7 @@ const persisConfig = {
   storage: AsyncStorage,
   stateReconciler: autoMergeLevel2,
   blacklist: [],
-  whitelist: ['app', 'account'],
+  whitelist: ['app', 'account', 'parking'],
   transforms: [],
 };
 

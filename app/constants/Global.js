@@ -8,4 +8,5 @@ export default {
   Font,
   FontSize,
   RefreshToken: '',
+  AccessToken: '',
 };
