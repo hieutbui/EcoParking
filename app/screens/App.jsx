@@ -12,6 +12,9 @@ import { StatusBar } from 'react-native';
 import ScaleToast, { ScaleToastRef } from 'app/shared/components/ScaleToast';
 import AppLoading, { AppLoadingRef } from 'app/shared/components/AppLoading';
 import AlertDialog, { AlertDialogRef } from 'app/shared/components/AlertDialog';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { PortalProvider } from '@gorhom/portal';
+import { BottomUp, BottomUpRef } from 'app/shared/components/BottomUp';
 
 // Mapbox.setAccessToken(mapboxToken);
 

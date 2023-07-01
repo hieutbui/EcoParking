@@ -13,6 +13,7 @@ import { StyleProp, ViewStyle } from 'react-native';
  * @property {Boolean} enableSwipeToDismiss
  * @property {StyleProp<ViewStyle>} style
  * @property {number} backgroundOpacity
+ * @property {()=>void=} onClose
  * @param {Param} param
  */
 export const BottomSheet = ({
@@ -23,11 +24,13 @@ export const BottomSheet = ({
   enableSwipeToDismiss,
   style,
   backgroundOpacity,
+  onClose,
 }) => {
   const [visible, setVisible] = useState(false);
 
   function handleClose() {
     setVisible(false);
+    onClose();
   }
 
   function handleHideDone() {

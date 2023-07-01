@@ -1,7 +1,14 @@
 import Mapbox, { UserLocationRenderMode } from '@rnmapbox/maps';
 import { Header } from 'app/shared/components/Header';
-import React, { useEffect, useRef, useState } from 'react';
-import { Image, Text, View, Platform, ImageBackground } from 'react-native';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import {
+  Image,
+  Text,
+  View,
+  Platform,
+  ImageBackground,
+  StyleSheet,
+} from 'react-native';
 import { mapboxToken, styleURL } from '../../../env.json';
 import { Const } from 'app/constants/Const';
 import { useFocusEffect } from '@react-navigation/native';
@@ -16,6 +23,9 @@ import { ParkingInfo } from 'app/types';
 import { useTranslation } from 'react-i18next';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
 import api from 'app/controllers/api';
+import { BottomUpRef } from 'app/shared/components/BottomUp';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { FullWindowOverlay } from 'react-native-screens';
 
 Mapbox.setAccessToken(mapboxToken);
 
@@ -29,7 +39,6 @@ export const HomeScreen = () => {
    * @type {[ParkingInfo, React.SetStateAction<ParkingInfo>]}
    */
   const [selectedPark, setSelectedPark] = useState(null);
-  const refBottomSheetParkingInfo = useRef('park');
   const dispatch = useDispatch();
   const { parks } = useAppSelector(state => state.parking);
   /**
@@ -39,6 +48,12 @@ export const HomeScreen = () => {
   const [followUser, setFollowUser] = useState(true);
   const { t } = useTranslation();
   const [direction, setDirection] = useState(null);
+
+  const bottomSheetModalRef = useRef(null);
+
+  const snapPoints = useMemo(() => ['47%', '47%'], []);
+
+  const bottomSheetDirectionRef = useRef(null);
 
   async function hasLocationPermission() {
     if (
@@ -68,6 +83,9 @@ export const HomeScreen = () => {
           parseFloat(selectedPark.latitude.$numberDecimal),
         ],
         zoomLevel: zoom,
+        bounds: {
+          paddingBottom: 300,
+        },
       });
     }
   }, [followUser, selectedPark]);
@@ -142,7 +160,7 @@ export const HomeScreen = () => {
                   onPress={() => {
                     setSelectedPark(park);
                     setFollowUser(false);
-                    refBottomSheetParkingInfo.current.show();
+                    bottomSheetModalRef.current.present();
                   }}
                 >
                   <Mapbox.Images
@@ -196,146 +214,214 @@ export const HomeScreen = () => {
         />
       </Mapbox.MapView>
       {/* Park info */}
-      <BottomSheet
-        refBottomSheet={refBottomSheetParkingInfo}
-        enableSwipeToDismiss
-        hideOnBackdropPress
-        onHideDone={() => {
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        snapPoints={snapPoints}
+        index={0}
+        handleIndicatorStyle={{
+          width: 55,
+          height: Const.space_3,
+          backgroundColor: Assets.AppColors.lightgrey,
+        }}
+        backgroundStyle={{
+          borderTopRightRadius: Const.space_50,
+          borderTopLeftRadius: Const.space_50,
+        }}
+        onDismiss={() => {
           setSelectedPark(null);
           setFollowUser(true);
         }}
-        backgroundOpacity={0}
-        content={
+      >
+        <View
+          style={{
+            backgroundColor: 'transparent',
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            paddingHorizontal: Const.space_31,
+          }}
+        >
           <View
             style={{
-              backgroundColor: Assets.AppColors.white,
+              borderBottomWidth: Const.space_1,
+              borderColor: Assets.AppColors.lightgrey,
               width: '100%',
               alignItems: 'center',
-              justifyContent: 'flex-end',
-              borderTopRightRadius: Const.space_50,
-              borderTopLeftRadius: Const.space_50,
-              paddingHorizontal: Const.space_30,
+              marginBottom: Const.space_12,
             }}
           >
-            <View
+            <Text
               style={{
-                borderBottomWidth: Const.space_1,
-                borderColor: Assets.AppColors.lightgrey,
-                width: '100%',
-                alignItems: 'center',
-                marginBottom: Const.space_12,
+                fontFamily: Font.bold,
+                fontSize: FontSize.s_24,
+                fontStyle: 'normal',
+                lineHeight: Const.space_35,
+                fontWeight: '600',
+                color: Assets.AppColors.black,
+                paddingTop: Const.space_16,
+                paddingBottom: Const.space_13,
               }}
             >
-              <Text
-                style={{
-                  fontFamily: Font.bold,
-                  fontSize: FontSize.s_24,
-                  fontStyle: 'normal',
-                  lineHeight: Const.space_35,
-                  fontWeight: '600',
-                  color: Assets.AppColors.black,
-                  paddingTop: Const.space_16,
-                  paddingBottom: Const.space_13,
-                }}
-              >
-                {t('Details')}
-              </Text>
-            </View>
-            <Image
-              source={{ uri: selectedPark?.image }}
+              {t('Details')}
+            </Text>
+          </View>
+          <Image
+            source={{ uri: selectedPark?.image }}
+            style={{
+              borderRadius: Const.space_20,
+              overflow: 'hidden',
+              width: Const.deviceWidth - 60,
+              height: 176,
+              marginBottom: Const.space_10,
+            }}
+          />
+          <View
+            style={{
+              alignSelf: 'flex-start',
+              width: '100%',
+              paddingBottom: Const.space_5,
+              borderBottomWidth: Const.space_1,
+              borderColor: Assets.AppColors.lightgrey,
+              marginBottom: Const.space_10,
+            }}
+          >
+            <Text
               style={{
-                borderRadius: Const.space_20,
-                overflow: 'hidden',
-                width: Const.deviceWidth - 60,
-                height: 176,
-                marginBottom: Const.space_10,
+                fontFamily: Font.semiBold,
+                fontSize: FontSize.s_20,
+                color: Assets.AppColors.black,
+                fontWeight: '600',
+              }}
+            >
+              {selectedPark?.name}
+            </Text>
+            <Text
+              style={{
+                color: Assets.AppColors.starDust,
+                fontWeight: '500',
+                fontSize: FontSize.s_15,
+                fontFamily: Font.medium,
+              }}
+            >
+              {selectedPark?.address}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'space-between',
+              marginBottom: Const.space_10,
+            }}
+          >
+            <RadiusButton
+              title={t('Get direction')}
+              type="hollow"
+              onPress={async () => {
+                utils.showLoading({ message: t('Loading') + '...' });
+                try {
+                  const result = await api.park.getDirection({
+                    startLongitude: userLocate.coords.longitude,
+                    startLatitude: userLocate.coords.latitude,
+                    endLongitude: selectedPark.longitude.$numberDecimal,
+                    endLatitude: selectedPark.latitude.$numberDecimal,
+                  });
+                  setDirection(result);
+                  camera.current?.fitBounds(
+                    [userLocate.coords.longitude, userLocate.coords.latitude],
+                    [
+                      selectedPark.longitude.$numberDecimal,
+                      selectedPark.latitude.$numberDecimal,
+                    ],
+                    [100, 62, Const.deviceHeight / 2 + 50, 62],
+                    1000,
+                  );
+                  bottomSheetDirectionRef.current.present();
+                  utils.hideLoading();
+                } catch (error) {
+                  bottomSheetModalRef.current.dismiss();
+                  utils.hideLoading();
+                  utils.toast({ message: t('Cannot get direction') });
+                }
+              }}
+              style={{
+                width: (Const.deviceWidth - 60) / 2 - Const.space_20,
               }}
             />
-            <View
+            <RadiusButton
+              title={t('Details')}
+              type="positive"
+              onPress={() => {}}
               style={{
-                alignSelf: 'flex-start',
-                width: '100%',
-                paddingBottom: Const.space_5,
-                borderBottomWidth: Const.space_1,
-                borderColor: Assets.AppColors.lightgrey,
-                marginBottom: Const.space_10,
+                width: (Const.deviceWidth - 60) / 2 - Const.space_20,
               }}
-            >
-              <Text
-                style={{
-                  fontFamily: Font.semiBold,
-                  fontSize: FontSize.s_20,
-                  color: Assets.AppColors.black,
-                  fontWeight: '600',
-                }}
-              >
-                {selectedPark?.name}
-              </Text>
-              <Text
-                style={{
-                  color: Assets.AppColors.starDust,
-                  fontWeight: '500',
-                  fontSize: FontSize.s_15,
-                  fontFamily: Font.medium,
-                }}
-              >
-                {selectedPark?.address}
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                justifyContent: 'space-between',
-                marginBottom: Const.space_10,
-              }}
-            >
-              <RadiusButton
-                title={t('Get direction')}
-                type="hollow"
-                onPress={async () => {
-                  utils.showLoading({ message: t('Loading') + '...' });
-                  try {
-                    const result = await api.park.getDirection({
-                      startLongitude: userLocate.coords.longitude,
-                      startLatitude: userLocate.coords.latitude,
-                      endLongitude: selectedPark.longitude.$numberDecimal,
-                      endLatitude: selectedPark.latitude.$numberDecimal,
-                    });
-                    setDirection(result);
-                    camera.current?.fitBounds(
-                      [userLocate.coords.longitude, userLocate.coords.latitude],
-                      [
-                        selectedPark.longitude.$numberDecimal,
-                        selectedPark.latitude.$numberDecimal,
-                      ],
-                      [30, 30],
-                      1000,
-                    );
-                    refBottomSheetParkingInfo.current.hide();
-                    utils.hideLoading();
-                  } catch (error) {
-                    utils.hideLoading();
-                    utils.toast({ message: t('Cannot get direction') });
-                  }
-                }}
-                style={{
-                  width: (Const.deviceWidth - 60) / 2 - Const.space_20,
-                }}
-              />
-              <RadiusButton
-                title={t('Details')}
-                type="positive"
-                onPress={() => {}}
-                style={{
-                  width: (Const.deviceWidth - 60) / 2 - Const.space_20,
-                }}
-                rightIcon={Assets.AppIcons.icArrowRight}
-              />
-            </View>
+              rightIcon={Assets.AppIcons.icArrowRight}
+            />
           </View>
-        }
-      />
+        </View>
+      </BottomSheetModal>
+      <BottomSheetModal
+        ref={bottomSheetDirectionRef}
+        snapPoints={snapPoints}
+        index={1}
+        handleIndicatorStyle={{
+          width: 55,
+          height: Const.space_3,
+          backgroundColor: Assets.AppColors.lightgrey,
+        }}
+        backgroundStyle={{
+          borderTopRightRadius: Const.space_50,
+          borderTopLeftRadius: Const.space_50,
+        }}
+        onDismiss={() => {
+          setDirection(null);
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'transparent',
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            paddingHorizontal: Const.space_31,
+          }}
+        >
+          <View
+            style={{
+              borderBottomWidth: Const.space_1,
+              borderColor: Assets.AppColors.lightgrey,
+              width: '100%',
+              alignItems: 'center',
+              marginBottom: Const.space_12,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: Font.bold,
+                fontSize: FontSize.s_24,
+                fontStyle: 'normal',
+                lineHeight: Const.space_35,
+                fontWeight: '600',
+                color: Assets.AppColors.black,
+                paddingTop: Const.space_16,
+                paddingBottom: Const.space_13,
+              }}
+            >
+              {t('Direction')}
+            </Text>
+          </View>
+          <RadiusButton
+            title={t('Close')}
+            type="hollow"
+            onPress={() => {
+              bottomSheetDirectionRef.current.dismiss();
+            }}
+            style={{
+              marginBottom: Const.space_10,
+            }}
+          />
+        </View>
+      </BottomSheetModal>
     </View>
   );
 };

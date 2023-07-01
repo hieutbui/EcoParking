@@ -20,6 +20,8 @@ import { useTranslation } from 'react-i18next';
 import { LoginScreen } from './auth/LoginScreen';
 import { RegisterScreen } from './auth/RegisterScreen';
 import { UpdateProfileScreen } from './profile/UpdateProfileScreen';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -32,36 +34,43 @@ export const rootNavigation = createNavigationContainerRef();
  */
 export const AppNavigator = () => {
   return (
-    <NavigationContainer ref={rootNavigation}>
-      <Stack.Navigator
-        initialRouteName={ScreenNames.Login}
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        {/* AUTH */}
-        <Stack.Group>
-          <Stack.Screen name={ScreenNames.Login} component={LoginScreen} />
-          <Stack.Screen
-            name={ScreenNames.Register}
-            component={RegisterScreen}
-          />
-        </Stack.Group>
-        {/* TAB BAR */}
-        <Stack.Screen name={ScreenNames.MainTabBar} component={MainTabBar} />
-        {/* MODALS */}
-        <Stack.Group
-          screenOptions={{
-            presentation: 'modal',
-          }}
-        >
-          <Stack.Screen
-            name={ScreenNames.UpdateProfile}
-            component={UpdateProfileScreen}
-          />
-        </Stack.Group>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <NavigationContainer ref={rootNavigation}>
+          <Stack.Navigator
+            initialRouteName={ScreenNames.Login}
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            {/* AUTH */}
+            <Stack.Group>
+              <Stack.Screen name={ScreenNames.Login} component={LoginScreen} />
+              <Stack.Screen
+                name={ScreenNames.Register}
+                component={RegisterScreen}
+              />
+            </Stack.Group>
+            {/* TAB BAR */}
+            <Stack.Screen
+              name={ScreenNames.MainTabBar}
+              component={MainTabBar}
+            />
+            {/* MODALS */}
+            <Stack.Group
+              screenOptions={{
+                presentation: 'modal',
+              }}
+            >
+              <Stack.Screen
+                name={ScreenNames.UpdateProfile}
+                component={UpdateProfileScreen}
+              />
+            </Stack.Group>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 };
 
