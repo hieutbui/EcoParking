@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { mapboxToken, styleURL } from '../../../env.json';
 import { Const } from 'app/constants/Const';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Assets from 'app/assets/Assets';
 import { Font, FontSize } from 'app/constants/Styles';
 import { BottomSheet } from 'app/shared/components/BottomSheet';
@@ -26,6 +26,7 @@ import api from 'app/controllers/api';
 import { BottomUpRef } from 'app/shared/components/BottomUp';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { FullWindowOverlay } from 'react-native-screens';
+import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 
 Mapbox.setAccessToken(mapboxToken);
 
@@ -51,9 +52,9 @@ export const HomeScreen = () => {
 
   const bottomSheetModalRef = useRef(null);
 
-  const snapPoints = useMemo(() => ['47%', '47%'], []);
-
   const bottomSheetDirectionRef = useRef(null);
+
+  const navigation = useNavigation();
 
   async function hasLocationPermission() {
     if (
@@ -216,8 +217,7 @@ export const HomeScreen = () => {
       {/* Park info */}
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        snapPoints={snapPoints}
-        index={0}
+        snapPoints={['47%']}
         handleIndicatorStyle={{
           width: 55,
           height: Const.space_3,
@@ -351,7 +351,17 @@ export const HomeScreen = () => {
             <RadiusButton
               title={t('Details')}
               type="positive"
-              onPress={() => {}}
+              onPress={() => {
+                bottomSheetModalRef.current.dismiss();
+                NavigatorUtils.gotoParkingDetail(
+                  {
+                    parkingInfo: selectedPark,
+                    // duration: utils.secondsToHms(direction?.routes[0].duration),
+                    // distance: utils.metersToKM(direction?.routes[0].distance),
+                  },
+                  navigation,
+                );
+              }}
               style={{
                 width: (Const.deviceWidth - 60) / 2 - Const.space_20,
               }}
@@ -360,10 +370,10 @@ export const HomeScreen = () => {
           </View>
         </View>
       </BottomSheetModal>
+      {/* Direction */}
       <BottomSheetModal
         ref={bottomSheetDirectionRef}
-        snapPoints={snapPoints}
-        index={1}
+        snapPoints={['30%']}
         handleIndicatorStyle={{
           width: 55,
           height: Const.space_3,
@@ -410,6 +420,46 @@ export const HomeScreen = () => {
               {t('Direction')}
             </Text>
           </View>
+          <Text
+            style={{
+              fontFamily: Font.bold,
+              fontSize: FontSize.s_24,
+              fontStyle: 'normal',
+              lineHeight: Const.space_35,
+              fontWeight: '600',
+              color: Assets.AppColors.black,
+              alignSelf: 'flex-start',
+            }}
+          >
+            {utils.metersToKM(direction?.routes[0].distance)}
+          </Text>
+          <Text
+            style={{
+              fontFamily: Font.semiBold,
+              fontSize: FontSize.s_20,
+              fontStyle: 'normal',
+              lineHeight: Const.space_31,
+              fontWeight: '600',
+              color: Assets.AppColors.black,
+              alignSelf: 'flex-start',
+            }}
+          >
+            {utils.secondsToHms(direction?.routes[0].duration)}
+          </Text>
+          <Text
+            style={{
+              fontSize: FontSize.s_15,
+              lineHeight: Const.space_26,
+              color: Assets.AppColors.starDust,
+              fontStyle: 'normal',
+              fontWeight: '500',
+              fontFamily: Font.medium,
+              alignSelf: 'flex-start',
+              marginBottom: Const.space_10,
+            }}
+          >
+            {t('Your location') + ' -----> ' + selectedPark?.name}
+          </Text>
           <RadiusButton
             title={t('Close')}
             type="hollow"

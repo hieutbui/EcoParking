@@ -7,4 +7,5 @@ export const ScreenNames = {
   Login: 'Login',
   Register: 'Register',
   UpdateProfile: 'UpdateProfile',
+  ParkingDetail: 'ParkingDetail',
 };

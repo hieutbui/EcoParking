@@ -6,6 +6,7 @@ import {
   StackActions,
   NavigationAction,
 } from '@react-navigation/native';
+import { ParkingInfo } from 'app/types';
 
 const tag = '[NavigatorUtil]';
 
@@ -109,6 +110,16 @@ const gotoLogin = (params = null, navigation = rootNavigation) => {
   navigate(ScreenNames.Login, params, navigation);
 };
 
+/**
+ * @author hieubt
+ * @param {{parkingInfo: ParkingInfo, distance: string, duration: string}} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoParkingDetail = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoParkingDetail');
+  navigate(ScreenNames.ParkingDetail, params, navigation);
+};
+
 export default {
   goBack,
   gotoHome,
@@ -116,4 +127,5 @@ export default {
   gotoRegister,
   gotoUpdateProfile,
   gotoLogin,
+  gotoParkingDetail,
 };

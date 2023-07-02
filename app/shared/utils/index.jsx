@@ -71,4 +71,34 @@ export default {
   hideDialog() {
     AlertDialogRef.current.hide();
   },
+
+  /**
+   * @author hieubt
+   * @param {number} time
+   * @returns {string}
+   */
+  secondsToHms(time) {
+    time = Number(time);
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = Math.floor((time % 3600) % 60);
+
+    const hDisplay =
+      hours > 0 ? hours + (hours === 1 ? ' hour, ' : ' hours, ') : '';
+    const mDisplay =
+      minutes > 0 ? minutes + (minutes === 1 ? ' minute, ' : ' minutes, ') : '';
+    const sDisplay =
+      seconds > 0 ? seconds + (seconds === 1 ? ' second' : ' seconds') : '';
+    return hDisplay + mDisplay + sDisplay;
+  },
+
+  /**
+   * @author hieubt
+   * @param {number} distance
+   * @returns {string}
+   */
+  metersToKM(distance) {
+    const km = distance / 1000;
+    return km.toFixed(1) + ' km';
+  },
 };
