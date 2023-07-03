@@ -31,4 +31,6 @@ export const AppIcons = {
   icMore: require('../assets/icons/ic_more/ic_more.png'),
   icMapParking: require('../assets/icons/ic_map_parking/ic_map_parking.png'),
   icArrowRight: require('../assets/icons/ic_arrow_right/ic_arrow_right.png'),
+  icLocationFeature: require('../assets/icons/ic_location_feature/ic_location_feature.png'),
+  icParkingFeature: require('../assets/icons/ic_parking_feature/ic_parking_feature.png'),
 };

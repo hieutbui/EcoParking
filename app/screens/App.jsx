@@ -15,28 +15,33 @@ import AlertDialog, { AlertDialogRef } from 'app/shared/components/AlertDialog';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
 import { BottomUp, BottomUpRef } from 'app/shared/components/BottomUp';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Mapbox.setAccessToken(mapboxToken);
 
 const App = () => {
   return (
     <SafeAreaProvider>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <I18nextProvider i18n={i18n}>
-            {/* statusbar */}
-            <StatusBar
-              backgroundColor={'transparent'}
-              translucent
-              barStyle={'dark-content'}
-            />
-            {/* navigator */}
-            <AppNavigator />
-            {/* root component */}
-            <RootComponent />
-          </I18nextProvider>
-        </PersistGate>
-      </Provider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <BottomSheetModalProvider>
+          <Provider store={store}>
+            <PersistGate persistor={persistor}>
+              <I18nextProvider i18n={i18n}>
+                {/* statusbar */}
+                <StatusBar
+                  backgroundColor={'transparent'}
+                  translucent
+                  barStyle={'dark-content'}
+                />
+                {/* navigator */}
+                <AppNavigator />
+                {/* root component */}
+                <RootComponent />
+              </I18nextProvider>
+            </PersistGate>
+          </Provider>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 };

@@ -30,7 +30,9 @@ export const BottomSheet = ({
 
   function handleClose() {
     setVisible(false);
-    onClose();
+    if (onClose) {
+      onClose();
+    }
   }
 
   function handleHideDone() {

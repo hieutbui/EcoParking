@@ -50,6 +50,8 @@ export const HomeScreen = () => {
   const { t } = useTranslation();
   const [direction, setDirection] = useState(null);
 
+  const [showDirection, setShowDirection] = useState(false);
+
   const bottomSheetModalRef = useRef(null);
 
   const bottomSheetDirectionRef = useRef(null);
@@ -158,10 +160,26 @@ export const HomeScreen = () => {
                       ],
                     },
                   }}
-                  onPress={() => {
+                  onPress={async () => {
                     setSelectedPark(park);
                     setFollowUser(false);
-                    bottomSheetModalRef.current.present();
+                    utils.showLoading({ message: t('Loading') + '...' });
+                    try {
+                      const result = await api.park.getDirection({
+                        startLongitude: userLocate.coords.longitude,
+                        startLatitude: userLocate.coords.latitude,
+                        endLongitude: park.longitude.$numberDecimal,
+                        endLatitude: park.latitude.$numberDecimal,
+                      });
+                      setDirection(result);
+                      bottomSheetModalRef.current.present();
+                      utils.hideLoading();
+                    } catch (error) {
+                      console.log({ error });
+                      bottomSheetModalRef.current.dismiss();
+                      utils.hideLoading();
+                      utils.toast({ message: t('Cannot get direction') });
+                    }
                   }}
                 >
                   <Mapbox.Images
@@ -189,7 +207,7 @@ export const HomeScreen = () => {
             })
           : null}
         {/* Route */}
-        {!_.isEmpty(direction) ? (
+        {!_.isEmpty(direction) && showDirection ? (
           <Mapbox.ShapeSource
             id="DirectionShapeSource"
             shape={direction.routes[0].geometry}
@@ -228,8 +246,10 @@ export const HomeScreen = () => {
           borderTopLeftRadius: Const.space_50,
         }}
         onDismiss={() => {
-          setSelectedPark(null);
-          setFollowUser(true);
+          if (!showDirection) {
+            setSelectedPark(null);
+            setFollowUser(true);
+          }
         }}
       >
         <View
@@ -317,32 +337,19 @@ export const HomeScreen = () => {
             <RadiusButton
               title={t('Get direction')}
               type="hollow"
-              onPress={async () => {
-                utils.showLoading({ message: t('Loading') + '...' });
-                try {
-                  const result = await api.park.getDirection({
-                    startLongitude: userLocate.coords.longitude,
-                    startLatitude: userLocate.coords.latitude,
-                    endLongitude: selectedPark.longitude.$numberDecimal,
-                    endLatitude: selectedPark.latitude.$numberDecimal,
-                  });
-                  setDirection(result);
-                  camera.current?.fitBounds(
-                    [userLocate.coords.longitude, userLocate.coords.latitude],
-                    [
-                      selectedPark.longitude.$numberDecimal,
-                      selectedPark.latitude.$numberDecimal,
-                    ],
-                    [100, 62, Const.deviceHeight / 2 + 50, 62],
-                    1000,
-                  );
-                  bottomSheetDirectionRef.current.present();
-                  utils.hideLoading();
-                } catch (error) {
-                  bottomSheetModalRef.current.dismiss();
-                  utils.hideLoading();
-                  utils.toast({ message: t('Cannot get direction') });
-                }
+              onPress={() => {
+                setShowDirection(true);
+                camera.current?.fitBounds(
+                  [userLocate.coords.longitude, userLocate.coords.latitude],
+                  [
+                    selectedPark.longitude.$numberDecimal,
+                    selectedPark.latitude.$numberDecimal,
+                  ],
+                  [100, 62, Const.deviceHeight / 2 + 50, 62],
+                  1000,
+                );
+                bottomSheetModalRef.current.dismiss();
+                bottomSheetDirectionRef.current.present();
               }}
               style={{
                 width: (Const.deviceWidth - 60) / 2 - Const.space_20,
@@ -356,8 +363,8 @@ export const HomeScreen = () => {
                 NavigatorUtils.gotoParkingDetail(
                   {
                     parkingInfo: selectedPark,
-                    // duration: utils.secondsToHms(direction?.routes[0].duration),
-                    // distance: utils.metersToKM(direction?.routes[0].distance),
+                    duration: utils.secondsToHms(direction?.routes[0].duration),
+                    distance: utils.metersToKM(direction?.routes[0].distance),
                   },
                   navigation,
                 );
@@ -385,6 +392,9 @@ export const HomeScreen = () => {
         }}
         onDismiss={() => {
           setDirection(null);
+          setShowDirection(false);
+          setSelectedPark(null);
+          setFollowUser(true);
         }}
       >
         <View
