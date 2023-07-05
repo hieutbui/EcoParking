@@ -1,4 +1,5 @@
 import Assets from 'app/assets/Assets';
+import { Font, FontSize } from 'app/constants/Styles';
 import api from 'app/controllers/api';
 import { Header } from 'app/shared/components/Header';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
@@ -19,19 +20,15 @@ export const BookingScreen = () => {
           alignItems: 'center',
         }}
       >
-        <RadiusButton
-          title="get route"
-          type="positive"
-          onPress={async () => {
-            const route = await api.park.getDirection({
-              startLongitude: 105.847556,
-              startLatitude: 20.976937,
-              endLongitude: 20.976937,
-              endLatitude: 21.030765,
-            });
-            console.log({ direction: route?.routes[0]?.geometry });
+        <Text
+          style={{
+            fontFamily: Font.semiBold,
+            fontSize: FontSize.s_20,
+            color: Assets.AppColors.feature,
           }}
-        />
+        >
+          Coming Soon!
+        </Text>
       </View>
     </View>
   );
