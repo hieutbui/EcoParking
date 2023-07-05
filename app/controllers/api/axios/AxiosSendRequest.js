@@ -55,6 +55,7 @@ export async function axiosSendRequest(
 
   await axios(config)
     .catch(function (error) {
+      console.log({ error });
       responseData.message = error.message;
       console.warn('[Axios]', error);
       return { data: responseData };

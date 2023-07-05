@@ -49,8 +49,24 @@ export const thunkRegister = createAsyncThunk(
   },
 );
 
+export const thunkUpdateProfile = createAsyncThunk(
+  '/updateProfile',
+  /**
+   *
+   * @param {{id: string, name: string, file: object, email: string, gender: 'Male' | 'Female' | 'Other', password: string, phoneNumber: string, address: string}} payload
+   */
+  async (payload, __thunkAPI) => {
+    try {
+      const result = await api.auth.updateProfile(payload);
+      return result.data;
+    } catch (error) {
+      return __thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 export const thunkLogout = createAsyncThunk(
-  'logout',
+  '/logout',
   async (payload, __thunkAPI) => {
     try {
       console.log('logout');
@@ -104,18 +120,39 @@ const AccountSlice = createSlice({
       })
       .addCase(thunkRegister.fulfilled, (state, { payload }) => {
         utils.hideLoading();
-        utils.showDialog({
-          image: Assets.AppIcons.icSuccessDialog,
-          title: i18n.t('Congratulations!'),
-          message: i18n.t('Your account is ready to use'),
-          options: [
-            {
-              type: 'positive',
-              title: i18n.t('Go to Login'),
-              onPress: () => NavigatorUtils.gotoLogin({}, rootNavigation),
-            },
-          ],
-        });
+        if (!_.isEmpty(payload)) {
+          utils.showDialog({
+            image: Assets.AppIcons.icSuccessDialog,
+            title: i18n.t('Congratulations!'),
+            message: i18n.t('Your account is ready to use'),
+            options: [
+              {
+                type: 'positive',
+                title: i18n.t('Go to Login'),
+                onPress: () => NavigatorUtils.gotoLogin({}, rootNavigation),
+              },
+            ],
+          });
+        } else {
+          utils.toast({ message: i18n.t('Cannot register') });
+        }
+      })
+      .addCase(thunkUpdateProfile.pending, state => {
+        utils.showLoading({ message: i18n.t('Loading') + '...' });
+      })
+      .addCase(thunkUpdateProfile.rejected, (state, { payload }) => {
+        utils.hideLoading();
+        utils.toast({ message: i18n.t('Cannot update profile') });
+      })
+      .addCase(thunkUpdateProfile.fulfilled, (state, { payload }) => {
+        if (!_.isEmpty(payload)) {
+          state.userInfo = payload;
+          utils.hideLoading();
+          NavigatorUtils.goBack();
+        } else {
+          utils.hideLoading();
+          utils.toast({ message: i18n.t('Cannot update profile') });
+        }
       }),
 });
 

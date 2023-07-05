@@ -33,4 +33,10 @@ export const AppIcons = {
   icArrowRight: require('../assets/icons/ic_arrow_right/ic_arrow_right.png'),
   icLocationFeature: require('../assets/icons/ic_location_feature/ic_location_feature.png'),
   icParkingFeature: require('../assets/icons/ic_parking_feature/ic_parking_feature.png'),
+  icEditProfile: require('../assets/icons/ic_edit_profile/ic_edit_profile.png'),
+  icHelp: require('../assets/icons/ic_help/ic_help.png'),
+  icLogout: require('../assets/icons/ic_logout/ic_logout.png'),
+  icNotification: require('../assets/icons/ic_notification/ic_notification.png'),
+  icPayment: require('../assets/icons/ic_payment/ic_payment.png'),
+  icSecurity: require('../assets/icons/ic_security/ic_security.png'),
 };

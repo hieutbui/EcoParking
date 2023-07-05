@@ -48,7 +48,7 @@ export const AppColors = {
   floralwhite: '#fffaf0',
   forestgreen: '#228b22',
   fuchsia: '#ff00ff',
-  gainsboro: '#dcdcdc',
+  gainsboro: '#dddddd',
   ghostwhite: '#f8f9ff',
   gold: '#ffd700',
   goldenrod: '#daa520',

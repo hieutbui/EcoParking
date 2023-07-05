@@ -6,6 +6,7 @@ import { BottomSheet } from 'app/shared/components/BottomSheet';
 import { Header } from 'app/shared/components/Header';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
 import { RowButton } from 'app/shared/components/RowButton';
+import { TextButton } from 'app/shared/components/TextButton';
 import utils, { useAppSelector } from 'app/shared/utils';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import _ from 'lodash';
@@ -17,6 +18,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  ImageSourcePropType,
 } from 'react-native';
 
 export const ProfileScreen = () => {
@@ -24,6 +26,58 @@ export const ProfileScreen = () => {
   const { userInfo } = useAppSelector(state => state.account);
   const refBottomSheetLogout = useRef('logout');
   const navigation = useNavigation();
+
+  /**
+   * @typedef ProfileOption
+   * @property {ImageSourcePropType} leftIcon
+   * @property {string} text
+   * @property {boolean} isSwitch
+   * @property {()=>void=} onPress
+   */
+  /**
+   * @type {ProfileOption[]}
+   */
+  const profileOptions = [
+    {
+      text: 'Edit Profile',
+      leftIcon: Assets.AppIcons.icEditProfile,
+      isSwitch: false,
+      onPress: () => {
+        NavigatorUtils.gotoUpdateProfile({ type: 'Update' });
+      },
+    },
+    {
+      text: 'Payment',
+      leftIcon: Assets.AppIcons.icPayment,
+      onPress: () => {},
+      isSwitch: false,
+    },
+    {
+      text: 'Notification',
+      leftIcon: Assets.AppIcons.icNotification,
+      onPress: () => {},
+      isSwitch: false,
+    },
+    {
+      text: 'Security',
+      leftIcon: Assets.AppIcons.icSecurity,
+      onPress: () => {},
+      isSwitch: false,
+    },
+    {
+      text: 'Help',
+      leftIcon: Assets.AppIcons.icHelp,
+      onPress: () => {},
+      isSwitch: true,
+    },
+    {
+      text: 'Logout',
+      leftIcon: Assets.AppIcons.icLogout,
+      onPress: () => {},
+      isSwitch: false,
+    },
+  ];
+
   return (
     <View
       style={{
@@ -85,10 +139,25 @@ export const ProfileScreen = () => {
             fontSize: FontSize.s_14,
             color: Assets.AppColors.black,
             fontWeight: '400',
+            marginBottom: Const.space_60,
           }}
         >
           {userInfo.email}
         </Text>
+        {profileOptions.map((option, index) => {
+          return (
+            <TextButton
+              key={index}
+              leftIcon={option.leftIcon}
+              text={option.text}
+              isSwitch={option.isSwitch}
+              onPress={option.onPress}
+              style={{
+                marginBottom: Const.space_23,
+              }}
+            />
+          );
+        })}
       </View>
       <BottomSheet
         refBottomSheet={refBottomSheetLogout}

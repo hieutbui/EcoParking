@@ -29,7 +29,13 @@ import { BottomSheet } from 'app/shared/components/BottomSheet';
 import { SelectionsOptionsView } from 'app/shared/components/SelectionOptionsView';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
 import { useDispatch } from 'react-redux';
-import { thunkRegister } from 'app/controllers/slice/account.slice';
+import {
+  thunkRegister,
+  thunkUpdateProfile,
+} from 'app/controllers/slice/account.slice';
+import { useAppSelector } from 'app/shared/utils';
+import axios from 'axios';
+import Global from 'app/constants/Global';
 
 /**
  * @author hieubt
@@ -43,6 +49,7 @@ export const UpdateProfileScreen = () => {
   const defaultCountryCode = 'VN';
   const refBottomSheetChooseGender = useRef('gender');
   const dispatch = useDispatch();
+  const { userInfo } = useAppSelector(state => state.account);
   /**
    * @type {ImageLibraryOptions}
    */
@@ -58,13 +65,17 @@ export const UpdateProfileScreen = () => {
 
   const formik = useFormik({
     initialValues: {
-      avatar: '',
-      fullName: '',
-      phoneNumber: '',
-      gender: 'Gender',
-      address: '',
-      email: route.params?.email,
-      password: route.params?.password,
+      avatar: route.params?.type === 'Update' ? userInfo.avatar : '',
+      fullName: route.params?.type === 'Update' ? userInfo.name : '',
+      phoneNumber: route.params?.type === 'Update' ? userInfo.phoneNumber : '',
+      gender: route.params?.type === 'Update' ? userInfo.gender : 'Gender',
+      address: route.params?.type === 'Update' ? userInfo.address : '',
+      email:
+        route.params?.type === 'Update' ? userInfo.email : route.params?.email,
+      password:
+        route.params?.type === 'Update'
+          ? userInfo.password
+          : route.params?.password,
     },
   });
 
@@ -103,17 +114,32 @@ export const UpdateProfileScreen = () => {
           initialValues={formik.initialValues}
           validationSchema={ProfileSchema}
           onSubmit={values => {
-            dispatch(
-              thunkRegister({
+            if (route.params?.type === 'Update') {
+              let dataToUpdate = {
+                id: userInfo._id,
                 name: values.fullName,
-                file: values.avatar,
                 email: values.email,
                 gender: values.gender,
-                password: values.password,
                 phoneNumber: values.phoneNumber,
                 address: values.address,
-              }),
-            );
+              };
+              if (values.avatar !== userInfo.avatar) {
+                dataToUpdate = { ...dataToUpdate, file: values.avatar };
+              }
+              dispatch(thunkUpdateProfile(dataToUpdate));
+            } else {
+              dispatch(
+                thunkRegister({
+                  name: values.fullName,
+                  file: values.avatar,
+                  email: values.email,
+                  gender: values.gender,
+                  password: values.password,
+                  phoneNumber: values.phoneNumber,
+                  address: values.address,
+                }),
+              );
+            }
           }}
         >
           {({
@@ -138,7 +164,10 @@ export const UpdateProfileScreen = () => {
                   {_.isEmpty(values.avatar) ? (
                     <Image
                       source={Assets.AppIcons.icChangeAvatar}
-                      style={{ marginBottom: Const.space_29 }}
+                      style={{
+                        marginBottom: Const.space_29,
+                        marginTop: Const.space_28,
+                      }}
                     />
                   ) : (
                     <ImageBackground
@@ -171,6 +200,7 @@ export const UpdateProfileScreen = () => {
                   onChangeText={handleChange('fullName')}
                   isPassword={false}
                   autoCapitalize="none"
+                  value={values.fullName}
                   onFocus={() => {
                     setFieldTouched('fullName', true);
                   }}
@@ -262,6 +292,7 @@ export const UpdateProfileScreen = () => {
                   onChangeText={handleChange('address')}
                   isPassword={false}
                   autoCapitalize="none"
+                  value={values.address}
                   onFocus={() => {
                     setFieldTouched('address', true);
                   }}
@@ -270,7 +301,11 @@ export const UpdateProfileScreen = () => {
                   }}
                 />
                 <RadiusButton
-                  title={t('Continue')}
+                  title={
+                    route.params?.type === 'Register'
+                      ? t('Continue')
+                      : t('Update')
+                  }
                   type="positive"
                   style={{ marginTop: Const.space_50 + Const.space_6 }}
                   onPress={handleSubmit}
