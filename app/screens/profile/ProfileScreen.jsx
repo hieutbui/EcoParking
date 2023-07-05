@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import Assets from 'app/assets/Assets';
 import { Const } from 'app/constants/Const';
 import { FontSize, SecondFont, Font } from 'app/constants/Styles';
+import { thunkLogout } from 'app/controllers/slice/account.slice';
 import { BottomSheet } from 'app/shared/components/BottomSheet';
 import { Header } from 'app/shared/components/Header';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
@@ -20,12 +21,14 @@ import {
   TouchableOpacity,
   ImageSourcePropType,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 export const ProfileScreen = () => {
   const { t } = useTranslation();
   const { userInfo } = useAppSelector(state => state.account);
   const refBottomSheetLogout = useRef('logout');
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   /**
    * @typedef ProfileOption
@@ -43,7 +46,7 @@ export const ProfileScreen = () => {
       leftIcon: Assets.AppIcons.icEditProfile,
       isSwitch: false,
       onPress: () => {
-        NavigatorUtils.gotoUpdateProfile({ type: 'Update' });
+        NavigatorUtils.gotoUpdateProfile({ type: 'Update' }, navigation);
       },
     },
     {
@@ -55,25 +58,31 @@ export const ProfileScreen = () => {
     {
       text: 'Notification',
       leftIcon: Assets.AppIcons.icNotification,
-      onPress: () => {},
+      onPress: () => {
+        NavigatorUtils.gotoNotificationSettings({}, navigation);
+      },
       isSwitch: false,
     },
     {
       text: 'Security',
       leftIcon: Assets.AppIcons.icSecurity,
-      onPress: () => {},
+      onPress: () => {
+        NavigatorUtils.gotoSecurity({}, navigation);
+      },
       isSwitch: false,
     },
     {
       text: 'Help',
       leftIcon: Assets.AppIcons.icHelp,
       onPress: () => {},
-      isSwitch: true,
+      isSwitch: false,
     },
     {
       text: 'Logout',
       leftIcon: Assets.AppIcons.icLogout,
-      onPress: () => {},
+      onPress: () => {
+        refBottomSheetLogout.current.show();
+      },
       isSwitch: false,
     },
   ];
@@ -102,7 +111,10 @@ export const ProfileScreen = () => {
           }
         >
           {_.isEmpty(userInfo.avatar) ? (
-            <Image source={Assets.AppIcons.icChangeAvatar} />
+            <Image
+              source={Assets.AppIcons.icChangeAvatar}
+              style={{ marginTop: Const.space_28 }}
+            />
           ) : (
             <ImageBackground
               source={{ uri: userInfo.avatar }}
@@ -221,7 +233,11 @@ export const ProfileScreen = () => {
             <RadiusButton
               type="negative"
               title={t('Yes')}
-              onPress={() => {}}
+              onPress={async () => {
+                await refBottomSheetLogout.current.hide();
+                dispatch(thunkLogout());
+                NavigatorUtils.gotoLogin({}, navigation);
+              }}
               style={{ marginBottom: Const.space_30 }}
             />
           </View>

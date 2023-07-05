@@ -8,4 +8,6 @@ export const ScreenNames = {
   Register: 'Register',
   UpdateProfile: 'UpdateProfile',
   ParkingDetail: 'ParkingDetail',
+  NotificationSettings: 'NotificationSettings',
+  SecurityScreen: 'Security',
 };

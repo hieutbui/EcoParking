@@ -103,10 +103,9 @@ const AccountSlice = createSlice({
       })
       .addCase(thunkLogout.pending, state => {
         state.status = 'loggingOut';
-        state.userInfo = {};
       })
       .addCase(thunkLogout.rejected, state => {
-        state.status = 'loggedIn';
+        state.status = 'loggedOut';
       })
       .addCase(thunkLogout.fulfilled, state => {
         state.status = 'loggedOut';
@@ -148,6 +147,7 @@ const AccountSlice = createSlice({
         if (!_.isEmpty(payload)) {
           state.userInfo = payload;
           utils.hideLoading();
+          utils.toast({ message: i18n.t('Update successfully') });
           NavigatorUtils.goBack();
         } else {
           utils.hideLoading();

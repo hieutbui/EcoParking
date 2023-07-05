@@ -9,6 +9,8 @@ import {
   Animated,
   Easing,
   TouchableOpacity,
+  TextStyle,
+  ImageStyle,
 } from 'react-native';
 import _ from 'lodash';
 import { Font, FontSize } from 'app/constants/Styles';
@@ -23,10 +25,24 @@ import { Const } from 'app/constants/Const';
  * @property {boolean} isSwitch
  * @property {()=>void=} onPress
  * @property {StyleProp<ViewStyle>} style
+ * @property {StyleProp<TextStyle>} textStyle
+ * @property {StyleProp<ImageStyle>} leftIconStyle
+ * @property {ImageSourcePropType} rightIcon
+ * @property {StyleProp<ImageStyle>} rightIconStyle
  * @param {Params} param
  * @returns {JSX.Element}
  */
-export const TextButton = ({ leftIcon, text, isSwitch, onPress, style }) => {
+export const TextButton = ({
+  leftIcon,
+  text,
+  isSwitch,
+  onPress,
+  style,
+  textStyle,
+  leftIconStyle,
+  rightIconStyle,
+  rightIcon,
+}) => {
   const [toggleIsOn, setToggle] = useState(false);
   const animatedValue = new Animated.Value(0);
 
@@ -65,19 +81,27 @@ export const TextButton = ({ leftIcon, text, isSwitch, onPress, style }) => {
       ]}
       onPress={handlePress}
     >
-      {leftIcon ? <Image source={leftIcon} /> : null}
+      {leftIcon ? (
+        <Image
+          source={leftIcon}
+          style={[{ resizeMode: 'contain' }, leftIconStyle]}
+        />
+      ) : null}
       <Text
-        style={{
-          fontFamily: Font.medium,
-          fontSize: FontSize.s_18,
-          color: Assets.AppColors.black,
-          marginLeft: Const.space_26,
-          flex: 1,
-        }}
+        style={[
+          {
+            fontFamily: Font.medium,
+            fontSize: FontSize.s_18,
+            color: Assets.AppColors.black,
+            marginLeft: leftIcon ? Const.space_26 : undefined,
+            flex: 1,
+          },
+          textStyle,
+        ]}
       >
         {text}
       </Text>
-      {isSwitch ? (
+      {isSwitch && !rightIcon ? (
         <View
           style={{
             width: Const.space_40 + Const.space_3,
@@ -106,6 +130,9 @@ export const TextButton = ({ leftIcon, text, isSwitch, onPress, style }) => {
             }}
           />
         </View>
+      ) : null}
+      {rightIcon && !isSwitch ? (
+        <Image source={rightIcon} style={{ resizeMode: 'contain' }} />
       ) : null}
     </TouchableOpacity>
   );

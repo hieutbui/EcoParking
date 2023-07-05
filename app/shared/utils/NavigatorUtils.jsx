@@ -120,6 +120,26 @@ const gotoParkingDetail = (params, navigation = rootNavigation) => {
   navigate(ScreenNames.ParkingDetail, params, navigation);
 };
 
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoNotificationSettings = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoNotificationSettings');
+  navigate(ScreenNames.NotificationSettings, params, navigation);
+};
+
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoSecurity = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoSecurity');
+  navigate(ScreenNames.SecurityScreen, params, navigation);
+};
+
 export default {
   goBack,
   gotoHome,
@@ -128,4 +148,6 @@ export default {
   gotoUpdateProfile,
   gotoLogin,
   gotoParkingDetail,
+  gotoNotificationSettings,
+  gotoSecurity,
 };

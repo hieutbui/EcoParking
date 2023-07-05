@@ -24,6 +24,7 @@ import { StoreState } from 'app/types';
 import appSlice from '../slice/app.slice';
 import accountSlice from '../slice/account.slice';
 import parkingSlice from '../slice/parking.slice';
+import Global from 'app/constants/Global';
 
 const reducers = combineReducers({
   app: appSlice,
@@ -35,7 +36,26 @@ const reducers = combineReducers({
  * @type {Reducer<StoreState>}
  */
 const rootReducer = (state, action) => {
-  AsyncStorage.multiRemove(['persist:root']);
+  if (action.type === '/logout/pending') {
+    AsyncStorage.multiRemove(['persist:root']);
+
+    return reducers(
+      {
+        app: state.app,
+      },
+      action,
+    );
+  } else if (action.type === '/logout/fullfilled') {
+    Global.AccessToken = '';
+    Global.RefreshToken = '';
+    Global.UserId = null;
+  } else if (action.type === 'REHYDRATE') {
+    if (state.account.userInfo) {
+      Global.AccessToken = state.account.userInfo.accessToken;
+      Global.RefreshToken = state.account.userInfo.refreshToken;
+      Global.UserId = state.account.userInfo._id;
+    }
+  }
   return reducers(state, action);
 };
 

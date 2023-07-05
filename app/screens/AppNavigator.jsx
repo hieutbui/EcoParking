@@ -23,6 +23,8 @@ import { UpdateProfileScreen } from './profile/UpdateProfileScreen';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ParkingDetailScreen } from './details/ParkingDetailScreen';
+import { NotificationSettingsScreen } from './profile/NotificationSettingsScreen';
+import { SecurityScreen } from './profile/SecurityScreen';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -65,6 +67,14 @@ export const AppNavigator = () => {
           <Stack.Screen
             name={ScreenNames.ParkingDetail}
             component={ParkingDetailScreen}
+          />
+          <Stack.Screen
+            name={ScreenNames.NotificationSettings}
+            component={NotificationSettingsScreen}
+          />
+          <Stack.Screen
+            name={ScreenNames.SecurityScreen}
+            component={SecurityScreen}
           />
         </Stack.Group>
       </Stack.Navigator>
