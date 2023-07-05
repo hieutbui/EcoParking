@@ -39,4 +39,5 @@ export const AppIcons = {
   icNotification: require('../assets/icons/ic_notification/ic_notification.png'),
   icPayment: require('../assets/icons/ic_payment/ic_payment.png'),
   icSecurity: require('../assets/icons/ic_security/ic_security.png'),
+  icClock: require('../assets/icons/ic_clock/ic_clock.png'),
 };

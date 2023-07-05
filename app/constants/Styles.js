@@ -38,7 +38,7 @@ export const Font = {
   light: 'Jost-Light',
   regular: 'Jost-Regular',
   medium: 'Jost-Medium',
-  semiBold: 'Jost-SemiBild',
+  semiBold: 'Jost-SemiBold',
   bold: 'Jost-Bold',
 };
 
@@ -46,7 +46,7 @@ export const SecondFont = {
   light: 'Montserrat-Light',
   regular: 'Montserrat-Regular',
   medium: 'Montserrat-Medium',
-  semiBold: 'Montserrat-SemiBild',
+  semiBold: 'Montserrat-SemiBold',
   bold: 'Montserrat-Bold',
 };
 

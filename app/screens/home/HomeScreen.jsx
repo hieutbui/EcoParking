@@ -80,6 +80,7 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     if (!followUser && selectedPark) {
+      bottomSheetModalRef.current.present();
       camera.current?.setCamera({
         centerCoordinate: [
           parseFloat(selectedPark.longitude.$numberDecimal),
@@ -96,7 +97,11 @@ export const HomeScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <Mapbox.MapView
-        style={{ height: Const.deviceHeight, width: Const.deviceWidth }}
+        style={{
+          height: Const.deviceHeight,
+          width: Const.deviceWidth,
+          zIndex: 0,
+        }}
         styleURL={styleURL}
         logoEnabled={false}
         scaleBarEnabled={false}
@@ -172,7 +177,7 @@ export const HomeScreen = () => {
                         endLatitude: park.latitude.$numberDecimal,
                       });
                       setDirection(result);
-                      bottomSheetModalRef.current.present();
+                      // bottomSheetModalRef.current.present();
                       utils.hideLoading();
                     } catch (error) {
                       console.log({ error });
@@ -240,6 +245,7 @@ export const HomeScreen = () => {
           width: 55,
           height: Const.space_3,
           backgroundColor: Assets.AppColors.lightgrey,
+          zIndex: 1,
         }}
         backgroundStyle={{
           borderTopRightRadius: Const.space_50,

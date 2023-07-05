@@ -25,6 +25,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ParkingDetailScreen } from './details/ParkingDetailScreen';
 import { NotificationSettingsScreen } from './profile/NotificationSettingsScreen';
 import { SecurityScreen } from './profile/SecurityScreen';
+import { BookParkingDetailScreen } from './details/BookParkingDetailScreen';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -73,8 +74,12 @@ export const AppNavigator = () => {
             component={NotificationSettingsScreen}
           />
           <Stack.Screen
-            name={ScreenNames.SecurityScreen}
+            name={ScreenNames.Security}
             component={SecurityScreen}
+          />
+          <Stack.Screen
+            name={ScreenNames.BookParking}
+            component={BookParkingDetailScreen}
           />
         </Stack.Group>
       </Stack.Navigator>

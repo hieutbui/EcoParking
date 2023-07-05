@@ -1,4 +1,4 @@
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Assets from 'app/assets/Assets';
 import { Const } from 'app/constants/Const';
 import { Font, FontSize } from 'app/constants/Styles';
@@ -13,6 +13,7 @@ import { View, Text, Image } from 'react-native';
 export const ParkingDetailScreen = () => {
   const route = useRoute();
   const { t } = useTranslation();
+  const navigation = useNavigation();
   const { parkingInfo, duration, distance } = route?.params;
   const { address, available, image, name, parkType, quantity } = parkingInfo;
   return (
@@ -143,6 +144,9 @@ export const ParkingDetailScreen = () => {
           title={t('Book Parking')}
           type="positive"
           style={{ width: (Const.deviceWidth - 62) / 2 - 20 }}
+          onPress={() => {
+            NavigatorUtils.gotoBookParking({}, navigation);
+          }}
         />
       </View>
     </View>

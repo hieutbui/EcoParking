@@ -137,7 +137,17 @@ const gotoNotificationSettings = (params, navigation = rootNavigation) => {
  */
 const gotoSecurity = (params, navigation = rootNavigation) => {
   console.log(tag, 'gotoSecurity');
-  navigate(ScreenNames.SecurityScreen, params, navigation);
+  navigate(ScreenNames.Security, params, navigation);
+};
+
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoBookParking = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoBookParking');
+  navigate(ScreenNames.BookParking, params, navigation);
 };
 
 export default {
@@ -150,4 +160,5 @@ export default {
   gotoParkingDetail,
   gotoNotificationSettings,
   gotoSecurity,
+  gotoBookParking,
 };

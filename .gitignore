@@ -64,3 +64,6 @@ yarn-error.log
 
 # env
 env.json
+
+#key
+my-release-key.keystore

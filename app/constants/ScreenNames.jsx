@@ -9,5 +9,6 @@ export const ScreenNames = {
   UpdateProfile: 'UpdateProfile',
   ParkingDetail: 'ParkingDetail',
   NotificationSettings: 'NotificationSettings',
-  SecurityScreen: 'Security',
+  Security: 'Security',
+  BookParking: 'BookParking',
 };
