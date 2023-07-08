@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import Assets from 'app/assets/Assets';
 import { Const } from 'app/constants/Const';
 import { Font, FontSize } from 'app/constants/Styles';
@@ -11,6 +12,7 @@ import { Calendar } from 'react-native-calendars';
 import DatePicker from 'react-native-date-picker';
 
 export const BookParkingDetailScreen = () => {
+  const navigation = useNavigation();
   const { t } = useTranslation();
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().slice(0, 10),
@@ -187,7 +189,9 @@ export const BookParkingDetailScreen = () => {
       <RadiusButton
         type={'positive'}
         title={t('Continue')}
-        onPress={() => {}}
+        onPress={() => {
+          NavigatorUtils.gotoPayment({ type: 'booking' }, navigation);
+        }}
         style={{
           marginBottom: Const.space_40,
           width: Const.deviceWidth - 62,

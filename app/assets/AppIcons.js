@@ -40,4 +40,7 @@ export const AppIcons = {
   icPayment: require('../assets/icons/ic_payment/ic_payment.png'),
   icSecurity: require('../assets/icons/ic_security/ic_security.png'),
   icClock: require('../assets/icons/ic_clock/ic_clock.png'),
+  icUnselectedCircle: require('../assets/icons/ic_unselected_circle/ic_unselected_circle.png'),
+  icSelectedCircle: require('../assets/icons/ic_selected_circle/ic_selected_circle.png'),
+  icBookmarked: require('../assets/icons/ic_bookmarked/ic_bookmarked.png'),
 };

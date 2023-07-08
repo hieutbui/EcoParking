@@ -72,6 +72,10 @@ const gotoMainTabBar = (
   console.log(tag, 'gotoMainTabBar');
   if (needReplace) {
     replace(ScreenNames.MainTabBar, params, navigation);
+    navigation.reset({
+      routes: [{ name: ScreenNames.MainTabBar }],
+      index: 1,
+    });
   } else {
     navigate(ScreenNames.MainTabBar, params, navigation);
   }
@@ -107,6 +111,10 @@ const gotoUpdateProfile = (params, navigation = rootNavigation) => {
 const gotoLogin = (params = null, navigation = rootNavigation) => {
   console.log(tag, 'gotoLogin');
   replace(ScreenNames.Login, {});
+  navigation.reset({
+    routes: [{ name: ScreenNames.Login }],
+    index: 0,
+  });
   navigate(ScreenNames.Login, params, navigation);
 };
 
@@ -150,6 +158,47 @@ const gotoBookParking = (params, navigation = rootNavigation) => {
   navigate(ScreenNames.BookParking, params, navigation);
 };
 
+/**
+ * @author hieubt
+ * @param {{type: 'booking' | 'edit'}} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoPayment = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoPayment');
+  navigate(ScreenNames.Payment, params, navigation);
+};
+
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoReviewSummary = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoReviewSummary');
+  navigate(ScreenNames.ReviewSummary, params, navigation);
+};
+
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoBooking = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoBooking');
+  gotoMainTabBar(params, true, navigation);
+  navigate(ScreenNames.Booking, params, navigation);
+};
+
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoParkingTicket = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoParkingTicket');
+  navigate(ScreenNames.ParkingTicket, params, navigation);
+};
+
 export default {
   goBack,
   gotoHome,
@@ -161,4 +210,8 @@ export default {
   gotoNotificationSettings,
   gotoSecurity,
   gotoBookParking,
+  gotoPayment,
+  gotoReviewSummary,
+  gotoBooking,
+  gotoParkingTicket,
 };

@@ -26,6 +26,9 @@ import { ParkingDetailScreen } from './details/ParkingDetailScreen';
 import { NotificationSettingsScreen } from './profile/NotificationSettingsScreen';
 import { SecurityScreen } from './profile/SecurityScreen';
 import { BookParkingDetailScreen } from './details/BookParkingDetailScreen';
+import { PaymentScreen } from './profile/PaymentScreen';
+import { ReviewSummaryScreen } from './tickets/ReviewSummaryScreen';
+import { ParkingTicketScreen } from './tickets/ParkingTicketScreen';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -41,6 +44,7 @@ export const AppNavigator = () => {
     <NavigationContainer ref={rootNavigation}>
       <Stack.Navigator
         initialRouteName={ScreenNames.Login}
+        detachInactiveScreens={false}
         screenOptions={{
           headerShown: false,
         }}
@@ -80,6 +84,15 @@ export const AppNavigator = () => {
           <Stack.Screen
             name={ScreenNames.BookParking}
             component={BookParkingDetailScreen}
+          />
+          <Stack.Screen name={ScreenNames.Payment} component={PaymentScreen} />
+          <Stack.Screen
+            name={ScreenNames.ReviewSummary}
+            component={ReviewSummaryScreen}
+          />
+          <Stack.Screen
+            name={ScreenNames.ParkingTicket}
+            component={ParkingTicketScreen}
           />
         </Stack.Group>
       </Stack.Navigator>

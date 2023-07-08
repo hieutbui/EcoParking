@@ -240,7 +240,7 @@ export const HomeScreen = () => {
       {/* Park info */}
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        snapPoints={['47%']}
+        snapPoints={['55%']}
         handleIndicatorStyle={{
           width: 55,
           height: Const.space_3,
@@ -257,6 +257,7 @@ export const HomeScreen = () => {
             setFollowUser(true);
           }
         }}
+        style={{ flex: 1 }}
       >
         <View
           style={{
@@ -386,7 +387,7 @@ export const HomeScreen = () => {
       {/* Direction */}
       <BottomSheetModal
         ref={bottomSheetDirectionRef}
-        snapPoints={['30%']}
+        snapPoints={['35%']}
         handleIndicatorStyle={{
           width: 55,
           height: Const.space_3,

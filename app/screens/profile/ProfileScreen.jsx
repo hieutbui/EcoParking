@@ -52,7 +52,9 @@ export const ProfileScreen = () => {
     {
       text: 'Payment',
       leftIcon: Assets.AppIcons.icPayment,
-      onPress: () => {},
+      onPress: () => {
+        NavigatorUtils.gotoPayment({ type: 'edit' }, navigation);
+      },
       isSwitch: false,
     },
     {

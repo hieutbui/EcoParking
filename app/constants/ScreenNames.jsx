@@ -11,4 +11,7 @@ export const ScreenNames = {
   NotificationSettings: 'NotificationSettings',
   Security: 'Security',
   BookParking: 'BookParking',
+  Payment: 'Payment',
+  ReviewSummary: 'ReviewSummary',
+  ParkingTicket: 'ParkingTicket',
 };

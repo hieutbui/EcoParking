@@ -125,7 +125,10 @@ export default function (props) {
                     setShowing(false);
                     button.onPress();
                   }}
-                  style={button.style}
+                  style={[
+                    button.style,
+                    { marginBottom: index === 0 ? Const.space_16 : undefined },
+                  ]}
                 />
               );
             })}
