@@ -135,7 +135,7 @@ export const ReviewSummaryScreen = () => {
       <View
         style={{
           paddingHorizontal: Const.space_31,
-          marginBottom: Const.space_40,
+          marginBottom: Const.space_30,
         }}
       >
         <RadiusButton

@@ -199,6 +199,16 @@ const gotoParkingTicket = (params, navigation = rootNavigation) => {
   navigate(ScreenNames.ParkingTicket, params, navigation);
 };
 
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoSelectVehicle = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoSelectVehicle');
+  navigate(ScreenNames.SelectVehicle, params, navigation);
+};
+
 export default {
   goBack,
   gotoHome,
@@ -214,4 +224,5 @@ export default {
   gotoReviewSummary,
   gotoBooking,
   gotoParkingTicket,
+  gotoSelectVehicle,
 };

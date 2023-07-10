@@ -129,7 +129,7 @@ export const ParkingDetailScreen = () => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           paddingHorizontal: Const.space_31,
-          marginBottom: Const.space_40,
+          marginBottom: Const.space_30,
         }}
       >
         <RadiusButton
@@ -145,7 +145,7 @@ export const ParkingDetailScreen = () => {
           type="positive"
           style={{ width: (Const.deviceWidth - 62) / 2 - 20 }}
           onPress={() => {
-            NavigatorUtils.gotoBookParking({}, navigation);
+            NavigatorUtils.gotoSelectVehicle({}, navigation);
           }}
         />
       </View>

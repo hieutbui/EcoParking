@@ -74,7 +74,7 @@ export const PaymentScreen = () => {
             }}
             style={{
               alignSelf: 'center',
-              marginBottom: Const.space_40,
+              marginBottom: Const.space_30,
             }}
           />
         </View>

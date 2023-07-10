@@ -260,7 +260,7 @@ export const UpdateProfileScreen = () => {
                     paddingLeft: Const.space_35,
                     paddingRight: Const.space_24,
                     justifyContent: 'space-between',
-                    marginBottom: Const.space_40,
+                    marginBottom: Const.space_30,
                   }}
                   onPress={() => refBottomSheetChooseGender.current.show()}
                 >

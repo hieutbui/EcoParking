@@ -14,4 +14,5 @@ export const ScreenNames = {
   Payment: 'Payment',
   ReviewSummary: 'ReviewSummary',
   ParkingTicket: 'ParkingTicket',
+  SelectVehicle: 'SelectVehicle',
 };

@@ -193,7 +193,7 @@ export const BookParkingDetailScreen = () => {
           NavigatorUtils.gotoPayment({ type: 'booking' }, navigation);
         }}
         style={{
-          marginBottom: Const.space_40,
+          marginBottom: Const.space_30,
           width: Const.deviceWidth - 62,
           alignSelf: 'center',
         }}

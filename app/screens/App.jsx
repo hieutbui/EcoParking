@@ -22,26 +22,22 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 const App = () => {
   return (
     <SafeAreaProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <BottomSheetModalProvider>
-          <Provider store={store}>
-            <PersistGate persistor={persistor}>
-              <I18nextProvider i18n={i18n}>
-                {/* statusbar */}
-                <StatusBar
-                  backgroundColor={'transparent'}
-                  translucent
-                  barStyle={'dark-content'}
-                />
-                {/* navigator */}
-                <AppNavigator />
-                {/* root component */}
-                <RootComponent />
-              </I18nextProvider>
-            </PersistGate>
-          </Provider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <I18nextProvider i18n={i18n}>
+            {/* statusbar */}
+            <StatusBar
+              backgroundColor={'transparent'}
+              translucent
+              barStyle={'dark-content'}
+            />
+            {/* navigator */}
+            <AppNavigator />
+            {/* root component */}
+            <RootComponent />
+          </I18nextProvider>
+        </PersistGate>
+      </Provider>
     </SafeAreaProvider>
   );
 };
