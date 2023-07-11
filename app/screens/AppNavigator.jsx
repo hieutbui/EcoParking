@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, createRef } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   createNavigationContainerRef,
@@ -30,11 +30,15 @@ import { PaymentScreen } from './profile/PaymentScreen';
 import { ReviewSummaryScreen } from './tickets/ReviewSummaryScreen';
 import { ParkingTicketScreen } from './tickets/ParkingTicketScreen';
 import { SelectVehicleScreen } from './tickets/SelectVehicleScreen';
+import { DirectionScreen } from './direction/DirectionScreen';
+import { RouteNavigationScreen } from './direction/RouteNavigationScreen';
+import { ParkingTimerScreen } from './tickets/ParkingTImerScreen';
 
 enableScreens();
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 export const rootNavigation = createNavigationContainerRef();
+const routeNameRef = createRef();
 
 /**
  * @author hieubt
@@ -44,10 +48,15 @@ export const AppNavigator = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
-        <NavigationContainer ref={rootNavigation}>
+        <NavigationContainer
+          ref={rootNavigation}
+          onReady={() => {
+            routeNameRef.current =
+              rootNavigation.current.getCurrentRoute().name;
+          }}
+        >
           <Stack.Navigator
             initialRouteName={ScreenNames.Login}
-            detachInactiveScreens={false}
             screenOptions={{
               headerShown: false,
             }}
@@ -65,7 +74,7 @@ export const AppNavigator = () => {
               name={ScreenNames.MainTabBar}
               component={MainTabBar}
             />
-            {/* MODALS */}
+            {/* FUNCTIONAL */}
             <Stack.Group>
               <Stack.Screen
                 name={ScreenNames.UpdateProfile}
@@ -102,6 +111,18 @@ export const AppNavigator = () => {
               <Stack.Screen
                 name={ScreenNames.SelectVehicle}
                 component={SelectVehicleScreen}
+              />
+              <Stack.Screen
+                name={ScreenNames.Direction}
+                component={DirectionScreen}
+              />
+              <Stack.Screen
+                name={ScreenNames.RouteNavigation}
+                component={RouteNavigationScreen}
+              />
+              <Stack.Screen
+                name={ScreenNames.ParkingTimer}
+                component={ParkingTimerScreen}
               />
             </Stack.Group>
           </Stack.Navigator>

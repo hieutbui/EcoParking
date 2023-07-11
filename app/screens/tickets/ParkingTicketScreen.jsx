@@ -124,9 +124,11 @@ export const ParkingTicketScreen = () => {
         }}
       >
         <RadiusButton
-          title={t('Navigate to Parking Lot')}
+          title={t('Parking Timer')}
           type="positive"
-          onPress={() => {}}
+          onPress={() => {
+            NavigatorUtils.gotoParkingTimer({}, navigation);
+          }}
         />
       </View>
     </View>

@@ -55,7 +55,7 @@ const replace = (screen, params, navigation) => {
  * @param {NavigationAction<ParamListBase>} navigation
  */
 const gotoHome = (params = null, navigation = rootNavigation) => {
-  gotoMainTabBar(params, true, navigation);
+  gotoMainTabBar(params, false, navigation);
 };
 
 /**
@@ -72,10 +72,10 @@ const gotoMainTabBar = (
   console.log(tag, 'gotoMainTabBar');
   if (needReplace) {
     replace(ScreenNames.MainTabBar, params, navigation);
-    navigation.reset({
-      routes: [{ name: ScreenNames.MainTabBar }],
-      index: 1,
-    });
+    // navigation.reset({
+    //   routes: [{ name: ScreenNames.MainTabBar }],
+    //   index: 1,
+    // });
   } else {
     navigate(ScreenNames.MainTabBar, params, navigation);
   }
@@ -209,6 +209,36 @@ const gotoSelectVehicle = (params, navigation = rootNavigation) => {
   navigate(ScreenNames.SelectVehicle, params, navigation);
 };
 
+/**
+ * @author hieubt
+ * @param {{direction: Object, selectedPark: ParkingInfo}} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoDirection = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoDirection');
+  navigate(ScreenNames.Direction, params, navigation);
+};
+
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoRouteNavigation = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoRouteNavigation');
+  navigate(ScreenNames.RouteNavigation, params, navigation);
+};
+
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoParkingTimer = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoParkingTimer');
+  navigate(ScreenNames.ParkingTimer, params, navigation);
+};
+
 export default {
   goBack,
   gotoHome,
@@ -225,4 +255,7 @@ export default {
   gotoBooking,
   gotoParkingTicket,
   gotoSelectVehicle,
+  gotoDirection,
+  gotoRouteNavigation,
+  gotoParkingTimer,
 };

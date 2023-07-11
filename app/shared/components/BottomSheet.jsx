@@ -2,6 +2,7 @@ import { Const } from 'app/constants/Const';
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
 import { StyleProp, ViewStyle } from 'react-native';
+import _ from 'lodash';
 
 /**
  * @author hieubt
@@ -69,6 +70,11 @@ export const BottomSheet = ({
       onSwipeComplete={handleClose}
       onBackdropPress={() => {
         if (hideOnBackdropPress) {
+          handleClose();
+        }
+      }}
+      onModalHide={() => {
+        if (_.isFunction(onClose)) {
           handleClose();
         }
       }}

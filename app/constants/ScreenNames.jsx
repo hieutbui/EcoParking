@@ -15,4 +15,7 @@ export const ScreenNames = {
   ReviewSummary: 'ReviewSummary',
   ParkingTicket: 'ParkingTicket',
   SelectVehicle: 'SelectVehicle',
+  Direction: 'Direction',
+  RouteNavigation: 'RouteNavigation',
+  ParkingTimer: 'ParkingTimer',
 };

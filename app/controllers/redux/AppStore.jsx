@@ -42,6 +42,9 @@ const rootReducer = (state, action) => {
     return reducers(
       {
         app: state.app,
+        account: {
+          userInfo: state.account?.userInfo,
+        },
       },
       action,
     );

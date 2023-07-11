@@ -1,6 +1,5 @@
-import Mapbox, { UserLocationRenderMode } from '@rnmapbox/maps';
-import { Header } from 'app/shared/components/Header';
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import Mapbox from '@rnmapbox/maps';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   Text,
@@ -11,7 +10,11 @@ import {
 } from 'react-native';
 import { mapboxToken, styleURL } from '../../../env.json';
 import { Const } from 'app/constants/Const';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import Assets from 'app/assets/Assets';
 import { Font, FontSize } from 'app/constants/Styles';
 import { BottomSheet } from 'app/shared/components/BottomSheet';
@@ -24,9 +27,10 @@ import { useTranslation } from 'react-i18next';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
 import api from 'app/controllers/api';
 import { BottomUpRef } from 'app/shared/components/BottomUp';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { FullWindowOverlay } from 'react-native-screens';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
+import { CustomMap } from 'app/shared/components/CustomMap';
+import { Header } from 'app/shared/components/Header';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 Mapbox.setAccessToken(mapboxToken);
 
@@ -58,6 +62,10 @@ export const HomeScreen = () => {
 
   const navigation = useNavigation();
 
+  const [showMap, setShowMap] = useState(false);
+
+  const isFocused = useIsFocused();
+
   async function hasLocationPermission() {
     if (
       Const.os === 'ios' ||
@@ -87,19 +95,36 @@ export const HomeScreen = () => {
           parseFloat(selectedPark.latitude.$numberDecimal),
         ],
         zoomLevel: zoom,
-        // bounds: {
-        //   paddingBottom: 300,
-        // },
+        bounds: {
+          paddingBottom: 350,
+        },
       });
     }
-  }, [followUser, selectedPark]);
+    if (!isFocused) {
+      setFollowUser(true);
+      bottomSheetModalRef.current.dismiss();
+    }
+  }, [followUser, selectedPark, isFocused]);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: Assets.AppColors.white }}>
       {/* Park info */}
+      {/* <BottomSheet
+        refBottomSheet={bottomSheetModalRef}
+        enableSwipeToDismiss
+        hideOnBackdropPress
+        onClose={() => {
+          if (!showDirection) {
+            setFollowUser(true);
+          }
+        }}
+        content={
+
+        }
+      /> */}
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        snapPoints={['55%']}
+        snapPoints={['52%']}
         handleIndicatorStyle={{
           width: 55,
           height: Const.space_3,
@@ -116,11 +141,10 @@ export const HomeScreen = () => {
             setFollowUser(true);
           }
         }}
-        containerStyle={{ flex: 1 }}
       >
         <View
           style={{
-            backgroundColor: 'transparent',
+            backgroundColor: Assets.AppColors.white,
             width: '100%',
             alignItems: 'center',
             justifyContent: 'flex-end',
@@ -215,6 +239,11 @@ export const HomeScreen = () => {
                   1000,
                 );
                 bottomSheetModalRef.current.dismiss();
+
+                // NavigatorUtils.gotoDirection(
+                //   { direction, selectedPark },
+                //   navigation,
+                // );
                 bottomSheetDirectionRef.current.present();
               }}
               style={{
@@ -244,6 +273,19 @@ export const HomeScreen = () => {
         </View>
       </BottomSheetModal>
       {/* Direction */}
+      {/* <BottomSheet
+        refBottomSheet={bottomSheetDirectionRef}
+        enableSwipeToDismiss
+        hideOnBackdropPress
+        onClose={() => {
+          setShowDirection(false);
+          setDirection(null);
+          setFollowUser(true);
+        }}
+        content={
+
+        }
+      /> */}
       <BottomSheetModal
         ref={bottomSheetDirectionRef}
         snapPoints={['35%']}
@@ -260,13 +302,11 @@ export const HomeScreen = () => {
           setDirection(null);
           setShowDirection(false);
           setSelectedPark(null);
-          setFollowUser(true);
         }}
-        containerStyle={{ flex: 1 }}
       >
         <View
           style={{
-            backgroundColor: 'transparent',
+            backgroundColor: Assets.AppColors.white,
             width: '100%',
             alignItems: 'center',
             justifyContent: 'flex-end',
@@ -349,147 +389,145 @@ export const HomeScreen = () => {
           />
         </View>
       </BottomSheetModal>
-      <Mapbox.MapView
-        style={{
-          height: Const.deviceHeight,
-          width: Const.deviceWidth,
-          zIndex: 0,
-        }}
-        styleURL={styleURL}
-        logoEnabled={false}
-        scaleBarEnabled={false}
-        attributionEnabled={false}
-        onDidFinishLoadingMap={() => {
-          dispatch(thunkGetAllParks());
-        }}
-      >
-        {/* User marker */}
-        <Mapbox.UserLocation
-          androidRenderMode={'gps'}
-          renderMode={Mapbox.UserLocationRenderMode.Normal}
-          onUpdate={location => {
-            setUserLocate(location);
+      <Header title="Home" />
+      <View>
+        <CustomMap
+          onFinishLoad={() => {
+            dispatch(thunkGetAllParks());
           }}
-        >
-          <Mapbox.Images images={{ userLocation: Assets.AppIcons.icMapCar }} />
-          <Mapbox.CircleLayer
-            id={'outer_circle'}
-            style={{
-              circleColor: Assets.AppColors.feature,
-              circleRadius: 80,
-              circleOpacity: 0.08,
-            }}
-          />
-          <Mapbox.CircleLayer
-            id={'inner_circle'}
-            style={{
-              circleColor: Assets.AppColors.feature,
-              circleRadius: 40,
-              circleOpacity: 0.27,
-            }}
-          />
-          <Mapbox.SymbolLayer
-            id="CustomUserLocation"
-            style={{
-              iconImage: 'userLocation',
-              iconRotationAlignment: 'map',
-              iconAllowOverlap: true,
-              iconSize: 2,
-            }}
-          />
-        </Mapbox.UserLocation>
-        {/* Parking markers */}
-        {!_.isEmpty(parks)
-          ? parks.map((park, index) => {
-              return (
+          content={
+            <>
+              <Mapbox.UserLocation
+                androidRenderMode={'gps'}
+                renderMode={Mapbox.UserLocationRenderMode.Normal}
+                onUpdate={location => {
+                  setUserLocate(location);
+                }}
+              >
+                <Mapbox.Images
+                  images={{ userLocation: Assets.AppIcons.icMapCar }}
+                />
+                <Mapbox.CircleLayer
+                  id={'outer_circle'}
+                  style={{
+                    circleColor: Assets.AppColors.feature,
+                    circleRadius: 80,
+                    circleOpacity: 0.08,
+                  }}
+                />
+                <Mapbox.CircleLayer
+                  id={'inner_circle'}
+                  style={{
+                    circleColor: Assets.AppColors.feature,
+                    circleRadius: 40,
+                    circleOpacity: 0.27,
+                  }}
+                />
+                <Mapbox.SymbolLayer
+                  id="CustomUserLocation"
+                  style={{
+                    iconImage: 'userLocation',
+                    iconRotationAlignment: 'map',
+                    iconAllowOverlap: true,
+                    iconSize: 2,
+                  }}
+                />
+              </Mapbox.UserLocation>
+              {/* Parking markers */}
+              {!_.isEmpty(parks)
+                ? parks.map((park, index) => {
+                    return (
+                      <Mapbox.ShapeSource
+                        key={park.name.toString() + index.toString()}
+                        id={park.name.toString() + index.toString()}
+                        shape={{
+                          type: 'Feature',
+                          properties: {
+                            id: 'asd',
+                          },
+                          geometry: {
+                            type: 'Point',
+                            coordinates: [
+                              parseFloat(park.longitude.$numberDecimal),
+                              parseFloat(park.latitude.$numberDecimal),
+                            ],
+                          },
+                        }}
+                        onPress={async () => {
+                          setSelectedPark(park);
+                          setFollowUser(false);
+                          utils.showLoading({ message: t('Loading') + '...' });
+                          try {
+                            const result = await api.park.getDirection({
+                              startLongitude: userLocate.coords.longitude,
+                              startLatitude: userLocate.coords.latitude,
+                              endLongitude: park.longitude.$numberDecimal,
+                              endLatitude: park.latitude.$numberDecimal,
+                            });
+                            setDirection(result);
+                            // bottomSheetModalRef.current.present();
+                            utils.hideLoading();
+                          } catch (error) {
+                            console.log({ error });
+                            bottomSheetModalRef.current.dismiss();
+                            utils.hideLoading();
+                            utils.toast({ message: t('Cannot get direction') });
+                          }
+                        }}
+                      >
+                        <Mapbox.Images
+                          images={{ markerIcon: Assets.AppIcons.icMapParking }}
+                        />
+                        <Mapbox.SymbolLayer
+                          id={park.name.toString() + 'marker'}
+                          sourceID={park.name.toString() + index.toString()}
+                          style={{
+                            iconImage: 'markerIcon',
+                            iconSize: 4,
+                            iconAllowOverlap: true,
+                            textField:
+                              !_.isEmpty(selectedPark) &&
+                              selectedPark.name.toString() + 'marker' ===
+                                park.name.toString() + 'marker'
+                                ? park.name.toString()
+                                : undefined,
+                            textOffset: [0, -2],
+                            textColor: '#E55D4C',
+                          }}
+                        />
+                      </Mapbox.ShapeSource>
+                    );
+                  })
+                : null}
+              {/* Route */}
+              {!_.isEmpty(direction) && showDirection ? (
                 <Mapbox.ShapeSource
-                  key={park.name.toString() + index.toString()}
-                  id={park.name.toString() + index.toString()}
-                  shape={{
-                    type: 'Feature',
-                    properties: {
-                      id: 'asd',
-                    },
-                    geometry: {
-                      type: 'Point',
-                      coordinates: [
-                        parseFloat(park.longitude.$numberDecimal),
-                        parseFloat(park.latitude.$numberDecimal),
-                      ],
-                    },
-                  }}
-                  onPress={async () => {
-                    setSelectedPark(park);
-                    setFollowUser(false);
-                    utils.showLoading({ message: t('Loading') + '...' });
-                    try {
-                      const result = await api.park.getDirection({
-                        startLongitude: userLocate.coords.longitude,
-                        startLatitude: userLocate.coords.latitude,
-                        endLongitude: park.longitude.$numberDecimal,
-                        endLatitude: park.latitude.$numberDecimal,
-                      });
-                      setDirection(result);
-                      // bottomSheetModalRef.current.present();
-                      utils.hideLoading();
-                    } catch (error) {
-                      console.log({ error });
-                      bottomSheetModalRef.current.dismiss();
-                      utils.hideLoading();
-                      utils.toast({ message: t('Cannot get direction') });
-                    }
-                  }}
+                  id="DirectionShapeSource"
+                  shape={direction.routes[0].geometry}
                 >
-                  <Mapbox.Images
-                    images={{ markerIcon: Assets.AppIcons.icMapParking }}
-                  />
-                  <Mapbox.SymbolLayer
-                    id={park.name.toString() + 'marker'}
-                    sourceID={park.name.toString() + index.toString()}
+                  <Mapbox.LineLayer
+                    id="routeFill"
                     style={{
-                      iconImage: 'markerIcon',
-                      iconSize: 4,
-                      iconAllowOverlap: true,
-                      textField:
-                        !_.isEmpty(selectedPark) &&
-                        selectedPark.name.toString() + 'marker' ===
-                          park.name.toString() + 'marker'
-                          ? park.name.toString()
-                          : undefined,
-                      textOffset: [0, -2],
-                      textColor: '#E55D4C',
+                      lineColor: '#BC0063',
+                      lineWidth: 13,
+                      lineCap: Mapbox.LineJoin.Round,
+                      lineOpacity: 0.4,
                     }}
                   />
                 </Mapbox.ShapeSource>
-              );
-            })
-          : null}
-        {/* Route */}
-        {!_.isEmpty(direction) && showDirection ? (
-          <Mapbox.ShapeSource
-            id="DirectionShapeSource"
-            shape={direction.routes[0].geometry}
-          >
-            <Mapbox.LineLayer
-              id="routeFill"
-              style={{
-                lineColor: '#BC0063',
-                lineWidth: 13,
-                lineCap: Mapbox.LineJoin.Round,
-                lineOpacity: 0.4,
-              }}
-            />
-          </Mapbox.ShapeSource>
-        ) : null}
-        {/* camera config */}
-        <Mapbox.Camera
-          ref={camera}
-          zoomLevel={zoom}
-          followUserLocation={followUser}
-          followUserMode={Mapbox.UserTrackingMode.Follow}
-          allowUpdates
+              ) : null}
+              {/* camera config */}
+              <Mapbox.Camera
+                ref={camera}
+                zoomLevel={zoom}
+                followUserLocation={followUser}
+                followUserMode={Mapbox.UserTrackingMode.Follow}
+                allowUpdates
+              />
+            </>
+          }
         />
-      </Mapbox.MapView>
+      </View>
     </View>
   );
 };
