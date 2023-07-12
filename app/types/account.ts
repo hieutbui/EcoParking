@@ -14,5 +14,8 @@ export interface AccountState {
     accessToken: string;
     refreshToken: string;
   };
+  ongoing: [];
+  completed: [];
+  canceled: [];
   status: 'loggingIn' | 'loggedIn' | 'loggedOut' | 'loggingOut';
 }

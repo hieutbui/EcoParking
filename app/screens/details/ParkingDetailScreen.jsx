@@ -145,7 +145,10 @@ export const ParkingDetailScreen = () => {
           type="positive"
           style={{ width: (Const.deviceWidth - 62) / 2 - 20 }}
           onPress={() => {
-            NavigatorUtils.gotoSelectVehicle({}, navigation);
+            NavigatorUtils.gotoSelectVehicle(
+              { parkingId: parkingInfo },
+              navigation,
+            );
           }}
         />
       </View>

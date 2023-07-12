@@ -4,7 +4,7 @@ import { Font, FontSize, SecondFont } from 'app/constants/Styles';
 import api from 'app/controllers/api';
 import { Header } from 'app/shared/components/Header';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   View,
@@ -14,47 +14,109 @@ import {
   StyleProp,
   TextStyle,
   ViewStyle,
+  ScrollView,
 } from 'react-native';
 import { SceneMap, TabView, TabBar } from 'react-native-tab-view';
 import { ParkingInfo } from 'app/types';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import { BottomSheet } from 'app/shared/components/BottomSheet';
+import { useDispatch } from 'react-redux';
+import { thunkGetBooking } from 'app/controllers/slice/account.slice';
+import { useAppSelector } from 'app/shared/utils';
+import { useFocusEffect } from '@react-navigation/native';
+
+const ongoingTicket = [];
+const completedTicket = [];
+const canceledTicket = [];
 
 const OngoingRoute = () => {
+  const { ongoing } = useAppSelector(state => state.account);
   return (
-    <View style={styles.tabContainer}>
-      <ParkingCard
-        type="paid"
-        parking={{
-          _id: '3298573209jr',
-          unitPrice: '235y29',
-          name: 'Bãi giữ xe đình Kim Liên',
-          address: '152 P. Xã Đàn, Phương Liên, Đống Đa, Hà Nội, Việt Nam',
-          quantity: 20,
-          image: Assets.AppImages.image_defaultParking,
-          longitude: {
-            $numberDecimal: 105.83830152330626,
-          },
-          latitude: {
-            $numberDecimal: 21.01062391357886,
-          },
-          available: 2,
-          parkType: 0,
-          createdAt: new Date('2023-07-05T17:07:01.920+00:00'),
-          updatedAt: new Date('2023-07-05T17:07:01.920+00:00'),
-          __v: 0,
-        }}
-      />
-    </View>
+    <ScrollView style={styles.tabContainer}>
+      {ongoing.map((item, index) => {
+        return (
+          <ParkingCard
+            key={index}
+            type="paid"
+            parking={{
+              _id: item.parking._id,
+              unitPrice: '235y29',
+              name: item.parking.name,
+              address: item.parking.address,
+              quantity: item.parking.quantity,
+              image: item.parking.image,
+              longitude: {
+                $numberDecimal: item.parking.longitude.$numberDecimal,
+              },
+              latitude: {
+                $numberDecimal: item.parking.latitude.$numberDecimal,
+              },
+            }}
+          />
+        );
+      })}
+    </ScrollView>
   );
 };
 
 const CompleteRoute = () => {
-  return <View style={styles.tabContainer} />;
+  const { completed } = useAppSelector(state => state.account);
+  return (
+    <ScrollView style={styles.tabContainer}>
+      {completed.map((item, index) => {
+        return (
+          <ParkingCard
+            key={index}
+            type="completed"
+            parking={{
+              _id: item.parking._id,
+              unitPrice: '235y29',
+              name: item.parking.name,
+              address: item.parking.address,
+              quantity: item.parking.quantity,
+              image: item.parking.image,
+              longitude: {
+                $numberDecimal: item.parking.longitude.$numberDecimal,
+              },
+              latitude: {
+                $numberDecimal: item.parking.latitude.$numberDecimal,
+              },
+            }}
+          />
+        );
+      })}
+    </ScrollView>
+  );
 };
 
 const CanceledRoute = () => {
-  return <View style={styles.tabContainer} />;
+  const { canceled } = useAppSelector(state => state.account);
+  return (
+    <ScrollView style={styles.tabContainer}>
+      {canceled.map((item, index) => {
+        return (
+          <ParkingCard
+            key={index}
+            type="canceled"
+            parking={{
+              _id: item.parking._id,
+              unitPrice: '235y29',
+              name: item.parking.name,
+              address: item.parking.address,
+              quantity: item.parking.quantity,
+              image: item.parking.image,
+              longitude: {
+                $numberDecimal: item.parking.longitude.$numberDecimal,
+              },
+              latitude: {
+                $numberDecimal: item.parking.latitude.$numberDecimal,
+              },
+            }}
+          />
+        );
+      })}
+    </ScrollView>
+  );
 };
 
 const renderScene = SceneMap({
@@ -244,7 +306,7 @@ const ParkingCard = props => {
         }}
       >
         <Image
-          source={parking.image}
+          source={{ uri: parking.image }}
           style={{
             width: 98,
             height: 98,
@@ -299,7 +361,7 @@ const ParkingCard = props => {
                   color: Assets.AppColors.feature,
                 }}
               >
-                $6.58
+                $0
               </Text>
               <Text
                 style={{

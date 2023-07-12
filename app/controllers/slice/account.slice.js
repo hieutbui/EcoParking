@@ -8,6 +8,7 @@ import Assets from 'app/assets/Assets';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import { rootNavigation } from 'app/screens/AppNavigator';
 import Global from 'app/constants/Global';
+import { store } from '../redux/AppStore';
 
 /**
  * @type {AccountState}
@@ -15,6 +16,9 @@ import Global from 'app/constants/Global';
 const initialState = {
   userInfo: {},
   status: 'loggedOut',
+  ongoing: [],
+  completed: [],
+  canceled: [],
 };
 
 export const thunkLogin = createAsyncThunk(
@@ -70,6 +74,22 @@ export const thunkLogout = createAsyncThunk(
   async (payload, __thunkAPI) => {
     try {
       console.log('logout');
+    } catch (error) {
+      return __thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
+export const thunkGetBooking = createAsyncThunk(
+  '/getBooking',
+  /**
+   *
+   * @param {{userId: string}} payload
+   */
+  async (payload, __thunkAPI) => {
+    try {
+      const result = await api.auth.getBooking({ userId: payload.userId });
+      return result.data;
     } catch (error) {
       return __thunkAPI.rejectWithValue(error);
     }
@@ -152,6 +172,31 @@ const AccountSlice = createSlice({
         } else {
           utils.hideLoading();
           utils.toast({ message: i18n.t('Cannot update profile') });
+        }
+      })
+      .addCase(thunkGetBooking.rejected, (state, { payload }) => {
+        utils.hideLoading();
+        utils.toast({ message: i18n.t('Cannot load booking') });
+      })
+      .addCase(thunkGetBooking.pending, state => {
+        utils.showLoading({ message: i18n.t('Loading') + '...' });
+      })
+      .addCase(thunkGetBooking.fulfilled, (state, { payload }) => {
+        utils.hideDialog();
+        if (payload) {
+          const ongoingList = [];
+          const completedList = [];
+          const canceledList = [];
+          payload.forEach(element => {
+            if (element.endTime) {
+              completedList.push(element);
+            } else if (element.startTime && !element.endTime) {
+              ongoingList.push(element);
+            }
+          });
+          state.ongoing = ongoingList;
+          state.completed = completedList;
+          state.canceled = canceledList;
         }
       }),
 });

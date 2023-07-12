@@ -15,6 +15,9 @@ export const PaymentScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const [isSelectGoogle, setIsSelectGoogle] = useState(false);
+  const [isSelectPaypal, setIsSelectPaypal] = useState(false);
+  const [isSelectApple, setIsSelectApple] = useState(false);
+  const [isSelected, setIsSelected] = useState('');
   return (
     <View
       style={{
@@ -51,12 +54,44 @@ export const PaymentScreen = () => {
           <RadioButton
             type={'payment'}
             title="Google"
-            message="test"
             isSelected={isSelectGoogle}
             onPress={() => {
               setIsSelectGoogle(true);
+              setIsSelectApple(false);
+              setIsSelectPaypal(false);
+              setIsSelected('google');
             }}
-            leftIcon={Assets.AppIcons.icBookingActive}
+            leftIcon={Assets.AppIcons.icGoogle}
+            style={{
+              marginBottom: Const.space_22,
+            }}
+          />
+          <RadioButton
+            type={'payment'}
+            title="Paypal"
+            isSelected={isSelectPaypal}
+            onPress={() => {
+              setIsSelectGoogle(false);
+              setIsSelectApple(false);
+              setIsSelectPaypal(true);
+              setIsSelected('paypal');
+            }}
+            leftIcon={Assets.AppIcons.icPaypal}
+            style={{
+              marginBottom: Const.space_22,
+            }}
+          />
+          <RadioButton
+            type={'payment'}
+            title="Apple"
+            isSelected={isSelectApple}
+            onPress={() => {
+              setIsSelectGoogle(false);
+              setIsSelectApple(true);
+              setIsSelectPaypal(false);
+              setIsSelected('apple');
+            }}
+            leftIcon={Assets.AppIcons.icApple}
           />
         </View>
       </View>
@@ -70,7 +105,16 @@ export const PaymentScreen = () => {
             type={'positive'}
             title={t('Continue')}
             onPress={() => {
-              NavigatorUtils.gotoReviewSummary({}, navigation);
+              NavigatorUtils.gotoReviewSummary(
+                {
+                  parkingId: route.params?.parkingId,
+                  carNumber: route.params?.carNumber,
+                  checkedIn: route.params?.checkedIn,
+                  checkedOut: route.params?.checkedOut,
+                  payment: isSelected,
+                },
+                navigation,
+              );
             }}
             style={{
               alignSelf: 'center',

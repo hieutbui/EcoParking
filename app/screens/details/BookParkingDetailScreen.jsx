@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Assets from 'app/assets/Assets';
 import { Const } from 'app/constants/Const';
 import { Font, FontSize } from 'app/constants/Styles';
@@ -13,6 +13,7 @@ import DatePicker from 'react-native-date-picker';
 
 export const BookParkingDetailScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   const { t } = useTranslation();
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().slice(0, 10),
@@ -74,7 +75,7 @@ export const BookParkingDetailScreen = () => {
             textSectionTitleColor: Assets.AppColors.black,
             selectedDayBackgroundColor: Assets.AppColors.feature,
             selectedDayTextColor: '#ffffff',
-            todayTextColor: Assets.AppColors.white,
+            todayTextColor: Assets.AppColors.black,
             dayTextColor: Assets.AppColors.black,
             textDisabledColor: '#d9e1e8',
             monthTextColor: Assets.AppColors.black,
@@ -167,7 +168,7 @@ export const BookParkingDetailScreen = () => {
                   fontFamily: Font.semiBold,
                 }}
               >
-                {startTime.getHours() + ':' + startTime.getMinutes()}
+                {endTime.getHours() + ':' + endTime.getMinutes()}
               </Text>
               <Image
                 source={Assets.AppIcons.icClock}
@@ -190,7 +191,16 @@ export const BookParkingDetailScreen = () => {
         type={'positive'}
         title={t('Continue')}
         onPress={() => {
-          NavigatorUtils.gotoPayment({ type: 'booking' }, navigation);
+          NavigatorUtils.gotoPayment(
+            {
+              type: 'booking',
+              parkingId: route.params?.parkingId,
+              carNumber: route.params?.carNumber,
+              checkedIn: startTime.toISOString(),
+              checkedOut: endTime.toISOString(),
+            },
+            navigation,
+          );
         }}
         style={{
           marginBottom: Const.space_30,

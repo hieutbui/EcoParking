@@ -89,8 +89,42 @@ const updateProfile = async params => {
   );
 };
 
+/**
+ * @author hieubt
+ * @param {{userId: string}} params
+ */
+const getBooking = async params => {
+  const { userId } = params;
+  return await axiosSendRequest(
+    'post',
+    `${baseApiUrl}/users/get-booking`,
+    { userId },
+    {
+      Authorization: `Bearer ${Global.AccessToken}`,
+    },
+  );
+};
+
+/**
+ * @author hieubt
+ * @param {{checkedIn: Date, checkedOut: Date, customerId: string, parkingId: string, carNumber: string}} params
+ */
+const createNewTicket = async params => {
+  const { checkedIn, checkedOut, customerId, parkingId, carNumber } = params;
+  return await axiosSendRequest(
+    'post',
+    `${baseApiUrl}/tickets/create-new-ticket`,
+    { checkedIn, checkedOut, customerId, parkingId, carNumber },
+    {
+      Authorization: `Bearer ${Global.AccessToken}`,
+    },
+  );
+};
+
 export default {
   login,
   register,
   updateProfile,
+  getBooking,
+  createNewTicket,
 };

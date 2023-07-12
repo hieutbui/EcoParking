@@ -1,11 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Assets from 'app/assets/Assets';
 import { Const } from 'app/constants/Const';
 import { Font, FontSize } from 'app/constants/Styles';
+import api from 'app/controllers/api';
 import { Header } from 'app/shared/components/Header';
 import { RadioButton } from 'app/shared/components/RadioButton';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
-import utils from 'app/shared/utils';
+import utils, { useAppSelector } from 'app/shared/utils';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,32 +15,63 @@ import { View, Text } from 'react-native';
 export const ReviewSummaryScreen = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const amount = 8.0;
-  const taxes = 0.08;
+  const route = useRoute();
+  const { userInfo } = useAppSelector(state => state.account);
+  const amount = 0.0;
+  const taxes = 0.0;
   const total = amount + taxes;
+  const date = new Date(route.params?.checkedIn);
+  const displayDate =
+    date.getMonth() + date.getDate() + ', ' + date.getFullYear();
+  const duration =
+    new Date(route.params?.checkedIn).getHours() +
+    ':' +
+    new Date(route.params?.checkedIn).getMinutes() +
+    ' - ' +
+    new Date(route.params?.checkedOut).getHours() +
+    ':' +
+    new Date(route.params?.checkedOut).getMinutes();
+  let paymentIcon;
+  let paymentTitle;
+  switch (route.params?.payment) {
+    case 'paypal':
+      paymentIcon = Assets.AppIcons.icPaypal;
+      paymentTitle = 'Paypal';
+      break;
+    case 'google':
+      paymentIcon = Assets.AppIcons.icGoogle;
+      paymentTitle = 'Google';
+      break;
+    case 'apple':
+      paymentIcon = Assets.AppIcons.icApple;
+      paymentTitle = 'Apple';
+      break;
+  }
   /**
    * @type {{fieldName: string, fieldData: string}[]}
    */
   const ticketData = [
     {
       fieldName: t('Parking'),
-      fieldData: '29 P.Võ thị Sáu, Thanh Nhàn, Hai Bà Trưng, Hà Nội, Việt Nam',
+      fieldData: route.params?.parkingId?.name,
     },
     {
       fieldName: t('Address'),
-      fieldData: '9569, trantow Courts',
+      fieldData: route.params?.parkingId?.address,
     },
     {
       fieldName: t('Date'),
-      fieldData: 'May 11, 2023',
+      fieldData: displayDate,
     },
-    {
-      fieldName: t('Duration'),
-      fieldData: '4 hours',
-    },
+    // {
+    //   fieldName: t('Duration'),
+    //   fieldData: Math.abs(
+    //     new Date(route.params?.checkedIn) - new Date(route.params?.checkedOut),
+    //   ),
+    // },
     {
       fieldName: t('Hours'),
-      fieldData: '09:00 AM  -  13:00 PM',
+      fieldData: duration,
     },
   ];
 
@@ -126,10 +158,10 @@ export const ReviewSummaryScreen = () => {
           })}
         </View>
         <RadioButton
-          leftIcon={Assets.AppIcons.icBookingActive}
-          title="sajkfbsakjdgbksjag"
+          leftIcon={paymentIcon}
+          title={paymentTitle}
           rightText={t('change')}
-          onPress={() => {}}
+          onPress={() => NavigatorUtils.goBack()}
         />
       </View>
       <View
@@ -141,7 +173,21 @@ export const ReviewSummaryScreen = () => {
         <RadiusButton
           type={'positive'}
           title={t('Continue')}
-          onPress={() => {
+          onPress={async () => {
+            // await api.auth
+            //   .createNewTicket({
+            //     checkedIn: new Date(route.params?.checkedIn),
+            //     checkedOut: new Date(route.params?.checkedIn),
+            //     customerId: userInfo._id,
+            //     parkingId: route.params?.parkingId?._id,
+            //     carNumber: route.params?.parkingId?.carNumber,
+            //   })
+            //   .then(data => {
+            //     console.log(data);
+            //   })
+            //   .catch(error => {
+            //     console.log(error.response);
+            //   });
             utils.showDialog({
               image: Assets.AppIcons.icSuccessDialog,
               title: t('Successful'),

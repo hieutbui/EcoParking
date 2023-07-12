@@ -150,7 +150,7 @@ const gotoSecurity = (params, navigation = rootNavigation) => {
 
 /**
  * @author hieubt
- * @param {any} params
+ * @param {{parkingId: Object, carNumber: string}} params
  * @param {NavigationProp<ParamListBase>} navigation
  */
 const gotoBookParking = (params, navigation = rootNavigation) => {
@@ -160,7 +160,7 @@ const gotoBookParking = (params, navigation = rootNavigation) => {
 
 /**
  * @author hieubt
- * @param {{type: 'booking' | 'edit'}} params
+ * @param {{type: 'booking' | 'edit', parkingId: Object, carNumber: string, checkedIn: string, checkedOut: string}} params
  * @param {NavigationProp<ParamListBase>} navigation
  */
 const gotoPayment = (params, navigation = rootNavigation) => {
@@ -170,7 +170,7 @@ const gotoPayment = (params, navigation = rootNavigation) => {
 
 /**
  * @author hieubt
- * @param {any} params
+ * @param {{parkingId: Object, carNumber: string, checkedIn: string, checkedOut: string, payment: 'google' | 'paypal' | 'apple'}} params
  * @param {NavigationProp<ParamListBase>} navigation
  */
 const gotoReviewSummary = (params, navigation = rootNavigation) => {
@@ -180,7 +180,7 @@ const gotoReviewSummary = (params, navigation = rootNavigation) => {
 
 /**
  * @author hieubt
- * @param {any} params
+ * @param {{parkingId: Object}} params
  * @param {NavigationProp<ParamListBase>} navigation
  */
 const gotoBooking = (params, navigation = rootNavigation) => {
@@ -201,7 +201,7 @@ const gotoParkingTicket = (params, navigation = rootNavigation) => {
 
 /**
  * @author hieubt
- * @param {any} params
+ * @param {{parkingId: Object}} params
  * @param {NavigationProp<ParamListBase>} navigation
  */
 const gotoSelectVehicle = (params, navigation = rootNavigation) => {

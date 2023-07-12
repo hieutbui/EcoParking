@@ -31,6 +31,7 @@ import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import { CustomMap } from 'app/shared/components/CustomMap';
 import { Header } from 'app/shared/components/Header';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { thunkGetBooking } from 'app/controllers/slice/account.slice';
 
 Mapbox.setAccessToken(mapboxToken);
 
@@ -65,6 +66,8 @@ export const HomeScreen = () => {
   const [showMap, setShowMap] = useState(false);
 
   const isFocused = useIsFocused();
+
+  const { userInfo } = useAppSelector(state => state.account);
 
   async function hasLocationPermission() {
     if (
@@ -394,6 +397,7 @@ export const HomeScreen = () => {
         <CustomMap
           onFinishLoad={() => {
             dispatch(thunkGetAllParks());
+            dispatch(thunkGetBooking({ userId: userInfo._id }));
           }}
           content={
             <>
