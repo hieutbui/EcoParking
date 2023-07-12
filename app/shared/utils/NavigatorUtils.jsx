@@ -239,6 +239,16 @@ const gotoParkingTimer = (params, navigation = rootNavigation) => {
   navigate(ScreenNames.ParkingTimer, params, navigation);
 };
 
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoCancelParking = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoCancelParking');
+  navigate(ScreenNames.CancelParking, params, navigation);
+};
+
 export default {
   goBack,
   gotoHome,
@@ -258,4 +268,5 @@ export default {
   gotoDirection,
   gotoRouteNavigation,
   gotoParkingTimer,
+  gotoCancelParking,
 };

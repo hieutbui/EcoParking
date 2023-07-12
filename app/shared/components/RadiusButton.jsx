@@ -24,6 +24,7 @@ import _ from 'lodash';
  * @property {StyleProp<TextStyle>} titleStyle
  * @property {StyleProp<ImageStyle>} rightIconStyle
  * @property {() => void=} onPress
+ * @property {() => void=} onLongPress
  * @param {Param} param
  * @returns {JSX.Element}
  */
@@ -35,6 +36,7 @@ export const RadiusButton = ({
   titleStyle,
   rightIconStyle,
   onPress,
+  onLongPress,
 }) => {
   /**
    * @type {StyleProp<ViewStyle>}
@@ -109,6 +111,7 @@ export const RadiusButton = ({
       style={[defaultButtonStyle, style]}
       onPress={onPress}
       disabled={!_.isFunction(onPress)}
+      onLongPress={onLongPress}
     >
       <Text style={[defaultTitleStyle, titleStyle]}>{title}</Text>
       {rightIcon ? (

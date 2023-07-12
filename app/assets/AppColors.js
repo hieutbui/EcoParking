@@ -155,6 +155,10 @@ export const AppColors = {
   starDust: '#A1A1A1',
   davyGrey: '#565656',
   whiteSmoke: '#F4F4F4',
+  snowDrift: '#F9F9F9',
+  malachite: '#01DB3E',
+  grapeFruit: '#DF321D',
+  carbonGrey: '#5A5A5A',
   /* App colors */
   feature: '#BC0063',
   textRegular: 'rgba(53, 53, 53, 0.5)',

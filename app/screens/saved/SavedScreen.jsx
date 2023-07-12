@@ -4,9 +4,14 @@ import { Header } from 'app/shared/components/Header';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text } from 'react-native';
+import { ParkingInfo } from 'app/types';
 
 export const SavedScreen = () => {
   const { t } = useTranslation();
+  /**
+   * @type {ParkingInfo[]}
+   */
+  const bookmarkData = [];
   return (
     <View
       style={{

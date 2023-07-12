@@ -43,4 +43,7 @@ export const AppIcons = {
   icUnselectedCircle: require('../assets/icons/ic_unselected_circle/ic_unselected_circle.png'),
   icSelectedCircle: require('../assets/icons/ic_selected_circle/ic_selected_circle.png'),
   icBookmarked: require('../assets/icons/ic_bookmarked/ic_bookmarked.png'),
+  icApple: require('../assets/icons/ic_apple/ic_apple.png'),
+  icGoogle: require('../assets/icons/ic_google/ic_google.png'),
+  icPaypal: require('../assets/icons/ic_paypal/ic_paypal.png'),
 };

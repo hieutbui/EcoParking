@@ -33,6 +33,7 @@ import { SelectVehicleScreen } from './tickets/SelectVehicleScreen';
 import { DirectionScreen } from './direction/DirectionScreen';
 import { RouteNavigationScreen } from './direction/RouteNavigationScreen';
 import { ParkingTimerScreen } from './tickets/ParkingTImerScreen';
+import { CancelParking } from './tickets/CancelParkingScreen';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -123,6 +124,10 @@ export const AppNavigator = () => {
               <Stack.Screen
                 name={ScreenNames.ParkingTimer}
                 component={ParkingTimerScreen}
+              />
+              <Stack.Screen
+                name={ScreenNames.CancelParking}
+                component={CancelParking}
               />
             </Stack.Group>
           </Stack.Navigator>

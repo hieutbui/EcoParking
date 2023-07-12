@@ -18,4 +18,5 @@ export const ScreenNames = {
   Direction: 'Direction',
   RouteNavigation: 'RouteNavigation',
   ParkingTimer: 'ParkingTimer',
+  CancelParking: 'CancelParking',
 };

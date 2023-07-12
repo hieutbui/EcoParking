@@ -4,6 +4,7 @@ export interface ParkingState {
 
 export interface ParkingInfo {
   _id: string;
+  unitPrice: string;
   name: string;
   address: string;
   quantity: number;

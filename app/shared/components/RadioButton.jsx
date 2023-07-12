@@ -38,6 +38,7 @@ export const RadioButton = ({
   message,
   type,
   onPress,
+  onLongPress,
   leftIconStyle,
   titleStyle,
   messageStyle,
@@ -67,6 +68,9 @@ export const RadioButton = ({
     <TouchableOpacity
       onPress={() => {
         _.isFunction(onPress) && onPress();
+      }}
+      onLongPress={() => {
+        _.isFunction(onLongPress) && onLongPress();
       }}
       style={[
         {
