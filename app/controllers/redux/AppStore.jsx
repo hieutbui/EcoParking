@@ -25,11 +25,13 @@ import appSlice from '../slice/app.slice';
 import accountSlice from '../slice/account.slice';
 import parkingSlice from '../slice/parking.slice';
 import Global from 'app/constants/Global';
+import ticketSlice from '../slice/ticket.slice';
 
 const reducers = combineReducers({
   app: appSlice,
   account: accountSlice,
   parking: parkingSlice,
+  ticket: ticketSlice,
 });
 
 /**
@@ -70,7 +72,7 @@ const persisConfig = {
   storage: AsyncStorage,
   stateReconciler: autoMergeLevel2,
   blacklist: [],
-  whitelist: ['app', 'account', 'parking'],
+  whitelist: ['app', 'account', 'parking', 'ticket'],
   transforms: [],
 };
 

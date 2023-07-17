@@ -3,6 +3,7 @@ import Assets from 'app/assets/Assets';
 import { Const } from 'app/constants/Const';
 import { Font, FontSize } from 'app/constants/Styles';
 import api from 'app/controllers/api';
+import { thunkCreateTicket } from 'app/controllers/slice/ticket.slice';
 import { Header } from 'app/shared/components/Header';
 import { RadioButton } from 'app/shared/components/RadioButton';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
@@ -11,9 +12,11 @@ import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Text } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 export const ReviewSummaryScreen = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
   const { userInfo } = useAppSelector(state => state.account);
@@ -173,43 +176,16 @@ export const ReviewSummaryScreen = () => {
         <RadiusButton
           type={'positive'}
           title={t('Continue')}
-          onPress={async () => {
-            // await api.auth
-            //   .createNewTicket({
-            //     checkedIn: new Date(route.params?.checkedIn),
-            //     checkedOut: new Date(route.params?.checkedIn),
-            //     customerId: userInfo._id,
-            //     parkingId: route.params?.parkingId?._id,
-            //     carNumber: route.params?.parkingId?.carNumber,
-            //   })
-            //   .then(data => {
-            //     console.log(data);
-            //   })
-            //   .catch(error => {
-            //     console.log(error.response);
-            //   });
-            utils.showDialog({
-              image: Assets.AppIcons.icSuccessDialog,
-              title: t('Successful'),
-              message: t('Successfully made payment for you parking'),
-              options: [
-                {
-                  type: 'positive',
-                  title: t('View Parking Ticket'),
-                  onPress: () => {
-                    utils.hideDialog();
-                    NavigatorUtils.gotoParkingTicket({}, navigation);
-                  },
-                },
-                {
-                  type: 'negative',
-                  title: t('Cancel'),
-                  onPress: () => {
-                    utils.hideDialog();
-                  },
-                },
-              ],
-            });
+          onPress={() => {
+            dispatch(
+              thunkCreateTicket({
+                checkedIn: new Date(route.params?.checkedIn),
+                checkedOut: new Date(route.params?.checkedOut),
+                customerId: userInfo._id,
+                parkingId: route.params?.parkingId?._id,
+                carNumber: route.params?.carNumber,
+              }),
+            );
           }}
         />
       </View>

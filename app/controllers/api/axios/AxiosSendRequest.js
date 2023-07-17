@@ -57,6 +57,7 @@ export async function axiosSendRequest(
     .catch(function (error) {
       console.log({ error });
       responseData.message = error.message;
+      console.log({ detail: error.response.data.error });
       console.warn('[Axios]', error);
       return { data: responseData };
     })
