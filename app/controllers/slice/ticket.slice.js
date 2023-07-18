@@ -6,6 +6,7 @@ import i18n from '../language/i18n';
 import Assets from 'app/assets/Assets';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import { rootNavigation } from 'app/screens/AppNavigator';
+import _ from 'lodash';
 
 /**
  * @type {Ticket}
@@ -47,22 +48,26 @@ const TicketSlice = createSlice({
       })
       .addCase(thunkCreateTicket.fulfilled, (state, { payload }) => {
         utils.hideLoading();
-        state.singleTicket = payload;
-        utils.showDialog({
-          image: Assets.AppIcons.icSuccessDialog,
-          title: i18n.t('Successful'),
-          message: i18n.t('Successfully made payment for your parking'),
-          options: [
-            {
-              type: 'positive',
-              title: i18n.t('View Parking Ticket'),
-              onPress: () => {
-                utils.hideDialog();
-                NavigatorUtils.gotoParkingTicket({}, rootNavigation);
+        if (!_.isEmpty(payload)) {
+          state.singleTicket = payload;
+          utils.showDialog({
+            image: Assets.AppIcons.icSuccessDialog,
+            title: i18n.t('Successful'),
+            message: i18n.t('Successfully made payment for your parking'),
+            options: [
+              {
+                type: 'positive',
+                title: i18n.t('View Parking Ticket'),
+                onPress: () => {
+                  utils.hideDialog();
+                  NavigatorUtils.gotoParkingTicket({}, rootNavigation);
+                },
               },
-            },
-          ],
-        });
+            ],
+          });
+        } else {
+          utils.toast({ message: i18n.t('Can not create ticket') });
+        }
       }),
 });
 

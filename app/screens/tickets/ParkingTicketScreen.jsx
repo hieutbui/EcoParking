@@ -4,6 +4,7 @@ import { Const } from 'app/constants/Const';
 import { Font, FontSize } from 'app/constants/Styles';
 import { Header } from 'app/shared/components/Header';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
+import { useAppSelector } from 'app/shared/utils';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +15,10 @@ export const ParkingTicketScreen = () => {
   const { t } = useTranslation();
 
   const navigation = useNavigation();
+
+  const { account, ticket } = useAppSelector(state => state);
+
+  const { name, phoneNumber } = account.userInfo;
 
   const QRvalue = 'asdkjfbaskjg';
 

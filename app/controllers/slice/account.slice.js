@@ -188,9 +188,14 @@ const AccountSlice = createSlice({
           const completedList = [];
           const canceledList = [];
           payload.forEach(element => {
-            if (element.endTime) {
+            if (element.status === 'completed') {
               completedList.push(element);
-            } else if (element.startTime && !element.endTime) {
+            } else if (element.status === 'canceled') {
+              canceledList.push(element);
+            } else if (
+              element.status === 'paid' ||
+              element.status === 'nowActive'
+            ) {
               ongoingList.push(element);
             }
           });
