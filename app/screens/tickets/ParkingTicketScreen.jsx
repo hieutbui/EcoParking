@@ -1,7 +1,8 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Assets from 'app/assets/Assets';
 import { Const } from 'app/constants/Const';
 import { Font, FontSize } from 'app/constants/Styles';
+import { thunkGetBooking } from 'app/controllers/slice/account.slice';
 import { Header } from 'app/shared/components/Header';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
 import utils, { useAppSelector } from 'app/shared/utils';
@@ -10,15 +11,22 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text, View, StyleSheet } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+import { useDispatch } from 'react-redux';
 
 export const ParkingTicketScreen = () => {
   const { t } = useTranslation();
 
   const navigation = useNavigation();
 
+  const route = useRoute();
+
+  const dispatch = useDispatch();
+
+  const previousScreen = route.params?.previous;
+
   const { account, ticket } = useAppSelector(state => state);
 
-  const { name, phoneNumber } = account.userInfo;
+  const { name, phoneNumber, _id } = account.userInfo;
   const { singleTicket, parkName, carNumber, ticketDetailId } = ticket;
 
   const ticketStart = new Date(singleTicket.checkedIn);
@@ -49,16 +57,17 @@ export const ParkingTicketScreen = () => {
       endTime.getSeconds(),
       endTime.getMilliseconds(),
     );
-    return ((utcEnd - utcStart) / (1000 * 60 * 60)).toFixed(0);
+    return Math.abs(((utcEnd - utcStart) / (1000 * 60 * 60)).toFixed(0));
   }
 
-  const QRvalue = ticketDetailId;
+  const QRvalue =
+    previousScreen === 'create' ? ticketDetailId : route.params?.ticketDetailId;
 
   const QRSize = 200;
 
   const data = {
     name,
-    parking: parkName,
+    parking: previousScreen === 'create' ? parkName : route.params?.parkName,
     duration:
       calculateDuration(
         new Date(singleTicket.checkedIn),
@@ -68,7 +77,7 @@ export const ParkingTicketScreen = () => {
       utils.to12HourTime(new Date(singleTicket.checkedIn)) +
       ' - ' +
       utils.to12HourTime(new Date(singleTicket.checkedOut)),
-    vehicle: carNumber,
+    vehicle: previousScreen === 'create' ? carNumber : route.params?.carNumber,
     date: month + ' ' + day + ', ' + year,
     phone: phoneNumber,
   };
@@ -82,7 +91,10 @@ export const ParkingTicketScreen = () => {
     >
       <Header
         leftIcon={Assets.AppIcons.icBack}
-        onPressLeft={() => NavigatorUtils.gotoBooking({}, navigation)}
+        onPressLeft={() => {
+          dispatch(thunkGetBooking({ userId: _id }));
+          NavigatorUtils.gotoBooking({}, navigation);
+        }}
         title={t('Parking Ticket')}
         style={{
           marginBottom: Const.space_28,

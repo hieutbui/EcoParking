@@ -6,7 +6,9 @@ import {
   StackActions,
   NavigationAction,
 } from '@react-navigation/native';
-import { ParkingInfo } from 'app/types';
+import { ParkingInfo, SingleTicket } from 'app/types';
+import { store } from 'app/controllers/redux/AppStore';
+import { thunkGetBooking } from 'app/controllers/slice/account.slice';
 
 const tag = '[NavigatorUtil]';
 
@@ -186,12 +188,15 @@ const gotoReviewSummary = (params, navigation = rootNavigation) => {
 const gotoBooking = (params, navigation = rootNavigation) => {
   console.log(tag, 'gotoBooking');
   gotoMainTabBar(params, true, navigation);
+  store.dispatch(
+    thunkGetBooking({ userId: store.getState().account.userInfo._id }),
+  );
   navigate(ScreenNames.Booking, params, navigation);
 };
 
 /**
  * @author hieubt
- * @param {any} params
+ * @param {{previous: 'create' | 'booking', ticketDetailId: string, carNumber: string, parkName: string, }} params
  * @param {NavigationProp<ParamListBase>} navigation
  */
 const gotoParkingTicket = (params, navigation = rootNavigation) => {
@@ -241,7 +246,7 @@ const gotoParkingTimer = (params, navigation = rootNavigation) => {
 
 /**
  * @author hieubt
- * @param {any} params
+ * @param {{ticketDetailId: string}} params
  * @param {NavigationProp<ParamListBase>} navigation
  */
 const gotoCancelParking = (params, navigation = rootNavigation) => {

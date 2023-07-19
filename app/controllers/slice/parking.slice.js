@@ -27,6 +27,22 @@ export const thunkGetAllParks = createAsyncThunk(
   },
 );
 
+export const thunkSaveParking = createAsyncThunk(
+  '/saveParking',
+  /**
+   *
+   * @param {{parkingId: string, userId: string}} payload
+   */
+  async (payload, __thunkAPI) => {
+    try {
+      const result = await api.park.saveParking(payload);
+      return result.data;
+    } catch (error) {
+      return __thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 const actions = {};
 
 const ParkingSlice = createSlice({
@@ -37,7 +53,6 @@ const ParkingSlice = createSlice({
     builder
       .addCase(thunkGetAllParks.pending, state => {
         utils.showLoading({ message: i18n.t('Loading') + '...' });
-        console.log('/getAllParks pending');
       })
       .addCase(thunkGetAllParks.rejected, (state, { payload }) => {
         utils.hideLoading();
@@ -49,6 +64,16 @@ const ParkingSlice = createSlice({
         if (!_.isEmpty(payload)) {
           state.parks = payload;
         }
+      })
+      .addCase(thunkSaveParking.pending, () => {
+        utils.showLoading({ message: i18n.t('Loading') + '...' });
+      })
+      .addCase(thunkSaveParking.rejected, () => {
+        utils.hideLoading();
+        utils.toast({ message: 'Cannot save parking' });
+      })
+      .addCase(thunkSaveParking.fulfilled, () => {
+        utils.hideLoading();
       }),
 });
 

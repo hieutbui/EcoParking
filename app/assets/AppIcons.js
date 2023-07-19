@@ -46,4 +46,5 @@ export const AppIcons = {
   icApple: require('../assets/icons/ic_apple/ic_apple.png'),
   icGoogle: require('../assets/icons/ic_google/ic_google.png'),
   icPaypal: require('../assets/icons/ic_paypal/ic_paypal.png'),
+  icUnBookmark: require('../assets/icons/ic_unBookmark/ic_unBookmark.png'),
 };

@@ -182,7 +182,7 @@ const AccountSlice = createSlice({
         utils.showLoading({ message: i18n.t('Loading') + '...' });
       })
       .addCase(thunkGetBooking.fulfilled, (state, { payload }) => {
-        utils.hideDialog();
+        utils.hideLoading();
         if (payload) {
           const ongoingList = [];
           const completedList = [];

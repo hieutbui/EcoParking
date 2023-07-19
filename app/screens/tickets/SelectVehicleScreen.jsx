@@ -1,13 +1,14 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Assets from 'app/assets/Assets';
 import { Const } from 'app/constants/Const';
+import { Font, FontSize } from 'app/constants/Styles';
 import { CustomTextInput } from 'app/shared/components/CustomTextInput';
 import { Header } from 'app/shared/components/Header';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const SelectVehicleScreen = () => {
@@ -36,6 +37,16 @@ export const SelectVehicleScreen = () => {
           paddingHorizontal: Const.space_31,
         }}
       >
+        <Text
+          style={{
+            fontFamily: Font.semiBold,
+            fontSize: FontSize.s_18,
+            color: Assets.AppColors.black,
+            marginBottom: Const.space_20,
+          }}
+        >
+          {t('Enter your license plates')}
+        </Text>
         <CustomTextInput
           placeholder={t('Enter car number')}
           onChangeText={text => setCarNumber(text)}
@@ -50,12 +61,14 @@ export const SelectVehicleScreen = () => {
       >
         <RadiusButton
           title={t('Continue')}
-          onPress={() =>
-            NavigatorUtils.gotoBookParking(
-              { parkingId: route.params?.parkingId, carNumber },
-              navigation,
-            )
-          }
+          onPress={() => {
+            if (carNumber) {
+              NavigatorUtils.gotoBookParking(
+                { parkingId: route.params?.parkingId, carNumber },
+                navigation,
+              );
+            }
+          }}
           type="positive"
         />
       </View>

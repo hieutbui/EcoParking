@@ -15,108 +15,29 @@ import {
   TextStyle,
   ViewStyle,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import { SceneMap, TabView, TabBar } from 'react-native-tab-view';
 import { ParkingInfo } from 'app/types';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import { BottomSheet } from 'app/shared/components/BottomSheet';
 import { useDispatch } from 'react-redux';
-import { thunkGetBooking } from 'app/controllers/slice/account.slice';
 import { useAppSelector } from 'app/shared/utils';
-import { useFocusEffect } from '@react-navigation/native';
-
-const ongoingTicket = [];
-const completedTicket = [];
-const canceledTicket = [];
+import { thunkGetSingleTicket } from 'app/controllers/slice/ticket.slice';
 
 const OngoingRoute = () => {
   const { ongoing } = useAppSelector(state => state.account);
-  return (
-    <ScrollView style={styles.tabContainer}>
-      {ongoing.map((item, index) => {
-        return (
-          <ParkingCard
-            key={index}
-            type="paid"
-            parking={{
-              _id: item.parking._id,
-              unitPrice: '235y29',
-              name: item.parking.name,
-              address: item.parking.address,
-              quantity: item.parking.quantity,
-              image: item.parking.image,
-              longitude: {
-                $numberDecimal: item.parking.longitude.$numberDecimal,
-              },
-              latitude: {
-                $numberDecimal: item.parking.latitude.$numberDecimal,
-              },
-            }}
-          />
-        );
-      })}
-    </ScrollView>
-  );
+  return <RenderTabView data={ongoing} />;
 };
 
 const CompleteRoute = () => {
   const { completed } = useAppSelector(state => state.account);
-  return (
-    <ScrollView style={styles.tabContainer}>
-      {completed.map((item, index) => {
-        return (
-          <ParkingCard
-            key={index}
-            type="completed"
-            parking={{
-              _id: item.parking._id,
-              unitPrice: '235y29',
-              name: item.parking.name,
-              address: item.parking.address,
-              quantity: item.parking.quantity,
-              image: item.parking.image,
-              longitude: {
-                $numberDecimal: item.parking.longitude.$numberDecimal,
-              },
-              latitude: {
-                $numberDecimal: item.parking.latitude.$numberDecimal,
-              },
-            }}
-          />
-        );
-      })}
-    </ScrollView>
-  );
+  return <RenderTabView data={completed} />;
 };
 
 const CanceledRoute = () => {
   const { canceled } = useAppSelector(state => state.account);
-  return (
-    <ScrollView style={styles.tabContainer}>
-      {canceled.map((item, index) => {
-        return (
-          <ParkingCard
-            key={index}
-            type="canceled"
-            parking={{
-              _id: item.parking._id,
-              unitPrice: '235y29',
-              name: item.parking.name,
-              address: item.parking.address,
-              quantity: item.parking.quantity,
-              image: item.parking.image,
-              longitude: {
-                $numberDecimal: item.parking.longitude.$numberDecimal,
-              },
-              latitude: {
-                $numberDecimal: item.parking.latitude.$numberDecimal,
-              },
-            }}
-          />
-        );
-      })}
-    </ScrollView>
-  );
+  return <RenderTabView data={canceled} />;
 };
 
 const renderScene = SceneMap({
@@ -213,12 +134,15 @@ export const BookingScreen = () => {
  * @typedef ParkingCardParams
  * @property {'active' | 'paid' | 'completed' | 'canceled'} type
  * @property {ParkingInfo} parking
+ * @property {string} ticketDetailId
+ * @property {string} carNumber
  * @param {ParkingCardParams} props
  * @returns {JSX.Element}
  */
 const ParkingCard = props => {
   const { t } = useTranslation();
-  const { type, parking } = props;
+  const dispatch = useDispatch();
+  const { type, parking, carNumber, ticketDetailId } = props;
   const bottomSheetCancelRef = useRef(null);
   let cardTag;
   /**
@@ -284,11 +208,17 @@ const ParkingCard = props => {
   }
 
   function handleViewTicket() {
-    NavigatorUtils.gotoParkingTicket({});
+    dispatch(thunkGetSingleTicket({ ticketDetailId }));
+    NavigatorUtils.gotoParkingTicket({
+      previous: 'booking',
+      ticketDetailId,
+      parkName: parking.name,
+      carNumber,
+    });
   }
   function handleCancelParking() {
     bottomSheetCancelRef.current.hide();
-    NavigatorUtils.gotoCancelParking({});
+    NavigatorUtils.gotoCancelParking({ ticketDetailId });
   }
   return (
     <View
@@ -298,7 +228,6 @@ const ParkingCard = props => {
         paddingVertical: Const.space_17,
         backgroundColor: Assets.AppColors.snowDrift,
         borderRadius: Const.space_10,
-        marginBottom: Const.space_20,
       }}
     >
       <View
@@ -530,6 +459,60 @@ const ParkingCard = props => {
     </View>
   );
 };
+
+function RenderTabView({ data }) {
+  return (
+    <FlatList
+      data={data}
+      style={styles.tabContainer}
+      ItemSeparatorComponent={ItemSeparator}
+      showsVerticalScrollIndicator={false}
+      keyExtractor={item => item._id}
+      renderItem={RenderItem}
+      removeClippedSubviews={true}
+      initialNumToRender={2}
+      windowSize={11}
+      maxToRenderPerBatch={1}
+      ListFooterComponent={ItemSeparator}
+    />
+  );
+}
+
+function ItemSeparator() {
+  return (
+    <View
+      style={{
+        height: Const.space_20,
+        width: '100%',
+      }}
+    />
+  );
+}
+
+function RenderItem({ item, index }) {
+  return (
+    <ParkingCard
+      key={index}
+      type="paid"
+      carNumber={item.carNumber}
+      ticketDetailId={item._id}
+      parking={{
+        _id: item.parking._id,
+        unitPrice: '235y29',
+        name: item.parking.name,
+        address: item.parking.address,
+        quantity: item.parking.quantity,
+        image: item.parking.image,
+        longitude: {
+          $numberDecimal: item.parking.longitude.$numberDecimal,
+        },
+        latitude: {
+          $numberDecimal: item.parking.latitude.$numberDecimal,
+        },
+      }}
+    />
+  );
+}
 
 const styles = StyleSheet.create({
   tabContainer: {

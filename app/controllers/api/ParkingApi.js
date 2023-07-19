@@ -37,7 +37,26 @@ const getDirection = async ({
   );
 };
 
+/**
+ * @author hieubt
+ * @typedef SaveParkingParams
+ * @property {string} parkingId
+ * @property {string} userId
+ * @param {SaveParkingParams} param
+ */
+const saveParking = async ({ parkingId, userId }) => {
+  return axiosSendRequest(
+    'post',
+    `${baseApiUrl}parkings/save-parking`,
+    { parkingId, userId },
+    {
+      Authorization: `Bearer ${Global.AccessToken}`,
+    },
+  );
+};
+
 export default {
   getAll,
   getDirection,
+  saveParking,
 };

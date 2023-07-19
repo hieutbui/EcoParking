@@ -153,7 +153,7 @@ function MainTabBar() {
   return (
     <Tab.Navigator
       initialRouteName={ScreenNames.Home}
-      detachInactiveScreens={false}
+      // detachInactiveScreens={false}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           const routeName = route.name;

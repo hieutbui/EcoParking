@@ -7,6 +7,7 @@ import {
   Platform,
   ImageBackground,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { mapboxToken, styleURL } from '../../../env.json';
 import { Const } from 'app/constants/Const';
@@ -19,7 +20,10 @@ import Assets from 'app/assets/Assets';
 import { Font, FontSize } from 'app/constants/Styles';
 import { BottomSheet } from 'app/shared/components/BottomSheet';
 import { useDispatch } from 'react-redux';
-import { thunkGetAllParks } from 'app/controllers/slice/parking.slice';
+import {
+  thunkGetAllParks,
+  thunkSaveParking,
+} from 'app/controllers/slice/parking.slice';
 import utils, { useAppSelector } from 'app/shared/utils';
 import _ from 'lodash';
 import { ParkingInfo } from 'app/types';
@@ -62,8 +66,6 @@ export const HomeScreen = () => {
   const bottomSheetDirectionRef = useRef(null);
 
   const navigation = useNavigation();
-
-  const [showMap, setShowMap] = useState(false);
 
   const isFocused = useIsFocused();
 
@@ -112,19 +114,6 @@ export const HomeScreen = () => {
   return (
     <View style={{ flex: 1, backgroundColor: Assets.AppColors.white }}>
       {/* Park info */}
-      {/* <BottomSheet
-        refBottomSheet={bottomSheetModalRef}
-        enableSwipeToDismiss
-        hideOnBackdropPress
-        onClose={() => {
-          if (!showDirection) {
-            setFollowUser(true);
-          }
-        }}
-        content={
-
-        }
-      /> */}
       <BottomSheetModal
         ref={bottomSheetModalRef}
         snapPoints={['52%']}
@@ -190,34 +179,56 @@ export const HomeScreen = () => {
           />
           <View
             style={{
-              alignSelf: 'flex-start',
               width: '100%',
               paddingBottom: Const.space_5,
               borderBottomWidth: Const.space_1,
               borderColor: Assets.AppColors.lightgrey,
               marginBottom: Const.space_10,
+              flexDirection: 'row',
+              alignItems: 'center',
             }}
           >
-            <Text
+            <View
               style={{
-                fontFamily: Font.semiBold,
-                fontSize: FontSize.s_20,
-                color: Assets.AppColors.black,
-                fontWeight: '600',
+                width: '90%',
               }}
             >
-              {selectedPark?.name}
-            </Text>
-            <Text
-              style={{
-                color: Assets.AppColors.starDust,
-                fontWeight: '500',
-                fontSize: FontSize.s_15,
-                fontFamily: Font.medium,
+              <Text
+                style={{
+                  fontFamily: Font.semiBold,
+                  fontSize: FontSize.s_20,
+                  color: Assets.AppColors.black,
+                  fontWeight: '600',
+                }}
+              >
+                {selectedPark?.name}
+              </Text>
+              <Text
+                style={{
+                  color: Assets.AppColors.starDust,
+                  fontWeight: '500',
+                  fontSize: FontSize.s_15,
+                  fontFamily: Font.medium,
+                }}
+              >
+                {selectedPark?.address}
+              </Text>
+            </View>
+            <RenderBookmarkIcon
+              onPress={() => {
+                // dispatch(
+                //   thunkSaveParking({
+                //     parkingId: selectedPark._id,
+                //     userId: userInfo._id,
+                //   }),
+                // );
               }}
-            >
-              {selectedPark?.address}
-            </Text>
+              saved={
+                !selectedPark
+                  ? false
+                  : userInfo.saveParkings.includes(selectedPark._id)
+              }
+            />
           </View>
           <View
             style={{
@@ -276,19 +287,6 @@ export const HomeScreen = () => {
         </View>
       </BottomSheetModal>
       {/* Direction */}
-      {/* <BottomSheet
-        refBottomSheet={bottomSheetDirectionRef}
-        enableSwipeToDismiss
-        hideOnBackdropPress
-        onClose={() => {
-          setShowDirection(false);
-          setDirection(null);
-          setFollowUser(true);
-        }}
-        content={
-
-        }
-      /> */}
       <BottomSheetModal
         ref={bottomSheetDirectionRef}
         snapPoints={['35%']}
@@ -535,3 +533,30 @@ export const HomeScreen = () => {
     </View>
   );
 };
+
+/**
+ * @author hieubt
+ * @typedef RenderBookmarkIconParams
+ * @property {()=>void=} onPress
+ * @property {boolean} saved
+ * @param {RenderBookmarkIconParams} param
+ * @returns {JSX.Element}
+ */
+function RenderBookmarkIcon({ onPress, saved }) {
+  const [isSaved, setIsSaved] = useState(saved);
+  const bookmarkIcon = isSaved
+    ? Assets.AppIcons.icBookmarked
+    : Assets.AppIcons.icUnBookmark;
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        setIsSaved(!isSaved);
+        if (_.isFunction(onPress)) {
+          onPress();
+        }
+      }}
+    >
+      <Image source={bookmarkIcon} style={{ resizeMode: 'contain' }} />
+    </TouchableOpacity>
+  );
+}

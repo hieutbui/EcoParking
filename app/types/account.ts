@@ -13,6 +13,7 @@ export interface AccountState {
     updatedAt: Date;
     accessToken: string;
     refreshToken: string;
+    saveParkings: [];
   };
   ongoing: [];
   completed: [];
