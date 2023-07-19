@@ -16,6 +16,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useAppSelector } from 'app/shared/utils';
 import { useDispatch } from 'react-redux';
 import { thunkLogin } from 'app/controllers/slice/account.slice';
+import Global from 'app/constants/Global';
 
 /**
  * @author hieubt
@@ -29,7 +30,7 @@ export const LoginScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (status === 'loggedIn') {
+    if (status === 'loggedIn' && !_.isEmpty(Global.AccessToken)) {
       NavigatorUtils.gotoHome({}, navigation);
     }
   }, [status, navigation]);

@@ -4,7 +4,7 @@ import { Const } from 'app/constants/Const';
 import { Font, FontSize } from 'app/constants/Styles';
 import { Header } from 'app/shared/components/Header';
 import { RadiusButton } from 'app/shared/components/RadiusButton';
-import { useAppSelector } from 'app/shared/utils';
+import utils, { useAppSelector } from 'app/shared/utils';
 import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,19 +19,58 @@ export const ParkingTicketScreen = () => {
   const { account, ticket } = useAppSelector(state => state);
 
   const { name, phoneNumber } = account.userInfo;
+  const { singleTicket, parkName, carNumber, ticketDetailId } = ticket;
 
-  const QRvalue = 'asdkjfbaskjg';
+  const ticketStart = new Date(singleTicket.checkedIn);
+  const month = ticketStart.toLocaleString('default', { month: 'short' });
+  const day = ticketStart.getDate();
+  const year = ticketStart.getFullYear();
+
+  /**
+   *
+   * @param {Date} startTime
+   * @param {Date} endTime
+   */
+  function calculateDuration(startTime, endTime) {
+    const utcStart = Date.UTC(
+      startTime.getFullYear(),
+      startTime.getMonth(),
+      startTime.getDate(),
+      startTime.getHours(),
+      startTime.getMinutes(),
+      startTime.getMilliseconds(),
+    );
+    const utcEnd = Date.UTC(
+      endTime.getFullYear(),
+      endTime.getMonth(),
+      endTime.getDate(),
+      endTime.getHours(),
+      endTime.getMinutes(),
+      endTime.getSeconds(),
+      endTime.getMilliseconds(),
+    );
+    return ((utcEnd - utcStart) / (1000 * 60 * 60)).toFixed(0);
+  }
+
+  const QRvalue = ticketDetailId;
 
   const QRSize = 200;
 
   const data = {
-    name: 'asdfbasg',
-    parking: 'asdga yaw hw has jfas khgs kabk gasg',
-    duration: '4 hours',
-    hours: '09 AM - 13 PM',
-    vehicle: '12A-589259',
-    date: 'May 11, 2023',
-    phone: '+84 899551022',
+    name,
+    parking: parkName,
+    duration:
+      calculateDuration(
+        new Date(singleTicket.checkedIn),
+        new Date(singleTicket.checkedOut),
+      ) + ' hours',
+    hours:
+      utils.to12HourTime(new Date(singleTicket.checkedIn)) +
+      ' - ' +
+      utils.to12HourTime(new Date(singleTicket.checkedOut)),
+    vehicle: carNumber,
+    date: month + ' ' + day + ', ' + year,
+    phone: phoneNumber,
   };
 
   return (
@@ -150,6 +189,6 @@ const styles = StyleSheet.create({
     fontFamily: Font.semiBold,
     fontSize: FontSize.s_15,
     color: Assets.AppColors.black,
-    marginBottom: Const.space_28,
+    marginBottom: Const.space_15,
   },
 });

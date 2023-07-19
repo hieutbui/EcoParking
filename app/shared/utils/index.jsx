@@ -101,4 +101,19 @@ export default {
     const km = distance / 1000;
     return km.toFixed(1) + ' km';
   },
+  /**
+   * @author hieubt
+   * @param {Date} time
+   * @returns {string}
+   */
+  to12HourTime(time) {
+    let hours = time.getHours();
+    let minutes = time.getMinutes();
+    const ap = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours !== 0 ? hours : 12;
+    minutes = minutes.toString().padStart(2, '0');
+    const mergeTime = hours + ':' + minutes + ' ' + ap;
+    return mergeTime;
+  },
 };

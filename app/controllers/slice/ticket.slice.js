@@ -13,6 +13,9 @@ import _ from 'lodash';
  */
 export const initialState = {
   singleTicket: null,
+  parkName: '',
+  carNumber: '',
+  ticketDetailId: '',
 };
 
 const actions = {};
@@ -49,7 +52,10 @@ const TicketSlice = createSlice({
       .addCase(thunkCreateTicket.fulfilled, (state, { payload }) => {
         utils.hideLoading();
         if (!_.isEmpty(payload)) {
-          state.singleTicket = payload;
+          state.singleTicket = payload?.singleTicket;
+          state.parkName = payload?.parkName;
+          state.carNumber = payload?.carNumber;
+          state.ticketDetailId = payload?.ticketDetailId;
           utils.showDialog({
             image: Assets.AppIcons.icSuccessDialog,
             title: i18n.t('Successful'),

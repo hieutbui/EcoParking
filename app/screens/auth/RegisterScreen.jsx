@@ -159,7 +159,7 @@ export const RegisterScreen = () => {
                     </Text>
                   ) : null}
                 </View>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{
                     justifyContent: 'center',
                     flexDirection: 'row',
@@ -187,7 +187,7 @@ export const RegisterScreen = () => {
                   >
                     {t('RememberMe')}
                   </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <RadiusButton
                   type="positive"
                   onPress={() => handleSubmit()}

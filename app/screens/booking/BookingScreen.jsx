@@ -298,6 +298,7 @@ const ParkingCard = props => {
         paddingVertical: Const.space_17,
         backgroundColor: Assets.AppColors.snowDrift,
         borderRadius: Const.space_10,
+        marginBottom: Const.space_20,
       }}
     >
       <View

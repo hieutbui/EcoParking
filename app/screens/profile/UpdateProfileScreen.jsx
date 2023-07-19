@@ -128,17 +128,18 @@ export const UpdateProfileScreen = () => {
               }
               dispatch(thunkUpdateProfile(dataToUpdate));
             } else {
-              dispatch(
-                thunkRegister({
-                  name: values.fullName,
-                  file: values.avatar,
-                  email: values.email,
-                  gender: values.gender,
-                  password: values.password,
-                  phoneNumber: values.phoneNumber,
-                  address: values.address,
-                }),
-              );
+              let dataToRegister = {
+                name: values.fullName,
+                email: values.email,
+                gender: values.gender,
+                password: values.password,
+                phoneNumber: values.phoneNumber,
+                address: values.address,
+              };
+              if (!_.isEmpty(values.avatar)) {
+                dataToRegister = { ...dataToRegister, file: values.avatar };
+              }
+              dispatch(thunkRegister(dataToRegister));
             }
           }}
         >
