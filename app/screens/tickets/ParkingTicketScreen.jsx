@@ -60,8 +60,17 @@ export const ParkingTicketScreen = () => {
     return Math.abs(((utcEnd - utcStart) / (1000 * 60 * 60)).toFixed(0));
   }
 
-  const QRvalue =
-    previousScreen === 'create' ? ticketDetailId : route.params?.ticketDetailId;
+  const currentDate = new Date();
+
+  const valueToCode = {
+    ticketId:
+      previousScreen === 'create'
+        ? ticketDetailId
+        : route.params?.ticketDetailId,
+    time: currentDate,
+  };
+
+  const QRvalue = JSON.stringify(valueToCode);
 
   const QRSize = 200;
 

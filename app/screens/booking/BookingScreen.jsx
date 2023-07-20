@@ -490,10 +490,28 @@ function ItemSeparator() {
 }
 
 function RenderItem({ item, index }) {
+  /**
+   * @type {'active' | 'paid' | 'completed' | 'canceled'}
+   */
+  let cardType;
+  switch (item.status) {
+    case 'paid':
+      cardType = 'paid';
+      break;
+    case 'canceled':
+      cardType = 'canceled';
+      break;
+    case 'nowActive':
+      cardType = 'active';
+      break;
+    case 'completed':
+      cardType = 'completed';
+      break;
+  }
   return (
     <ParkingCard
       key={index}
-      type="paid"
+      type={cardType}
       carNumber={item.carNumber}
       ticketDetailId={item._id}
       parking={{
