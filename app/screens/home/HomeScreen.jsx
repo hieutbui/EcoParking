@@ -22,7 +22,9 @@ import { BottomSheet } from 'app/shared/components/BottomSheet';
 import { useDispatch } from 'react-redux';
 import {
   thunkGetAllParks,
+  thunkGetSavedParkings,
   thunkSaveParking,
+  thunkUnSaveParking,
 } from 'app/controllers/slice/parking.slice';
 import utils, { useAppSelector } from 'app/shared/utils';
 import _ from 'lodash';
@@ -35,7 +37,10 @@ import NavigatorUtils from 'app/shared/utils/NavigatorUtils';
 import { CustomMap } from 'app/shared/components/CustomMap';
 import { Header } from 'app/shared/components/Header';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { thunkGetBooking } from 'app/controllers/slice/account.slice';
+import {
+  thunkGetBooking,
+  thunkGetUserInfo,
+} from 'app/controllers/slice/account.slice';
 
 Mapbox.setAccessToken(mapboxToken);
 
@@ -215,14 +220,8 @@ export const HomeScreen = () => {
               </Text>
             </View>
             <RenderBookmarkIcon
-              onPress={() => {
-                // dispatch(
-                //   thunkSaveParking({
-                //     parkingId: selectedPark._id,
-                //     userId: userInfo._id,
-                //   }),
-                // );
-              }}
+              userId={userInfo._id}
+              parkId={selectedPark?._id}
               saved={
                 !selectedPark
                   ? false
@@ -395,7 +394,7 @@ export const HomeScreen = () => {
         <CustomMap
           onFinishLoad={() => {
             dispatch(thunkGetAllParks());
-            dispatch(thunkGetBooking({ userId: userInfo._id }));
+            // dispatch(thunkGetBooking({ userId: userInfo._id }));
           }}
           content={
             <>
@@ -537,23 +536,32 @@ export const HomeScreen = () => {
 /**
  * @author hieubt
  * @typedef RenderBookmarkIconParams
- * @property {()=>void=} onPress
+ * @property {string} userId
+ * @property {string} parkId
  * @property {boolean} saved
  * @param {RenderBookmarkIconParams} param
  * @returns {JSX.Element}
  */
-function RenderBookmarkIcon({ onPress, saved }) {
+function RenderBookmarkIcon({ userId, parkId, saved }) {
+  const dispatch = useDispatch();
   const [isSaved, setIsSaved] = useState(saved);
   const bookmarkIcon = isSaved
     ? Assets.AppIcons.icBookmarked
     : Assets.AppIcons.icUnBookmark;
   return (
     <TouchableOpacity
-      onPress={() => {
+      onPress={async () => {
         setIsSaved(!isSaved);
-        if (_.isFunction(onPress)) {
-          onPress();
+        if (saved) {
+          await Promise.all(
+            dispatch(thunkUnSaveParking({ userId, parkingId: parkId })),
+          );
+        } else {
+          await Promise.all(
+            dispatch(thunkSaveParking({ userId, parkingId: parkId })),
+          );
         }
+        dispatch(thunkGetUserInfo({ userId }));
       }}
     >
       <Image source={bookmarkIcon} style={{ resizeMode: 'contain' }} />

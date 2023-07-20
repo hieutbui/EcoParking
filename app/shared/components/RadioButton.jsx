@@ -29,6 +29,10 @@ import {
  * @property {boolean} isSelected
  * @property {StyleProp<ViewStyle>} style
  * @property {string} rightText
+ * @property {ImageSourcePropType} rightIconSource
+ * @property {StyleProp<ViewStyle>} textZoneStyle
+ * @property {()=>void=} onLongPress
+ * @property {boolean} disable
  * @param {Params} param
  * @returns {JSX.Element}
  */
@@ -45,6 +49,9 @@ export const RadioButton = ({
   isSelected,
   rightText,
   style,
+  rightIconSource,
+  textZoneStyle,
+  disable,
 }) => {
   let rightIcon;
 
@@ -60,12 +67,13 @@ export const RadioButton = ({
       }
       break;
     default:
-      rightIcon = undefined;
+      rightIcon = rightIconSource;
       break;
   }
 
   return (
     <TouchableOpacity
+      disabled={disable}
       onPress={() => {
         _.isFunction(onPress) && onPress();
       }}
@@ -89,10 +97,13 @@ export const RadioButton = ({
     >
       {leftIcon ? <Image source={leftIcon} style={leftIconStyle} /> : null}
       <View
-        style={{
-          marginLeft: Const.space_50,
-          flex: 1,
-        }}
+        style={[
+          {
+            marginLeft: Const.space_50,
+            flex: 1,
+          },
+          textZoneStyle,
+        ]}
       >
         <Text
           style={{

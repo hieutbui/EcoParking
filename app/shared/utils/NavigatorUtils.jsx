@@ -9,6 +9,7 @@ import {
 import { ParkingInfo, SingleTicket } from 'app/types';
 import { store } from 'app/controllers/redux/AppStore';
 import { thunkGetBooking } from 'app/controllers/slice/account.slice';
+import { thunkGetSavedParkings } from 'app/controllers/slice/parking.slice';
 
 const tag = '[NavigatorUtil]';
 

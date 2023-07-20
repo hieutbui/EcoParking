@@ -97,7 +97,7 @@ const getBooking = async params => {
   const { userId } = params;
   return await axiosSendRequest(
     'post',
-    `${baseApiUrl}/users/get-booking`,
+    `${baseApiUrl}users/get-booking`,
     { userId },
     {
       Authorization: `Bearer ${Global.AccessToken}`,
@@ -113,8 +113,23 @@ const createNewTicket = async params => {
   const { checkedIn, checkedOut, customerId, parkingId, carNumber } = params;
   return await axiosSendRequest(
     'post',
-    `${baseApiUrl}/tickets/create-new-ticket`,
+    `${baseApiUrl}tickets/create-new-ticket`,
     { checkedIn, checkedOut, customerId, parkingId, carNumber },
+    {
+      Authorization: `Bearer ${Global.AccessToken}`,
+    },
+  );
+};
+
+/**
+ * @author hieubt
+ * @param {{userId: string}} param
+ */
+const getUserInfo = async ({ userId }) => {
+  return await axiosSendRequest(
+    'post',
+    `${baseApiUrl}users/get-info`,
+    { userId },
     {
       Authorization: `Bearer ${Global.AccessToken}`,
     },
@@ -127,4 +142,5 @@ export default {
   updateProfile,
   getBooking,
   createNewTicket,
+  getUserInfo,
 };

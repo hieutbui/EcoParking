@@ -96,6 +96,22 @@ export const thunkGetBooking = createAsyncThunk(
   },
 );
 
+export const thunkGetUserInfo = createAsyncThunk(
+  '/getUserInfo',
+  /**
+   *
+   * @param {{userId: string}} payload
+   */
+  async (payload, __thunkAPI) => {
+    try {
+      const result = await api.auth.getUserInfo({ userId: payload.userId });
+      return result.data;
+    } catch (error) {
+      return __thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 const actions = {};
 
 const AccountSlice = createSlice({
@@ -202,6 +218,21 @@ const AccountSlice = createSlice({
           state.ongoing = ongoingList;
           state.completed = completedList;
           state.canceled = canceledList;
+        }
+      })
+      .addCase(thunkGetUserInfo.pending, () => {
+        utils.showLoading({ message: i18n.t('Loading') + '...' });
+      })
+      .addCase(thunkGetUserInfo.rejected, () => {
+        utils.hideLoading();
+        utils.toast({ message: i18n.t('Cannot get infos') });
+      })
+      .addCase(thunkGetUserInfo.fulfilled, (state, { payload }) => {
+        utils.hideLoading();
+        if (!_.isEmpty(payload)) {
+          state.userInfo = payload;
+        } else {
+          utils.toast({ message: i18n.t('Cannot get infos') });
         }
       }),
 });

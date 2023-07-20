@@ -34,6 +34,9 @@ import { DirectionScreen } from './direction/DirectionScreen';
 import { RouteNavigationScreen } from './direction/RouteNavigationScreen';
 import { ParkingTimerScreen } from './tickets/ParkingTImerScreen';
 import { CancelParking } from './tickets/CancelParkingScreen';
+import { store } from 'app/controllers/redux/AppStore';
+import { thunkGetSavedParkings } from 'app/controllers/slice/parking.slice';
+import { thunkGetBooking } from 'app/controllers/slice/account.slice';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -188,11 +191,29 @@ function MainTabBar() {
         name={ScreenNames.Saved}
         component={SavedScreen}
         options={{ tabBarLabel: t(ScreenNames.Saved) }}
+        listeners={({ navigation }) => ({
+          tabPress: event => {
+            store.dispatch(
+              thunkGetSavedParkings({
+                userId: store.getState().account.userInfo._id,
+              }),
+            );
+          },
+        })}
       />
       <Tab.Screen
         name={ScreenNames.Booking}
         component={BookingScreen}
         options={{ tabBarLabel: t(ScreenNames.Booking) }}
+        listeners={({ navigation }) => ({
+          tabPress: event => {
+            store.dispatch(
+              thunkGetBooking({
+                userId: store.getState().account.userInfo._id,
+              }),
+            );
+          },
+        })}
       />
       <Tab.Screen
         name={ScreenNames.Profile}

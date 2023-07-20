@@ -11,7 +11,7 @@ import Global from 'app/constants/Global';
 const getSingleTicket = ({ ticketDetailId }) => {
   return axiosSendRequest(
     'post',
-    `${baseApiUrl}/tickets/get-single-ticket`,
+    `${baseApiUrl}tickets/get-single-ticket`,
     { ticketDetailId },
     {
       Authorization: `Bearer ${Global.AccessToken}`,
@@ -28,7 +28,7 @@ const getSingleTicket = ({ ticketDetailId }) => {
 const cancelTicket = ({ ticketDetailId }) => {
   return axiosSendRequest(
     'post',
-    `${baseApiUrl}/tickets/cancel-ticket`,
+    `${baseApiUrl}tickets/cancel-ticket`,
     { ticketId: ticketDetailId },
     {
       Authorization: `Bearer ${Global.AccessToken}`,

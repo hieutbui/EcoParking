@@ -1,5 +1,6 @@
 export interface ParkingState {
   parks: ParkingInfo[];
+  savedParkings: ParkingInfo[];
 }
 
 export interface ParkingInfo {

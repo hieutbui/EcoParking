@@ -55,8 +55,43 @@ const saveParking = async ({ parkingId, userId }) => {
   );
 };
 
+/**
+ * @author hieubt
+ * @typedef UnSaveParkingParams
+ * @property {string} parkingId
+ * @property {string} userId
+ * @param {UnSaveParkingParams} param
+ */
+const unSaveParking = async ({ parkingId, userId }) => {
+  return axiosSendRequest(
+    'post',
+    `${baseApiUrl}parkings/un-save-parking`,
+    { parkingId, userId },
+    {
+      Authorization: `Bearer ${Global.AccessToken}`,
+    },
+  );
+};
+
+/**
+ * @author hieubt
+ * @param {{userId: string}} param
+ */
+const getSavedParkings = async ({ userId }) => {
+  return axiosSendRequest(
+    'post',
+    `${baseApiUrl}parkings/get-saved-parking`,
+    { userId },
+    {
+      Authorization: `Bearer ${Global.AccessToken}`,
+    },
+  );
+};
+
 export default {
   getAll,
   getDirection,
   saveParking,
+  unSaveParking,
+  getSavedParkings,
 };
