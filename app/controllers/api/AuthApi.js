@@ -136,6 +136,21 @@ const getUserInfo = async ({ userId }) => {
   );
 };
 
+/**
+ * @author hieubt
+ * @param {{ticketId: string}} param
+ */
+const scanQR = async ({ ticketId }) => {
+  return await axiosSendRequest(
+    'post',
+    `${baseApiUrl}users/scanQR`,
+    { ticketId },
+    {
+      Authorization: `Bearer ${Global.AccessToken}`,
+    },
+  );
+};
+
 export default {
   login,
   register,
@@ -143,4 +158,5 @@ export default {
   getBooking,
   createNewTicket,
   getUserInfo,
+  scanQR,
 };

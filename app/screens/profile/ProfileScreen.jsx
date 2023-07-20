@@ -76,7 +76,9 @@ export const ProfileScreen = () => {
     {
       text: 'Help',
       leftIcon: Assets.AppIcons.icHelp,
-      onPress: () => {},
+      onPress: () => {
+        NavigatorUtils.gotoScanQR({}, navigation);
+      },
       isSwitch: false,
     },
     {

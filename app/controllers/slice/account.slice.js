@@ -112,6 +112,22 @@ export const thunkGetUserInfo = createAsyncThunk(
   },
 );
 
+export const thunkScanQR = createAsyncThunk(
+  '/scanQR',
+  /**
+   *
+   * @param {{ticketId: string}} payload
+   */
+  async (payload, __thunkAPI) => {
+    try {
+      const result = await api.auth.scanQR(payload);
+      return result.data;
+    } catch (error) {
+      return __thunkAPI.rejectWithValue(error);
+    }
+  },
+);
+
 const actions = {};
 
 const AccountSlice = createSlice({
@@ -233,6 +249,22 @@ const AccountSlice = createSlice({
           state.userInfo = payload;
         } else {
           utils.toast({ message: i18n.t('Cannot get infos') });
+        }
+      })
+      .addCase(thunkScanQR.pending, () => {
+        utils.showLoading({ message: i18n.t('Loading') + '...' });
+      })
+      .addCase(thunkScanQR.rejected, () => {
+        utils.hideLoading();
+        utils.toast({ message: i18n.t('Cannot send ticket') });
+      })
+      .addCase(thunkScanQR.fulfilled, (state, { payload }) => {
+        utils.hideLoading();
+        if (!_.isEmpty(payload)) {
+          console.log({ payload });
+          utils.toast({ message: i18n.t('Done') });
+        } else {
+          utils.toast({ message: i18n.t('Cannot send ticket info') });
         }
       }),
 });

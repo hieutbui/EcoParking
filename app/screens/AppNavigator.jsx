@@ -37,6 +37,7 @@ import { CancelParking } from './tickets/CancelParkingScreen';
 import { store } from 'app/controllers/redux/AppStore';
 import { thunkGetSavedParkings } from 'app/controllers/slice/parking.slice';
 import { thunkGetBooking } from 'app/controllers/slice/account.slice';
+import { ScanQRScreen } from './qr/ScanQRScreen';
 
 enableScreens();
 const Stack = createStackNavigator();
@@ -131,6 +132,10 @@ export const AppNavigator = () => {
               <Stack.Screen
                 name={ScreenNames.CancelParking}
                 component={CancelParking}
+              />
+              <Stack.Screen
+                name={ScreenNames.ScanQR}
+                component={ScanQRScreen}
               />
             </Stack.Group>
           </Stack.Navigator>

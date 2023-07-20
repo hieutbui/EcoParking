@@ -255,6 +255,16 @@ const gotoCancelParking = (params, navigation = rootNavigation) => {
   navigate(ScreenNames.CancelParking, params, navigation);
 };
 
+/**
+ * @author hieubt
+ * @param {any} params
+ * @param {NavigationProp<ParamListBase>} navigation
+ */
+const gotoScanQR = (params, navigation = rootNavigation) => {
+  console.log(tag, 'gotoScanQR');
+  navigate(ScreenNames.ScanQR, params, navigation);
+};
+
 export default {
   goBack,
   gotoHome,
@@ -275,4 +285,5 @@ export default {
   gotoRouteNavigation,
   gotoParkingTimer,
   gotoCancelParking,
+  gotoScanQR,
 };
