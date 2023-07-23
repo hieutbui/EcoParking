@@ -477,13 +477,19 @@ export const HomeScreen = () => {
                         }}
                       >
                         <Mapbox.Images
-                          images={{ markerIcon: Assets.AppIcons.icMapParking }}
+                          images={{
+                            markerIcon: Assets.AppIcons.icMapParking,
+                            spontaneous: Assets.AppIcons.icSpontaneousParking,
+                          }}
                         />
                         <Mapbox.SymbolLayer
                           id={park.name.toString() + 'marker'}
                           sourceID={park.name.toString() + index.toString()}
                           style={{
-                            iconImage: 'markerIcon',
+                            iconImage:
+                              park.parkType === 0
+                                ? 'markerIcon'
+                                : 'spontaneous',
                             iconSize: 4,
                             iconAllowOverlap: true,
                             textField:

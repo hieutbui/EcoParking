@@ -135,22 +135,29 @@ export const ParkingDetailScreen = () => {
         <RadiusButton
           title={t('Cancel')}
           type="negative"
-          style={{ width: (Const.deviceWidth - 62) / 2 - 20 }}
+          style={{
+            width:
+              parkType === 0
+                ? (Const.deviceWidth - 62) / 2 - 20
+                : Const.deviceWidth - 62,
+          }}
           onPress={() => {
             NavigatorUtils.goBack();
           }}
         />
-        <RadiusButton
-          title={t('Book Parking')}
-          type="positive"
-          style={{ width: (Const.deviceWidth - 62) / 2 - 20 }}
-          onPress={() => {
-            NavigatorUtils.gotoSelectVehicle(
-              { parkingId: parkingInfo },
-              navigation,
-            );
-          }}
-        />
+        {parkType === 0 ? (
+          <RadiusButton
+            title={t('Book Parking')}
+            type="positive"
+            style={{ width: (Const.deviceWidth - 62) / 2 - 20 }}
+            onPress={() => {
+              NavigatorUtils.gotoSelectVehicle(
+                { parkingId: parkingInfo },
+                navigation,
+              );
+            }}
+          />
+        ) : null}
       </View>
     </View>
   );

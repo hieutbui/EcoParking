@@ -207,8 +207,8 @@ const ParkingCard = props => {
       break;
   }
 
-  function handleViewTicket() {
-    Promise.all(dispatch(thunkGetSingleTicket({ ticketDetailId })));
+  async function handleViewTicket() {
+    await Promise.all(dispatch(thunkGetSingleTicket({ ticketDetailId })));
     NavigatorUtils.gotoParkingTicket({
       previous: 'booking',
       ticketDetailId,

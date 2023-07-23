@@ -29,10 +29,10 @@ export const ParkingTicketScreen = () => {
   const { name, phoneNumber, _id } = account.userInfo;
   const { singleTicket, parkName, carNumber, ticketDetailId } = ticket;
 
-  const ticketStart = new Date(singleTicket.checkedIn);
-  const month = ticketStart.toLocaleString('default', { month: 'short' });
-  const day = ticketStart.getDate();
-  const year = ticketStart.getFullYear();
+  const ticketStart = new Date(singleTicket?.checkedIn);
+  const month = ticketStart?.toLocaleString('default', { month: 'short' });
+  const day = ticketStart?.getDate();
+  const year = ticketStart?.getFullYear();
 
   /**
    *
@@ -41,21 +41,21 @@ export const ParkingTicketScreen = () => {
    */
   function calculateDuration(startTime, endTime) {
     const utcStart = Date.UTC(
-      startTime.getFullYear(),
-      startTime.getMonth(),
-      startTime.getDate(),
-      startTime.getHours(),
-      startTime.getMinutes(),
-      startTime.getMilliseconds(),
+      startTime?.getFullYear(),
+      startTime?.getMonth(),
+      startTime?.getDate(),
+      startTime?.getHours(),
+      startTime?.getMinutes(),
+      startTime?.getMilliseconds(),
     );
     const utcEnd = Date.UTC(
-      endTime.getFullYear(),
-      endTime.getMonth(),
-      endTime.getDate(),
-      endTime.getHours(),
-      endTime.getMinutes(),
-      endTime.getSeconds(),
-      endTime.getMilliseconds(),
+      endTime?.getFullYear(),
+      endTime?.getMonth(),
+      endTime?.getDate(),
+      endTime?.getHours(),
+      endTime?.getMinutes(),
+      endTime?.getSeconds(),
+      endTime?.getMilliseconds(),
     );
     return Math.abs(((utcEnd - utcStart) / (1000 * 60 * 60)).toFixed(0));
   }
@@ -79,13 +79,13 @@ export const ParkingTicketScreen = () => {
     parking: previousScreen === 'create' ? parkName : route.params?.parkName,
     duration:
       calculateDuration(
-        new Date(singleTicket.checkedIn),
-        new Date(singleTicket.checkedOut),
+        new Date(singleTicket?.checkedIn),
+        new Date(singleTicket?.checkedOut),
       ) + ' hours',
     hours:
-      utils.to12HourTime(new Date(singleTicket.checkedIn)) +
+      utils.to12HourTime(new Date(singleTicket?.checkedIn)) +
       ' - ' +
-      utils.to12HourTime(new Date(singleTicket.checkedOut)),
+      utils.to12HourTime(new Date(singleTicket?.checkedOut)),
     vehicle: previousScreen === 'create' ? carNumber : route.params?.carNumber,
     date: month + ' ' + day + ', ' + year,
     phone: phoneNumber,
